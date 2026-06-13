@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Shiva Continental | Mussoorie</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#008080;
+  --teal-deep:#005f5f;
+  --teal-pale:#e8f5f5;
+  --teal-soft:#c2e4e4;
+  --cream:#faf7f2;
+  --warm:#f5ede0;
+  --parchment:#f0e9dd;
+  --bark:#2e1f0f;
+  --bark-mid:#5a4030;
+  --stone:#9a8c7e;
+  --gold:#b8861e;
+  --sage:#d4e8d4;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--bark);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+}
+
+/* LOADER */
+#loader{
+  position:fixed;inset:0;
+  background:var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;transition:opacity .8s ease,visibility .8s ease;
+}
+#loader.gone{opacity:0;visibility:hidden;pointer-events:none}
+.loader-inner{text-align:center}
+.loader-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,5vw,3.8rem);
+  color:var(--teal);letter-spacing:.3em;
+  opacity:0;animation:fadeWord 2.6s ease forwards;
+}
+.loader-sub{
+  font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;
+  color:var(--stone);margin-top:.8rem;
+  opacity:0;animation:fadeWord 2.6s .3s ease forwards;
+}
+@keyframes fadeWord{0%{opacity:0;transform:translateY(18px)}60%{opacity:1;transform:translateY(0)}100%{opacity:1}}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.2rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,box-shadow .4s;
+}
+nav.scrolled{
+  background:rgba(250,247,242,.94);
+  backdrop-filter:blur(14px);
+  box-shadow:0 1px 0 rgba(0,0,0,.07);
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;font-weight:600;color:var(--bark);
+  letter-spacing:.12em;text-decoration:none;
+}
+nav:not(.scrolled) .nav-logo{color:#fff}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{
+  font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--bark-mid);text-decoration:none;transition:color .3s;
+}
+nav:not(.scrolled) .nav-links a{color:rgba(255,255,255,.8)}
+.nav-links a:hover{color:var(--teal)}
+.nav-book{
+  background:var(--teal);color:#fff;
+  padding:.5rem 1.4rem;font-size:.78rem;letter-spacing:.1em;
+  text-transform:uppercase;text-decoration:none;
+  border-radius:2px;transition:background .3s;
+}
+.nav-book:hover{background:var(--teal-deep)}
+
+/* HERO */
+#hero{
+  height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23') center/cover no-repeat;
+  transform:scale(1.12);
+  opacity:.54;
+  will-change:transform;
+}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(170deg,rgba(0,60,60,.38) 0%,rgba(10,30,20,.62) 55%,rgba(20,10,0,.72) 100%);
+}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem}
+.hero-eyebrow{
+  font-size:.73rem;letter-spacing:.38em;text-transform:uppercase;
+  color:rgba(255,255,255,.75);margin-bottom:1.6rem;
+  opacity:0;animation:riseIn .9s .5s ease forwards;
+}
+.hero-eyebrow span{color:var(--teal-soft)}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.4rem,8vw,7rem);font-weight:300;line-height:1;
+  color:#fff;margin-bottom:.6rem;
+  opacity:0;animation:riseIn 1.1s .7s ease forwards;
+}
+.hero-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.1rem,2.5vw,1.9rem);
+  font-weight:300;font-style:italic;color:rgba(255,255,255,.68);
+  opacity:0;animation:riseIn 1.1s .9s ease forwards;margin-bottom:2.8rem;
+}
+.hero-cta{
+  display:inline-flex;gap:1rem;flex-wrap:wrap;justify-content:center;
+  opacity:0;animation:riseIn 1s 1.2s ease forwards;
+}
+.btn-primary{
+  background:var(--teal);color:#fff;
+  padding:.8rem 2.2rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;border-radius:2px;transition:all .3s;border:none;cursor:pointer;
+}
+.btn-primary:hover{background:var(--teal-deep);transform:translateY(-2px)}
+.btn-ghost{
+  border:1px solid rgba(255,255,255,.5);color:#fff;
+  padding:.8rem 2.2rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;border-radius:2px;transition:all .3s;
+}
+.btn-ghost:hover{border-color:#fff;transform:translateY(-2px)}
+.btn-teal-outline{
+  border:1px solid var(--teal);color:var(--teal);
+  padding:.8rem 2.2rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;border-radius:2px;transition:all .3s;
+}
+.btn-teal-outline:hover{background:var(--teal);color:#fff;transform:translateY(-2px)}
+.hero-scroll{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:riseIn 1s 1.7s ease forwards;
+}
+.scroll-line{width:1px;height:50px;background:rgba(255,255,255,.25);position:relative;overflow:hidden}
+.scroll-line::after{
+  content:'';position:absolute;top:-100%;left:0;width:100%;height:50%;
+  background:var(--teal-soft);animation:scrollDrop 1.8s ease infinite;
+}
+@keyframes scrollDrop{0%{top:-100%}100%{top:200%}}
+.scroll-label{font-size:.62rem;letter-spacing:.22em;color:rgba(255,255,255,.38);text-transform:uppercase}
+@keyframes riseIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* FLOATING LEAVES */
+.floating-leaf{
+  position:fixed;pointer-events:none;z-index:1;opacity:.35;
+  animation:floatLeaf linear infinite;
+}
+@keyframes floatLeaf{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  10%{opacity:.35}90%{opacity:.15}
+  100%{transform:translateY(-10vh) rotate(720deg) translateX(50px);opacity:0}
+}
+
+section{position:relative;overflow:hidden}
+
+/* ── STORY ── */
+#story{
+  min-height:100vh;background:var(--cream);
+  display:flex;align-items:center;
+}
+.story-inner{
+  max-width:1200px;margin:0 auto;padding:8rem 3rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;
+}
+.section-eyebrow{
+  font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:1.1rem;
+  display:flex;align-items:center;gap:.8rem;
+}
+.section-eyebrow::before{content:'';width:36px;height:1px;background:var(--teal)}
+.story-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,4vw,3.8rem);font-weight:300;
+  line-height:1.15;color:var(--bark);margin-bottom:1.4rem;
+}
+.story-body{font-size:1rem;line-height:1.95;color:var(--bark-mid);margin-bottom:1.2rem}
+.stat-row{display:flex;gap:3rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(0,128,128,.15)}
+.stat-item{display:flex;flex-direction:column;gap:.2rem}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;font-weight:300;color:var(--teal);line-height:1;
+}
+.stat-label{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--stone)}
+.story-visual{position:relative;height:520px}
+.story-img-main{
+  position:absolute;top:0;left:0;width:74%;height:80%;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114') center/cover;
+  border-radius:4px;box-shadow:0 20px 60px rgba(46,31,15,.14);will-change:transform;
+}
+.story-img-accent{
+  position:absolute;bottom:0;right:0;width:54%;height:54%;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9') center/cover;
+  border-radius:4px;border:6px solid var(--cream);
+  box-shadow:0 16px 50px rgba(46,31,15,.14);will-change:transform;
+}
+.story-teal-blob{
+  position:absolute;bottom:-30px;left:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:var(--teal-pale);z-index:-1;
+}
+
+/* ── ROOMS ── */
+#rooms{
+  background:var(--parchment);
+  padding:8rem 3rem;
+}
+.rooms-header{text-align:center;margin-bottom:4rem}
+.rooms-header .section-eyebrow{justify-content:center}
+.rooms-header .section-eyebrow::before{display:none}
+.rooms-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;color:var(--bark);
+}
+.rooms-header p{font-size:.95rem;color:var(--bark-mid);margin-top:.8rem;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.8}
+.rooms-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;
+}
+.room-card{position:relative;border-radius:6px;overflow:hidden;cursor:pointer}
+.room-card:first-child{grid-column:span 2;grid-row:span 2}
+.room-img{width:100%;height:100%;min-height:200px;object-fit:cover;display:block;transition:transform .65s ease}
+.room-card:first-child .room-img{min-height:460px}
+.room-card:hover .room-img{transform:scale(1.06)}
+.room-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(20,10,0,.72) 0%,transparent 55%);
+}
+.room-info{position:absolute;bottom:0;left:0;right:0;padding:1.5rem}
+.room-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;font-weight:400;color:#fff;
+}
+.room-tag{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-top:.3rem}
+
+/* ── POLAROID MEMORIES ── */
+#memories{
+  min-height:100vh;background:var(--warm);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6rem 3rem;
+}
+.memories-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,4vw,3.4rem);font-weight:300;color:var(--bark);
+  text-align:center;margin-bottom:.5rem;z-index:2;position:relative;
+}
+.memories-sub{
+  font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--stone);text-align:center;margin-bottom:4rem;
+  z-index:2;position:relative;
+}
+.polaroid-stage{position:relative;width:100%;max-width:1020px;height:500px}
+.polaroid{
+  position:absolute;background:#fff;
+  padding:12px 12px 42px;
+  box-shadow:0 10px 35px rgba(46,31,15,.16);
+  cursor:grab;transform-origin:center bottom;
+  transition:box-shadow .3s ease;user-select:none;
+}
+.polaroid:hover{
+  box-shadow:0 22px 55px rgba(46,31,15,.24);
+  z-index:10!important;
+}
+.polaroid img{width:200px;height:162px;object-fit:cover;display:block;pointer-events:none}
+.pol-caption{
+  text-align:center;margin-top:8px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:.9rem;color:#666;font-style:italic;
+}
+.polaroid-pin{
+  position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  width:14px;height:14px;border-radius:50%;
+  background:var(--teal);box-shadow:0 2px 6px rgba(0,128,128,.35);
+}
+.pol-tape{
+  position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  width:40px;height:16px;
+  background:rgba(0,128,128,.18);border-radius:2px;
+}
+
+/* ── GARDEN ── */
+#garden{
+  min-height:100vh;position:relative;
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.garden-visual{position:relative;overflow:hidden;min-height:100vh}
+.garden-bg{
+  position:absolute;inset:0;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23') center/cover no-repeat;
+  transform:scale(1.1);will-change:transform;
+  filter:brightness(.9) saturate(1.1);
+}
+.garden-text{
+  background:var(--teal-pale);
+  display:flex;flex-direction:column;justify-content:center;padding:6rem 4rem;
+}
+.garden-text .section-eyebrow{color:var(--teal-deep)}
+.garden-text .section-eyebrow::before{background:var(--teal-deep)}
+.garden-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,3.5vw,3.2rem);font-weight:300;
+  color:var(--bark);line-height:1.2;margin-bottom:1.4rem;
+}
+.garden-body{font-size:1rem;line-height:1.95;color:var(--bark-mid)}
+.garden-objects{margin-top:2.5rem;display:flex;flex-wrap:wrap;gap:.8rem}
+.garden-obj{
+  display:flex;align-items:center;gap:.6rem;
+  background:#fff;border:1px solid rgba(0,128,128,.2);
+  padding:.45rem 1rem;border-radius:50px;
+  font-size:.75rem;color:var(--teal-deep);letter-spacing:.08em;
+}
+.garden-obj-dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+/* ── KITCHEN ── */
+#kitchen{
+  min-height:100vh;position:relative;overflow:hidden;
+}
+.kitchen-parallax-bg{
+  position:absolute;inset:0;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4') center/cover;
+  filter:brightness(.28) saturate(0.8);
+  transform:scale(1.08);will-change:transform;
+}
+/* light overlay that fades toward bottom so text has contrast */
+.kitchen-light-wash{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(250,247,242,.0) 0%,rgba(250,247,242,.0) 40%,rgba(250,247,242,.08) 100%);
+}
+.kitchen-content{
+  position:relative;z-index:2;
+  max-width:680px;margin:0 auto;padding:10rem 3rem;text-align:center;
+}
+.kitchen-content .section-eyebrow{justify-content:center;color:var(--teal-soft)}
+.kitchen-content .section-eyebrow::before{background:var(--teal-soft)}
+.kitchen-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;
+  color:#fff;line-height:1.1;margin-bottom:1.5rem;
+}
+.kitchen-body{font-size:1.02rem;line-height:1.92;color:rgba(255,255,255,.7);margin-bottom:2.5rem}
+.food-tags{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-bottom:2.5rem}
+.food-tag{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.78);padding:.4rem 1.1rem;border-radius:50px;
+  font-size:.76rem;letter-spacing:.1em;
+}
+
+/* ── REVIEWS ── */
+#reviews{
+  background:var(--cream);
+  padding:7rem 0 7rem 3rem;overflow:hidden;
+}
+.reviews-header{text-align:center;margin-bottom:4rem;padding-right:3rem}
+.reviews-header .section-eyebrow{justify-content:center}
+.reviews-header .section-eyebrow::before{display:none}
+.reviews-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3.5vw,3rem);font-weight:300;color:var(--bark);
+}
+.reviews-track{
+  display:flex;gap:1.5rem;
+  animation:reviewScroll 32s linear infinite;
+  width:max-content;
+}
+.reviews-track:hover{animation-play-state:paused}
+.review-card{
+  width:340px;flex-shrink:0;
+  background:#fff;
+  border:1px solid rgba(0,128,128,.12);
+  border-radius:6px;padding:2rem;
+  box-shadow:0 4px 20px rgba(46,31,15,.06);
+}
+.review-stars{color:var(--gold);font-size:.95rem;margin-bottom:.9rem;letter-spacing:.08em}
+.review-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.02rem;font-style:italic;
+  color:var(--bark-mid);line-height:1.82;margin-bottom:1rem;
+}
+.review-author{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--teal)}
+@keyframes reviewScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── AMENITIES ── */
+#amenities{
+  background:var(--parchment);padding:8rem 3rem;
+}
+.amenities-inner{max-width:1100px;margin:0 auto}
+.amenities-header{text-align:center;margin-bottom:5rem}
+.amenities-header .section-eyebrow{justify-content:center}
+.amenities-header .section-eyebrow::before{display:none}
+.amenities-header h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;color:var(--bark);
+}
+.amenities-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.5rem}
+.amenity-item{
+  display:flex;flex-direction:column;align-items:center;gap:.85rem;
+  padding:2rem 1rem;background:#fff;
+  border:1px solid rgba(0,128,128,.12);border-radius:6px;text-align:center;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.amenity-item:hover{
+  border-color:var(--teal);transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(0,128,128,.1);
+}
+.amenity-icon{
+  width:50px;height:50px;border-radius:50%;
+  background:var(--teal-pale);
+  display:flex;align-items:center;justify-content:center;font-size:1.35rem;
+}
+.amenity-name{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bark);font-weight:500}
+
+/* ── LOCATION ── */
+#location{
+  min-height:70vh;background:var(--cream);
+  display:grid;grid-template-columns:1fr 1fr;
+}
+.location-text{
+  padding:6rem 4rem;display:flex;flex-direction:column;justify-content:center;
+}
+.location-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3vw,3rem);font-weight:300;color:var(--bark);
+  line-height:1.2;margin-bottom:1.4rem;
+}
+.location-body{font-size:.95rem;line-height:1.92;color:var(--bark-mid);margin-bottom:1.8rem}
+.location-points{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.location-points li{
+  font-size:.88rem;color:var(--bark-mid);
+  display:flex;align-items:center;
+}
+.location-points li::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--teal);margin-right:.85rem;flex-shrink:0;
+}
+.loc-btns{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+.location-map{position:relative;overflow:hidden}
+.location-map img{
+  width:100%;height:100%;object-fit:cover;
+  filter:sepia(.2) hue-rotate(130deg) brightness(.85) saturate(.9);
+}
+
+/* ── CTA ── */
+#cta{
+  min-height:65vh;position:relative;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.cta-bg{
+  position:absolute;inset:0;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb') center/cover;
+  filter:brightness(.38);transform:scale(1.08);will-change:transform;
+}
+.cta-wash{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,80,80,.28),rgba(10,5,0,.5));
+}
+.cta-content{position:relative;z-index:2;text-align:center;padding:4rem 2rem}
+.cta-content h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;
+  color:#fff;line-height:1.12;margin-bottom:1rem;
+}
+.cta-content p{
+  font-size:1rem;color:rgba(255,255,255,.65);
+  margin-bottom:2.5rem;max-width:480px;margin-left:auto;margin-right:auto;
+}
+.cta-contact{display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;flex-wrap:wrap}
+.cta-contact-item{display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.cta-contact-label{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--teal-soft)}
+.cta-contact-val{font-size:.88rem;color:rgba(255,255,255,.72)}
+
+/* FOOTER */
+footer{
+  background:var(--cream);border-top:1px solid rgba(0,128,128,.14);
+  padding:3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;
+}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--bark);letter-spacing:.1em}
+.footer-tagline{font-size:.72rem;color:var(--stone);margin-top:.3rem}
+.footer-links{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
+.footer-links a{
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--stone);text-decoration:none;transition:color .3s;
+}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:.7rem;color:var(--stone)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-44px);transition:opacity .9s ease,transform .9s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(44px);transition:opacity .9s ease,transform .9s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.zoom-section{transform:scale(.93);opacity:0;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity 1.2s ease}
+.zoom-section.visible{transform:scale(1);opacity:1}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  .story-inner{grid-template-columns:1fr;gap:3rem}
+  .story-visual{height:280px}
+  .rooms-grid{grid-template-columns:1fr}
+  .room-card:first-child{grid-column:1;grid-row:1}
+  #garden{grid-template-columns:1fr}
+  .garden-visual{min-height:55vh}
+  .garden-text{padding:4rem 2rem}
+  #location{grid-template-columns:1fr}
+  .location-text{padding:4rem 2rem}
+  .location-map{min-height:300px}
+  .polaroid-stage{height:auto;position:static;display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+  .polaroid{position:static!important;transform:rotate(0deg)!important}
+  .amenities-grid{grid-template-columns:repeat(2,1fr)}
+  footer{flex-direction:column;text-align:center;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-text">Shiva Continental</div>
+    <div class="loader-sub">Mussoorie · Uttarakhand</div>
+  </div>
+</div>
+
+<!-- FLOATING LEAVES -->
+<div class="floating-leaf" style="left:7%;animation-duration:13s;animation-delay:2s;font-size:1rem">🍃</div>
+<div class="floating-leaf" style="left:26%;animation-duration:19s;animation-delay:6s">🌿</div>
+<div class="floating-leaf" style="left:58%;animation-duration:15s;animation-delay:1s;font-size:.85rem">🍃</div>
+<div class="floating-leaf" style="left:82%;animation-duration:21s;animation-delay:9s">🌿</div>
+<div class="floating-leaf" style="left:44%;animation-duration:14s;animation-delay:13s;font-size:.8rem">🍃</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Shiva Continental</a>
+  <ul class="nav-links">
+    <li><a href="#story">Story</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#garden">Garden</a></li>
+    <li><a href="#kitchen">Dine</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <a href="https://www.shivacontinental.in/" target="_blank" class="nav-book">Reserve a Stay</a>
+</nav>
+
+<!-- HERO (full-bleed photo — dark overlay on photo only, not body) -->
+<section id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Kulri · <span>Mall Road</span> · Mussoorie · Uttarakhand</div>
+    <h1 class="hero-title">Hotel Shiva<br>Continental</h1>
+    <p class="hero-subtitle">Where the Hills Come Alive</p>
+    <div class="hero-cta">
+      <a href="https://www.shivacontinental.in/" target="_blank" class="btn-primary">Reserve Your Stay</a>
+      <a href="#story" class="btn-ghost">Explore the Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll to discover</span>
+  </div>
+</section>
+
+<!-- STORY -->
+<section id="story">
+  <div class="story-inner">
+    <div class="reveal-left">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="story-heading">A Place with<br>a Soul</h2>
+      <p class="story-body">Welcome to a stay that feels like home. From the moment you arrive, our team welcomes you with warm smiles and genuine care — not just as a guest, but as part of the family.</p>
+      <p class="story-body">Wake up to serene hill views from your window, sip your tea in peaceful comfort, and in just two minutes, step into the vibrant buzz of Mall Road. It's the perfect balance of calm and connection.</p>
+      <div class="stat-row">
+        <div class="stat-item"><span class="stat-num">37</span><span class="stat-label">Cosy Rooms</span></div>
+        <div class="stat-item"><span class="stat-num">2<span style="font-size:1.1rem"> min</span></span><span class="stat-label">to Mall Road</span></div>
+        <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Valley Views</span></div>
+      </div>
+    </div>
+    <div class="story-visual reveal-right">
+      <div class="story-img-main" id="imgMain"></div>
+      <div class="story-img-accent" id="imgAccent"></div>
+      <div class="story-teal-blob"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms">
+  <div class="rooms-header reveal">
+    <div class="section-eyebrow">Accommodations</div>
+    <h2>Rooms That Fit Every Journey</h2>
+    <p>From cosy corners to balcony views — designed for slow mornings, mountain light, and warm comfort.</p>
+  </div>
+  <div class="rooms-grid zoom-section">
+    <div class="room-card">
+      <img class="room-img" src="https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267" alt="Deluxe Valley View Room">
+      <div class="room-overlay"></div>
+      <div class="room-info">
+        <div class="room-name">Deluxe Valley View</div>
+        <div class="room-tag">Slow mornings · Mountain light · Warm comfort</div>
+      </div>
+    </div>
+    <div class="room-card">
+      <img class="room-img" src="https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb" alt="Standard Hill View Room">
+      <div class="room-overlay"></div>
+      <div class="room-info">
+        <div class="room-name">Standard Hill View</div>
+        <div class="room-tag">Cosy & comfortable</div>
+      </div>
+    </div>
+    <div class="room-card">
+      <img class="room-img" src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114" alt="Garden Facing Room">
+      <div class="room-overlay"></div>
+      <div class="room-info">
+        <div class="room-name">Garden Facing Suite</div>
+        <div class="room-tag">Nature · Peace · Stories</div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:3rem" class="reveal">
+    <a href="https://www.shivacontinental.in/rooms.html" target="_blank" class="btn-teal-outline">Choose Your Story</a>
+  </div>
+</section>
+
+<!-- POLAROID MEMORIES -->
+<section id="memories">
+  <h2 class="memories-title reveal">Pinned Memories</h2>
+  <p class="memories-sub reveal">Moments our guests carry home</p>
+  <div class="polaroid-stage" id="polaroidStage">
+    <div class="polaroid" id="pol1" style="left:2%;top:50px;transform:rotate(-5deg);z-index:4">
+      <div class="pol-tape"></div>
+      <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d" alt="Gardenica in bloom">
+      <div class="pol-caption">Gardenica in bloom</div>
+    </div>
+    <div class="polaroid" id="pol2" style="left:21%;top:15px;transform:rotate(2.5deg);z-index:3">
+      <div class="polaroid-pin"></div>
+      <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114" alt="Morning tea with a view">
+      <div class="pol-caption">Morning tea ritual</div>
+    </div>
+    <div class="polaroid" id="pol3" style="left:41%;top:65px;transform:rotate(-2deg);z-index:5">
+      <div class="pol-tape"></div>
+      <img src="https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4" alt="Deodar Kitchen">
+      <div class="pol-caption">Deodar Kitchen flavours</div>
+    </div>
+    <div class="polaroid" id="pol4" style="left:61%;top:20px;transform:rotate(3deg);z-index:2">
+      <div class="polaroid-pin"></div>
+      <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9" alt="Welcoming staff">
+      <div class="pol-caption">Warmth at every step</div>
+    </div>
+    <div class="polaroid" id="pol5" style="left:79%;top:55px;transform:rotate(-3.5deg);z-index:3">
+      <div class="pol-tape"></div>
+      <img src="https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23" alt="Terrace garden">
+      <div class="pol-caption">Terrace at golden hour</div>
+    </div>
+  </div>
+  <svg style="position:absolute;bottom:0;left:0;width:100%;height:70px;pointer-events:none;opacity:.25" viewBox="0 0 1200 70" preserveAspectRatio="none">
+    <path d="M0 35 Q150 8 300 35 Q450 62 600 35 Q750 8 900 35 Q1050 62 1200 35" fill="none" stroke="#008080" stroke-width="1.5" stroke-dasharray="7,5">
+      <animate attributeName="stroke-dashoffset" from="0" to="-24" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </svg>
+</section>
+
+<!-- GARDEN -->
+<section id="garden">
+  <div class="garden-visual">
+    <div class="garden-bg" id="gardenBg"></div>
+  </div>
+  <div class="garden-text">
+    <div class="section-eyebrow reveal" style="color:var(--teal-deep)">Gardenica</div>
+    <h2 class="garden-heading reveal">Where Broken<br>Things<br>Bloom Again</h2>
+    <p class="garden-body reveal">An old kettle, a cracked shoe, a forgotten bucket. In our upcycled garden, every plant grows inside a story. Beauty with a past, growing fresh every day.</p>
+    <div class="garden-objects reveal">
+      <div class="garden-obj"><div class="garden-obj-dot"></div>Upcycled Planters</div>
+      <div class="garden-obj"><div class="garden-obj-dot"></div>Hanging Gardens</div>
+      <div class="garden-obj"><div class="garden-obj-dot"></div>Valley Terrace</div>
+      <div class="garden-obj"><div class="garden-obj-dot"></div>Hill Flora</div>
+      <div class="garden-obj"><div class="garden-obj-dot"></div>Stories in Soil</div>
+    </div>
+    <div style="margin-top:2.5rem" class="reveal">
+      <a href="https://www.shivacontinental.in/gardenica/gardenica.html" target="_blank" class="btn-teal-outline">Explore Gardenica</a>
+    </div>
+  </div>
+</section>
+
+<!-- KITCHEN -->
+<section id="kitchen">
+  <div class="kitchen-parallax-bg" id="kitchenBg"></div>
+  <div class="kitchen-light-wash"></div>
+  <div class="kitchen-content">
+    <div class="section-eyebrow reveal" style="justify-content:center;color:rgba(200,230,230,.85)">Deodar Kitchen</div>
+    <h2 class="kitchen-heading reveal">Comfort<br>Comes Cooked<br>Here</h2>
+    <p class="kitchen-body reveal">We don't just cook food. We serve stories of hill kitchens, grandma recipes, and warmth that lingers long after the meal. From homestyle sabzi to steaming parathas — every plate carries a memory you'll want to take home.</p>
+    <div class="food-tags reveal">
+      <span class="food-tag">Hill Kitchen Recipes</span>
+      <span class="food-tag">Complimentary Breakfast</span>
+      <span class="food-tag">Multi-Cuisine Menu</span>
+      <span class="food-tag">Room Service</span>
+      <span class="food-tag">Parathas &amp; Sabzi</span>
+      <span class="food-tag">Uttarakhand Flavours</span>
+    </div>
+    <div class="reveal">
+      <a href="https://www.shivacontinental.in/deodar-kitchen/deodar-kitchen.html" target="_blank" class="btn-ghost">Come Dine With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-header reveal">
+    <div class="section-eyebrow">Guest Chronicles</div>
+    <h2>What Our Guests Say</h2>
+  </div>
+  <div style="overflow:hidden">
+    <div class="reviews-track">
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"A cosy escape with amazing service! The food was delicious with a great variety. The staff were incredibly welcoming and made me feel completely at home. And that garden? Absolutely beautiful."</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"A hidden gem of peace and hospitality. From the moment we arrived, we were wrapped in a peaceful, cosy atmosphere. The staff were incredibly warm — truly outstanding hospitality."</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Wow moments at every turn. The kitchen served up absolute flavour magic. I loved every bite, every single day. The staff were the definition of kindness."</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Just a short walk from Mall Road — made exploring the hill station incredibly easy. My room was spotless, cosy, and well-equipped. I'm already excited for my next visit!"</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"A special shout-out to Aman, who went above and beyond to recommend the best route for our return trip — his guidance saved us nearly two hours!"</p><div class="review-author">Guest · July 2025</div></div>
+      <!-- duplicates for seamless loop -->
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"A cosy escape with amazing service! The food was delicious with a great variety. The staff were incredibly welcoming and made me feel completely at home. And that garden? Absolutely beautiful."</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"A hidden gem of peace and hospitality. From the moment we arrived, we were wrapped in a peaceful, cosy atmosphere. The staff were incredibly warm — truly outstanding hospitality."</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Wow moments at every turn. The kitchen served up absolute flavour magic. I loved every bite, every single day. The staff were the definition of kindness."</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"Just a short walk from Mall Road — made exploring the hill station incredibly easy. My room was spotless, cosy, and well-equipped. I'm already excited for my next visit!"</p><div class="review-author">Guest · July 2025</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">"A special shout-out to Aman, who went above and beyond to recommend the best route for our return trip — his guidance saved us nearly two hours!"</p><div class="review-author">Guest · July 2025</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section id="amenities">
+  <div class="amenities-inner">
+    <div class="amenities-header reveal">
+      <div class="section-eyebrow">What Awaits You</div>
+      <h2>Everything You Need,<br>Right Where You Stay</h2>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity-item reveal"><div class="amenity-icon">🍽️</div><div class="amenity-name">Room Service</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">☕</div><div class="amenity-name">Complimentary Breakfast</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">🎮</div><div class="amenity-name">Recreational Area</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">📶</div><div class="amenity-name">Free Wi-Fi</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">🌿</div><div class="amenity-name">Gardenica Garden</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">🍴</div><div class="amenity-name">Restaurant</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">🧹</div><div class="amenity-name">Housekeeping</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">🚗</div><div class="amenity-name">Parking Facility</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">👕</div><div class="amenity-name">Laundry Service</div></div>
+      <div class="amenity-item reveal"><div class="amenity-icon">📍</div><div class="amenity-name">Central Location</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="location-text">
+    <div class="section-eyebrow reveal">Find Us</div>
+    <h2 class="location-heading reveal">At the Heart<br>of Mussoorie</h2>
+    <p class="location-body reveal">Nestled in Kulri on the famed Mall Road, Hotel Shiva Continental places you at the pulse of Mussoorie — with the tranquility of the hills right at your doorstep.</p>
+    <ul class="location-points reveal">
+      <li>Kulri, The Mall Road, Mussoorie</li>
+      <li>Uttarakhand – 248179</li>
+      <li>2 minutes walk to Mall Road</li>
+      <li>Easy access to Gun Hill Point</li>
+      <li>Close to Kempty Falls route</li>
+    </ul>
+    <div class="loc-btns reveal">
+      <a href="https://www.shivacontinental.in/location.html" target="_blank" class="btn-primary">Get Directions</a>
+      <a href="tel:+917042288289" class="btn-teal-outline">Call Us</a>
+    </div>
+  </div>
+  <div class="location-map">
+    <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1920,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/3_5ba27cb9" alt="Location map Hotel Shiva Continental Mussoorie">
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg" id="ctaBg"></div>
+  <div class="cta-wash"></div>
+  <div class="cta-content">
+    <h2 class="reveal">Your Mussoorie<br>Story Awaits</h2>
+    <p class="reveal">Not just a stay. A place with a soul.</p>
+    <div class="reveal">
+      <a href="https://www.shivacontinental.in/" target="_blank" class="btn-primary" style="font-size:.9rem;padding:1rem 2.8rem">Reserve Your Stay</a>
+    </div>
+    <div class="cta-contact reveal">
+      <div class="cta-contact-item"><span class="cta-contact-label">Phone</span><span class="cta-contact-val">+91 70 4228 8289</span></div>
+      <div class="cta-contact-item"><span class="cta-contact-label">Email</span><span class="cta-contact-val">sales@shivacontinental.in</span></div>
+      <div class="cta-contact-item"><span class="cta-contact-label">WhatsApp</span><span class="cta-contact-val">+91 70 6050 2380</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Shiva Continental</div>
+    <div class="footer-tagline">Kulri, Mall Road · Mussoorie · Uttarakhand</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="https://www.shivacontinental.in/rooms.html" target="_blank">Rooms</a></li>
+    <li><a href="https://www.shivacontinental.in/deodar-kitchen/deodar-kitchen.html" target="_blank">Dine</a></li>
+    <li><a href="https://www.shivacontinental.in/gardenica/gardenica.html" target="_blank">Gardenica</a></li>
+    <li><a href="https://www.shivacontinental.in/gallery.html" target="_blank">Gallery</a></li>
+    <li><a href="https://www.shivacontinental.in/explore-mussoorie.html" target="_blank">Explore</a></li>
+    <li><a href="https://www.shivacontinental.in/contact-us/contact-us.html" target="_blank">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Hotel Shiva Continental. Mussoorie, India.</div>
+</footer>
+
+<script>
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('gone'),2700);
+});
+
+const nav=document.getElementById('main-nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>70)},{passive:true});
+
+/* PARALLAX */
+const parallaxItems=[
+  {el:document.getElementById('heroBg'),speed:-.28},
+  {el:document.getElementById('imgMain'),speed:.07},
+  {el:document.getElementById('imgAccent'),speed:-.1},
+  {el:document.getElementById('gardenBg'),speed:-.18},
+  {el:document.getElementById('kitchenBg'),speed:-.18},
+  {el:document.getElementById('ctaBg'),speed:-.22},
+];
+function doParallax(){
+  const sy=window.scrollY;
+  parallaxItems.forEach(({el,speed})=>{
+    if(!el)return;
+    el.style.transform=`scale(1.12) translateY(${sy*speed*.55}px)`;
+  });
+}
+window.addEventListener('scroll',doParallax,{passive:true});
+
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}
+  });
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.zoom-section').forEach(el=>io.observe(el));
+
+/* POLAROID DRAG */
+document.querySelectorAll('.polaroid').forEach(pol=>{
+  let drag=false,sx,sy,ol,ot;
+  pol.addEventListener('mousedown',e=>{
+    drag=true;sx=e.clientX;sy=e.clientY;
+    ol=parseInt(pol.style.left)||0;ot=parseInt(pol.style.top)||0;
+    pol.style.cursor='grabbing';pol.style.zIndex=20;
+    pol.style.transition='none';e.preventDefault();
+  });
+  window.addEventListener('mousemove',e=>{
+    if(!drag)return;
+    pol.style.left=(ol+e.clientX-sx)+'px';
+    pol.style.top=(ot+e.clientY-sy)+'px';
+  });
+  window.addEventListener('mouseup',()=>{drag=false;pol.style.cursor='grab';pol.style.transition='box-shadow .3s'});
+  pol.addEventListener('touchstart',e=>{
+    drag=true;const t=e.touches[0];sx=t.clientX;sy=t.clientY;
+    ol=parseInt(pol.style.left)||0;ot=parseInt(pol.style.top)||0;pol.style.zIndex=20;
+  },{passive:true});
+  window.addEventListener('touchmove',e=>{
+    if(!drag)return;const t=e.touches[0];
+    pol.style.left=(ol+t.clientX-sx)+'px';pol.style.top=(ot+t.clientY-sy)+'px';
+  },{passive:true});
+  window.addEventListener('touchend',()=>{drag=false});
+});
+
+/* LEAF SPAWNER */
+function spawnLeaf(){
+  const l=document.createElement('div');
+  l.classList.add('floating-leaf');
+  l.style.left=Math.random()*100+'%';
+  const d=10+Math.random()*13;
+  l.style.animationDuration=d+'s';
+  l.style.animationDelay='0s';
+  l.style.fontSize=(.65+Math.random()*.65)+'rem';
+  l.textContent=Math.random()>.5?'🍃':'🌿';
+  document.body.appendChild(l);
+  setTimeout(()=>l.remove(),(d+1)*1000);
+}
+setInterval(spawnLeaf,4500);
+</script>
+</body>
+</html>
