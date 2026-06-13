@@ -398,34 +398,64 @@ section{position:relative;overflow:hidden}
 @keyframes reviewScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
 /* ── AMENITIES ── */
-#amenities{
-  background:var(--parchment);padding:8rem 3rem;
-}
+#amenities{background:var(--parchment);padding:8rem 3rem;}
 .amenities-inner{max-width:1100px;margin:0 auto}
-.amenities-header{text-align:center;margin-bottom:5rem}
+.amenities-header{text-align:center;margin-bottom:4rem}
 .amenities-header .section-eyebrow{justify-content:center}
 .amenities-header .section-eyebrow::before{display:none}
-.amenities-header h2{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;color:var(--bark);
-}
-.amenities-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1.5rem}
-.amenity-item{
-  display:flex;flex-direction:column;align-items:center;gap:.85rem;
-  padding:2rem 1rem;background:#fff;
+.amenities-header h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;color:var(--bark);}
+.amenities-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:0}
+.amenity-card{
+  display:flex;flex-direction:column;align-items:center;gap:.75rem;
+  padding:1.8rem 1rem;background:#fff;
   border:1px solid rgba(0,128,128,.12);border-radius:6px;text-align:center;
-  transition:border-color .3s,transform .3s,box-shadow .3s;
+  cursor:pointer;transition:border-color .3s,transform .3s,box-shadow .3s,background .3s;
+  user-select:none;
 }
-.amenity-item:hover{
-  border-color:var(--teal);transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,128,128,.1);
+.amenity-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,128,128,.1);}
+.amenity-card.active{
+  border-color:var(--teal);background:var(--teal-pale);
+  transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,128,128,.15);
 }
 .amenity-icon{
   width:50px;height:50px;border-radius:50%;
   background:var(--teal-pale);
   display:flex;align-items:center;justify-content:center;font-size:1.35rem;
+  transition:background .3s;
 }
-.amenity-name{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bark);font-weight:500}
+.amenity-card.active .amenity-icon{background:rgba(0,128,128,.18);}
+.amenity-name{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--bark);font-weight:500;line-height:1.4;}
+.amenity-chevron{font-size:.65rem;color:var(--teal);opacity:0;transition:opacity .3s,transform .3s;transform:rotate(0deg);}
+.amenity-card.active .amenity-chevron,.amenity-card:hover .amenity-chevron{opacity:1;}
+.amenity-card.active .amenity-chevron{transform:rotate(180deg);}
+
+/* expand panel */
+.amenity-expand{
+  grid-column:1/-1;
+  max-height:0;overflow:hidden;
+  transition:max-height .55s cubic-bezier(.16,1,.3,1),opacity .45s ease,margin .45s ease;
+  opacity:0;margin-top:0;
+}
+.amenity-expand.open{max-height:600px;opacity:1;margin-top:.5rem;}
+.amenity-panel{
+  background:#fff;border:1px solid rgba(0,128,128,.14);border-radius:8px;
+  padding:2.2rem 2rem;display:grid;grid-template-columns:1fr 1.6fr;gap:2.4rem;align-items:start;
+}
+.amenity-panel-text h3{
+  font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--bark);margin-bottom:.6rem;
+}
+.amenity-panel-text p{font-size:.95rem;line-height:1.88;color:var(--bark-mid);}
+.amenity-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;}
+.amenity-gallery img{
+  width:100%;height:130px;object-fit:cover;border-radius:4px;
+  cursor:pointer;transition:transform .4s ease,box-shadow .4s;
+}
+.amenity-gallery img:hover{transform:scale(1.04);box-shadow:0 8px 22px rgba(46,31,15,.18);}
+.amenity-gallery img:first-child{grid-column:span 2;height:160px;}
+@media(max-width:768px){
+  .amenity-panel{grid-template-columns:1fr;}
+  .amenities-grid{grid-template-columns:repeat(2,1fr);}
+}
 
 /* ── LOCATION ── */
 #location{
@@ -759,17 +789,64 @@ footer{
       <div class="section-eyebrow">What Awaits You</div>
       <h2>Everything You Need,<br>Right Where You Stay</h2>
     </div>
-    <div class="amenities-grid">
-      <div class="amenity-item reveal"><div class="amenity-icon">🍽️</div><div class="amenity-name">Room Service</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">☕</div><div class="amenity-name">Complimentary Breakfast</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">🎮</div><div class="amenity-name">Recreational Area</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">📶</div><div class="amenity-name">Free Wi-Fi</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">🌿</div><div class="amenity-name">Gardenica Garden</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">🍴</div><div class="amenity-name">Restaurant</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">🧹</div><div class="amenity-name">Housekeeping</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">🚗</div><div class="amenity-name">Parking Facility</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">👕</div><div class="amenity-name">Laundry Service</div></div>
-      <div class="amenity-item reveal"><div class="amenity-icon">📍</div><div class="amenity-name">Central Location</div></div>
+    <div class="amenities-grid" id="amenitiesGrid">
+
+      <div class="amenity-card reveal" data-amenity="room-service">
+        <div class="amenity-icon">🍽️</div>
+        <div class="amenity-name">Room Service</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="breakfast">
+        <div class="amenity-icon">☕</div>
+        <div class="amenity-name">Complimentary Breakfast</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="recreation">
+        <div class="amenity-icon">🎮</div>
+        <div class="amenity-name">Recreational Area</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="wifi">
+        <div class="amenity-icon">📶</div>
+        <div class="amenity-name">Free Wi-Fi</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="garden">
+        <div class="amenity-icon">🌿</div>
+        <div class="amenity-name">Gardenica Garden</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="restaurant">
+        <div class="amenity-icon">🍴</div>
+        <div class="amenity-name">Restaurant</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="housekeeping">
+        <div class="amenity-icon">🧹</div>
+        <div class="amenity-name">Housekeeping</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="parking">
+        <div class="amenity-icon">🚗</div>
+        <div class="amenity-name">Parking Facility</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="laundry">
+        <div class="amenity-icon">👕</div>
+        <div class="amenity-name">Laundry Service</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+      <div class="amenity-card reveal" data-amenity="location">
+        <div class="amenity-icon">📍</div>
+        <div class="amenity-name">Central Location</div>
+        <div class="amenity-chevron">▼</div>
+      </div>
+
+      <!-- expand panel lives inside the grid so it can span all columns -->
+      <div class="amenity-expand" id="amenityExpand">
+        <div class="amenity-panel" id="amenityPanel"></div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -905,6 +982,132 @@ function spawnLeaf(){
   setTimeout(()=>l.remove(),(d+1)*1000);
 }
 setInterval(spawnLeaf,4500);
+
+/* ── AMENITIES EXPAND ── */
+const amenityData = {
+  'room-service': {
+    title: 'Room Service',
+    desc: 'Craving a hot cup of chai at midnight or a hearty meal after a long day of exploring the hills? Our room service brings the warmth of Deodar Kitchen straight to your door — any time you need it.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
+    ]
+  },
+  'breakfast': {
+    title: 'Complimentary Breakfast',
+    desc: 'Start every morning the Shiva way — a generous complimentary breakfast featuring fresh hill-kitchen dishes, warm parathas, seasonal fruits, eggs your way, and steaming chai with a view of the valley mist.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d',
+    ]
+  },
+  'recreation': {
+    title: 'Recreational Area',
+    desc: 'Unwind between sightseeing adventures in our recreational lounge — a comfortable space for games, reading, or simply gathering with family. The hills are best enjoyed at a slow, joyful pace.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
+    ]
+  },
+  'wifi': {
+    title: 'Free Wi-Fi',
+    desc: 'Stay connected with high-speed complimentary Wi-Fi throughout the property — whether you\'re sharing your mountain memories on social media, catching up on work, or video-calling loved ones from the valley view.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb',
+    ]
+  },
+  'garden': {
+    title: 'Gardenica Garden',
+    desc: 'Our beloved upcycled garden — where broken things bloom again. Old kettles, cracked shoes, forgotten buckets, all repurposed into planters bursting with colour. A living artwork tended with love every single day.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9',
+    ]
+  },
+  'restaurant': {
+    title: 'Deodar Kitchen',
+    desc: 'Our multi-cuisine restaurant serves everything from Uttarakhand hill specialities to North Indian comfort classics and light continental fare. Every dish is prepared fresh, with ingredients sourced thoughtfully and cooked with heart.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
+    ]
+  },
+  'housekeeping': {
+    title: 'Daily Housekeeping',
+    desc: 'Your comfort is our quiet promise. Our housekeeping team keeps every room fresh, spotless and welcoming — so you return from your adventures to a space that feels like it was just made for you.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9',
+    ]
+  },
+  'parking': {
+    title: 'Parking Facility',
+    desc: 'Arriving by car? We have dedicated parking to take the hassle out of hill-town driving. Secure your vehicle and step straight into the calm of our property — no circling, no stress.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1920,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/3_5ba27cb9',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb',
+    ]
+  },
+  'laundry': {
+    title: 'Laundry Service',
+    desc: 'Travelling light? Our prompt laundry service ensures your clothes are fresh and ready, so you can pack less and experience more of the mountains without a second thought.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
+    ]
+  },
+  'location': {
+    title: 'Central Location',
+    desc: 'Perched on Kulri, Mall Road — the heartbeat of Mussoorie — we sit two minutes\' walk from the promenade, shops, and viewpoints. The hills are at your feet, and everything worth seeing is right around the corner.',
+    imgs: [
+      'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1920,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/3_5ba27cb9',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23',
+      'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb',
+    ]
+  }
+};
+
+let activeAmenity = null;
+const expandEl = document.getElementById('amenityExpand');
+const panelEl  = document.getElementById('amenityPanel');
+
+document.querySelectorAll('.amenity-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const key = card.dataset.amenity;
+    if (activeAmenity === key) {
+      // close
+      card.classList.remove('active');
+      expandEl.classList.remove('open');
+      activeAmenity = null;
+      return;
+    }
+    document.querySelectorAll('.amenity-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    activeAmenity = key;
+    const d = amenityData[key];
+    panelEl.innerHTML = `
+      <div class="amenity-panel-text">
+        <h3>${d.title}</h3>
+        <p>${d.desc}</p>
+      </div>
+      <div class="amenity-gallery">
+        ${d.imgs.map(src => `<img src="${src}" alt="${d.title}" loading="lazy">`).join('')}
+      </div>`;
+    expandEl.classList.add('open');
+    // scroll panel into view smoothly
+    setTimeout(() => expandEl.scrollIntoView({behavior:'smooth', block:'nearest'}), 60);
+  });
+});
 </script>
 </body>
 </html>
