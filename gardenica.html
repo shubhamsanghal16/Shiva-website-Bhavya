@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gardenica | Hotel Shiva Continental, Mussoorie</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#008080;
+  --teal-deep:#005f5f;
+  --teal-pale:#e8f5f5;
+  --teal-soft:#c2e4e4;
+  --cream:#faf7f2;
+  --warm:#f5ede0;
+  --parchment:#f0e9dd;
+  --bark:#2e1f0f;
+  --bark-mid:#5a4030;
+  --stone:#9a8c7e;
+  --gold:#b8861e;
+  --sage:#d4e8d4;
+  --sage-deep:#8fad8f;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--bark);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.2rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,box-shadow .4s;
+}
+nav.scrolled{background:rgba(250,247,242,.94);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.07)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:#fff;letter-spacing:.12em;text-decoration:none;transition:color .4s}
+nav.scrolled .nav-logo{color:var(--bark)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);text-decoration:none;transition:color .3s}
+nav.scrolled .nav-links a{color:var(--bark-mid)}
+.nav-links a:hover,.nav-links a.active{color:var(--teal)!important}
+.nav-book{
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--teal);color:#fff;
+  padding:.55rem 1.4rem;border-radius:2px;text-decoration:none;
+  transition:background .3s;
+}
+.nav-book:hover{background:var(--teal-deep)}
+@media(max-width:768px){nav{padding:1rem 1.4rem}.nav-links{display:none}}
+
+/* HERO */
+.garden-hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+  background:#1a2e1a;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_1440,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d');
+  background-size:cover;background-position:center;
+  transform:scale(1.08);transition:transform 12s ease;
+}
+.hero-bg.loaded{transform:scale(1)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top, rgba(10,25,10,.85) 0%, rgba(10,25,10,.3) 60%, transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:5rem 4rem;max-width:800px}
+.hero-eyebrow{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:1.2rem}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.2rem,7vw,6rem);
+  font-weight:300;line-height:1;color:#fff;margin-bottom:1.4rem;
+}
+.hero-title em{font-style:italic;color:#a8d5a2}
+.hero-sub{font-size:1rem;line-height:1.7;color:rgba(255,255,255,.75);max-width:480px;margin-bottom:2rem}
+.hero-cta{
+  display:inline-block;padding:.8rem 2.2rem;
+  border:1px solid rgba(255,255,255,.4);border-radius:2px;
+  font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  color:#fff;text-decoration:none;transition:all .3s;
+}
+.hero-cta:hover{background:rgba(255,255,255,.12);border-color:#fff}
+
+/* SCROLL HINT */
+.scroll-hint{
+  position:absolute;bottom:2.5rem;right:3rem;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:.6;
+}
+.scroll-line{width:1px;height:50px;background:rgba(255,255,255,.4);animation:scrollPulse 2s ease-in-out infinite}
+.scroll-label{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:#fff;writing-mode:vertical-rl}
+@keyframes scrollPulse{0%,100%{transform:scaleY(.5);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+/* INTRO */
+.intro-section{padding:6rem 4rem;max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+@media(max-width:860px){.intro-section{grid-template-columns:1fr;gap:2.5rem;padding:4rem 2rem}}
+.section-eyebrow{font-size:.65rem;letter-spacing:.32em;text-transform:uppercase;color:var(--teal);margin-bottom:.8rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:var(--bark);line-height:1.15;margin-bottom:1.2rem}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-divider{width:40px;height:2px;background:var(--teal);margin-bottom:1.5rem;border-radius:1px}
+.intro-body{font-size:.92rem;line-height:1.85;color:var(--bark-mid)}
+.intro-body p+p{margin-top:1rem}
+.intro-image{border-radius:6px;overflow:hidden;box-shadow:0 16px 48px rgba(46,31,15,.14)}
+.intro-image img{width:100%;height:420px;object-fit:cover;display:block;transition:transform 8s ease}
+.intro-image:hover img{transform:scale(1.04)}
+
+/* FEATURES BAND */
+.features-band{background:var(--sage);padding:4rem 2rem}
+.features-inner{max-width:1140px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(143,173,143,.4)}
+@media(max-width:860px){.features-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.features-grid{grid-template-columns:1fr}}
+.feature-item{
+  padding:2.2rem 1.8rem;
+  border-right:1px solid rgba(143,173,143,.4);
+  border-bottom:1px solid rgba(143,173,143,.4);
+  transition:background .3s;
+}
+.feature-item:hover{background:rgba(0,128,128,.06)}
+.feature-icon{font-size:1.6rem;margin-bottom:.8rem}
+.feature-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--bark);margin-bottom:.4rem}
+.feature-desc{font-size:.8rem;line-height:1.6;color:var(--bark-mid)}
+
+/* GALLERY GRID */
+.gallery-section{padding:5rem 2rem}
+.gallery-header{text-align:center;max-width:600px;margin:0 auto 3.5rem}
+.masonry{
+  max-width:1140px;margin:0 auto;
+  columns:3;column-gap:1rem;
+}
+@media(max-width:860px){.masonry{columns:2}}
+@media(max-width:480px){.masonry{columns:1}}
+.masonry-item{
+  break-inside:avoid;margin-bottom:1rem;
+  border-radius:4px;overflow:hidden;cursor:pointer;
+  position:relative;
+}
+.masonry-item img{width:100%;display:block;transition:transform .5s ease}
+.masonry-item:hover img{transform:scale(1.04)}
+.masonry-item .overlay{
+  position:absolute;inset:0;
+  background:rgba(10,30,10,.5);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:center;justify-content:center;
+}
+.masonry-item:hover .overlay{opacity:1}
+.overlay-icon{width:44px;height:44px;border:1px solid rgba(255,255,255,.7);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.overlay-icon svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:1.5}
+
+/* LIGHTBOX */
+#lightbox{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,.9);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+}
+#lightbox.open{display:flex}
+.lb-img{max-width:90vw;max-height:88vh;border-radius:4px;object-fit:contain;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+.lb-close{
+  position:absolute;top:1.5rem;right:2rem;
+  font-size:1.8rem;color:#fff;cursor:pointer;line-height:1;
+  opacity:.7;transition:opacity .3s;background:none;border:none;
+}
+.lb-close:hover{opacity:1}
+.lb-prev,.lb-next{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:2px;
+  color:#fff;font-size:1.4rem;cursor:pointer;padding:.6rem .9rem;
+  transition:background .3s;
+}
+.lb-prev{left:1.5rem}.lb-next{right:1.5rem}
+.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,.2)}
+.lb-caption{
+  position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);
+  font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;
+  color:rgba(255,255,255,.6);white-space:nowrap;
+}
+
+/* SEASONS */
+.seasons-section{background:var(--parchment);padding:5rem 2rem}
+.seasons-inner{max-width:1140px;margin:0 auto}
+.seasons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+@media(max-width:860px){.seasons-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.seasons-grid{grid-template-columns:1fr}}
+.season-card{background:#fff;border-radius:4px;overflow:hidden;box-shadow:0 4px 16px rgba(46,31,15,.07)}
+.season-card img{width:100%;height:180px;object-fit:cover;display:block}
+.season-body{padding:1.2rem 1.4rem}
+.season-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--bark);margin-bottom:.4rem}
+.season-months{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:.5rem}
+.season-desc{font-size:.8rem;line-height:1.6;color:var(--bark-mid)}
+
+/* CTA */
+.garden-cta{
+  background:var(--teal-deep);color:#fff;
+  text-align:center;padding:5rem 2rem;
+}
+.garden-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;margin-bottom:1rem}
+.garden-cta p{font-size:.9rem;opacity:.8;max-width:480px;margin:0 auto 2rem;line-height:1.7}
+.cta-btn-white{
+  display:inline-block;padding:.85rem 2.4rem;
+  background:#fff;color:var(--teal-deep);
+  font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;
+  text-decoration:none;border-radius:2px;transition:opacity .3s;
+}
+.cta-btn-white:hover{opacity:.9}
+
+/* FOOTER */
+footer{background:var(--bark);color:rgba(255,255,255,.55);padding:3rem 3rem 2rem}
+.footer-inner{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem}
+.footer-brand{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#fff;letter-spacing:.12em;margin-bottom:.5rem}
+.footer-tagline{font-size:.75rem;letter-spacing:.15em;opacity:.55;text-transform:uppercase}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.footer-links a{font-size:.8rem;color:rgba(255,255,255,.55);text-decoration:none;transition:color .3s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:2rem;padding-top:1.2rem;font-size:.72rem;text-align:center;opacity:.45}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="shiva-continental.html" class="nav-logo">SHIVA CONTINENTAL</a>
+  <ul class="nav-links">
+    <li><a href="shiva-continental.html#story">Story</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="shiva-continental.html#rooms">Rooms</a></li>
+    <li><a href="gardenica.html" class="active">Garden</a></li>
+    <li><a href="shiva-continental.html#dine">Dine</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="https://www.secure-booking-engine.com/accounts/7XngYDeENYAAJH1ayOVj_Q/properties/O7MnuV8lpjv85dWWR1z5DQ/booking-engine/web/source/4wsctBw6Oq6j-g9XuxeRzQ/cart/KP1jvaTifw8HPTAxWGR6gQ/#!/rooms" class="nav-book" target="_blank">Reserve a Stay</a>
+</nav>
+
+<!-- HERO -->
+<section class="garden-hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Hotel Shiva Continental · Mussoorie</div>
+    <h1 class="hero-title">The <em>Gardenica</em></h1>
+    <p class="hero-sub">A terraced garden carved into the Mussoorie hillside, where Himalayan wildflowers, heritage roses, and mountain mist conspire to create something quietly extraordinary.</p>
+    <a href="#gallery" class="hero-cta">Explore the Garden</a>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section style="padding:6rem 2rem">
+  <div class="intro-section" style="padding:0">
+    <div>
+      <div class="section-eyebrow reveal">Our Garden</div>
+      <h2 class="section-title reveal">Where the <em>Hills</em><br>Come Alive</h2>
+      <div class="section-divider reveal"></div>
+      <div class="intro-body reveal">
+        <p>The Gardenica is not a manicured garden — it is a living conversation between the hotel and the mountain it inhabits. Spanning three terraced levels, it is home to over 80 species of Himalayan flora, planted over four decades by the founding family.</p>
+        <p>Mornings here carry the scent of dew-wet earth and wild chamomile. By afternoon, the valley below unfolds in soft greens and blues. Come evening, fireflies weave through the hedgerows while mist rolls in from the Doon Valley far below.</p>
+        <p>Guests are welcome to walk the garden paths at any hour. A gardener is available each morning to guide those curious about the plants — their names, their stories, their uses in mountain cooking and medicine.</p>
+      </div>
+    </div>
+    <div class="intro-image reveal">
+      <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d" alt="Gardenica terrace garden" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-band">
+  <div class="features-inner">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="section-eyebrow reveal">What You'll Find</div>
+      <h2 class="section-title reveal" style="margin-bottom:0">Garden Highlights</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-item reveal">
+        <div class="feature-icon">🌿</div>
+        <div class="feature-title">Heritage Roses</div>
+        <div class="feature-desc">Over 40 varieties, some planted in the 1980s. Best in full bloom May through June.</div>
+      </div>
+      <div class="feature-item reveal">
+        <div class="feature-icon">🦋</div>
+        <div class="feature-title">Butterfly Meadow</div>
+        <div class="feature-desc">A wildflower patch on the lower terrace that attracts 20+ species of Himalayan butterflies.</div>
+      </div>
+      <div class="feature-item reveal">
+        <div class="feature-icon">🌅</div>
+        <div class="feature-title">Sunrise Terrace</div>
+        <div class="feature-desc">A stone-paved seating area facing east — perfect for watching the Himalayas catch their first light.</div>
+      </div>
+      <div class="feature-item reveal">
+        <div class="feature-icon">🍃</div>
+        <div class="feature-title">Herb Walk</div>
+        <div class="feature-desc">A guided trail through culinary and medicinal herbs used in our kitchen and local healing traditions.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="gallery-header">
+    <div class="section-eyebrow reveal">Gallery</div>
+    <h2 class="section-title reveal">Through the <em>Garden</em></h2>
+    <div class="section-divider reveal" style="margin:0 auto"></div>
+  </div>
+
+  <div class="masonry" id="masonryGrid">
+    <!-- Images injected by JS -->
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section class="seasons-section">
+  <div class="seasons-inner">
+    <div style="text-align:center;margin-bottom:0">
+      <div class="section-eyebrow reveal">Visit Any Time</div>
+      <h2 class="section-title reveal">The Garden Through the Seasons</h2>
+    </div>
+    <div class="seasons-grid">
+      <div class="season-card reveal">
+        <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_600,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Mountains" alt="Spring garden" loading="lazy">
+        <div class="season-body">
+          <div class="season-months">March – May</div>
+          <div class="season-name">Spring</div>
+          <div class="season-desc">Rhododendrons blaze red. Roses wake up. The air smells like wet soil and new beginnings.</div>
+        </div>
+      </div>
+      <div class="season-card reveal">
+        <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_600,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d" alt="Summer garden" loading="lazy">
+        <div class="season-body">
+          <div class="season-months">June – August</div>
+          <div class="season-name">Monsoon</div>
+          <div class="season-desc">Mist cloaks the terraces. Every shade of green turns luminous. The garden is at its most lush.</div>
+        </div>
+      </div>
+      <div class="season-card reveal">
+        <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_600,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Hotel_View" alt="Autumn garden" loading="lazy">
+        <div class="season-body">
+          <div class="season-months">Sept – November</div>
+          <div class="season-name">Autumn</div>
+          <div class="season-desc">Clear skies, golden light. The best season for Himalayan views from the sunrise terrace.</div>
+        </div>
+      </div>
+      <div class="season-card reveal">
+        <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_600,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Exterior_View" alt="Winter garden" loading="lazy">
+        <div class="season-body">
+          <div class="season-months">Dec – February</div>
+          <div class="season-name">Winter</div>
+          <div class="season-desc">Snow settles on the hedgerows. The garden sleeps under a white hush. Utterly peaceful.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="garden-cta">
+  <h2 class="reveal">Come, Walk With Us</h2>
+  <p class="reveal">The garden is best experienced in person. Reserve a stay and wake to a morning walk through the Gardenica.</p>
+  <a href="https://www.secure-booking-engine.com/accounts/7XngYDeENYAAJH1ayOVj_Q/properties/O7MnuV8lpjv85dWWR1z5DQ/booking-engine/web/source/4wsctBw6Oq6j-g9XuxeRzQ/cart/KP1jvaTifw8HPTAxWGR6gQ/#!/rooms" class="cta-btn-white reveal" target="_blank">Reserve a Stay</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">SHIVA CONTINENTAL</div>
+      <div class="footer-tagline">Mussoorie · Since 1985</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="shiva-continental.html#rooms">Rooms &amp; Suites</a></li>
+      <li><a href="shiva-continental.html#dine">Dine</a></li>
+      <li><a href="gardenica.html">Gardenica</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <ul class="footer-links">
+      <li><a href="about.html">Our Story</a></li>
+      <li><a href="mailto:sales@shivacontinental.in">sales@shivacontinental.in</a></li>
+      <li><a href="tel:+917042288289">+91 70 4228 8289</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">© 2025 Hotel Shiva Continental. Kulri, Mussoorie, Uttarakhand.</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" id="lbClose">×</button>
+  <button class="lb-prev" id="lbPrev">‹</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-next" id="lbNext">›</button>
+  <div class="lb-caption" id="lbCaption"></div>
+</div>
+
+<script>
+// Gallery images
+const galleryImages = [
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d', caption: 'Gardenica in bloom' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Mountains', caption: 'Mountain views from the upper terrace' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Hotel_View', caption: 'Hotel and garden at dusk' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Exterior_View', caption: 'Exterior view with garden terraces' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Lobby', caption: 'Garden lobby entrance' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Swimming_Pool', caption: 'Pool with garden surround' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Standard_Room', caption: 'Garden-view standard room' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Deluxe_Room', caption: 'Deluxe room overlooking the terraces' },
+  { src: 'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Hotel_Shiva_Continental_-_Restaurant', caption: 'Restaurant with garden outlook' },
+];
+
+// Build masonry
+const grid = document.getElementById('masonryGrid');
+galleryImages.forEach((img, i) => {
+  const item = document.createElement('div');
+  item.className = 'masonry-item reveal';
+  item.innerHTML = `
+    <img src="${img.src}" alt="${img.caption}" loading="lazy">
+    <div class="overlay">
+      <div class="overlay-icon">
+        <svg viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+      </div>
+    </div>
+  `;
+  item.addEventListener('click', () => openLightbox(i));
+  grid.appendChild(item);
+});
+
+// Lightbox
+let currentIdx = 0;
+function openLightbox(idx) {
+  currentIdx = idx;
+  document.getElementById('lbImg').src = galleryImages[idx].src;
+  document.getElementById('lbCaption').textContent = galleryImages[idx].caption;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+document.getElementById('lbPrev').addEventListener('click', () => openLightbox((currentIdx - 1 + galleryImages.length) % galleryImages.length));
+document.getElementById('lbNext').addEventListener('click', () => openLightbox((currentIdx + 1) % galleryImages.length));
+document.getElementById('lightbox').addEventListener('click', e => { if(e.target === document.getElementById('lightbox')) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') openLightbox((currentIdx - 1 + galleryImages.length) % galleryImages.length);
+  if (e.key === 'ArrowRight') openLightbox((currentIdx + 1) % galleryImages.length);
+});
+
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// Hero parallax bg
+const heroBg = document.getElementById('heroBg');
+setTimeout(() => heroBg.classList.add('loaded'), 100);
+
+// Reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
