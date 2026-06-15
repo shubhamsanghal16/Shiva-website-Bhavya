@@ -330,37 +330,35 @@ section{position:relative;overflow:hidden}
 
 /* ── KITCHEN ── */
 #kitchen{
-  background:var(--warm);
-  padding:8rem 3rem;
+  min-height:100vh;position:relative;overflow:hidden;
 }
-.kitchen-inner{
-  max-width:1200px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;
+.kitchen-parallax-bg{
+  position:absolute;inset:0;
+  background:url('https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4') center/cover;
+  filter:brightness(.28) saturate(0.8);
+  transform:scale(1.08);will-change:transform;
 }
-.kitchen-content{text-align:left;}
-.kitchen-content .section-eyebrow{color:var(--teal)}
-.kitchen-content .section-eyebrow::before{background:var(--teal)}
+.kitchen-light-wash{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(250,247,242,.0) 0%,rgba(250,247,242,.0) 40%,rgba(250,247,242,.08) 100%);
+}
+.kitchen-content{
+  position:relative;z-index:2;
+  max-width:680px;margin:0 auto;padding:10rem 3rem;text-align:center;
+}
+.kitchen-content .section-eyebrow{justify-content:center;color:var(--teal-soft)}
+.kitchen-content .section-eyebrow::before{background:var(--teal-soft)}
 .kitchen-heading{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2.5rem,4vw,3.8rem);font-weight:300;
-  color:var(--bark);line-height:1.1;margin-bottom:1.5rem;
+  font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;
+  color:#fff;line-height:1.1;margin-bottom:1.5rem;
 }
-.kitchen-body{font-size:1rem;line-height:1.92;color:var(--bark-mid);margin-bottom:2rem}
-.food-tags{display:flex;flex-wrap:wrap;gap:.65rem;margin-bottom:2rem}
+.kitchen-body{font-size:1.02rem;line-height:1.92;color:rgba(255,255,255,.7);margin-bottom:2.5rem}
+.food-tags{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-bottom:2.5rem}
 .food-tag{
-  background:#fff;border:1px solid rgba(0,128,128,.2);
-  color:var(--teal-deep);padding:.4rem 1rem;border-radius:50px;
-  font-size:.74rem;letter-spacing:.08em;
-}
-.kitchen-images{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:1rem;}
-.kitchen-img{width:100%;border-radius:6px;object-fit:cover;display:block;transition:transform .6s ease;box-shadow:0 12px 36px rgba(46,31,15,.14);}
-.kitchen-img:hover{transform:scale(1.03);}
-.kitchen-img-main{grid-column:1/-1;height:280px;}
-.kitchen-img-sm{height:180px;}
-@media(max-width:768px){
-  .kitchen-inner{grid-template-columns:1fr;gap:3rem;}
-  .kitchen-content{text-align:center;}
-  .food-tags{justify-content:center;}
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+  color:rgba(255,255,255,.78);padding:.4rem 1.1rem;border-radius:50px;
+  font-size:.76rem;letter-spacing:.1em;
 }
 
 /* ── REVIEWS ── */
@@ -481,11 +479,14 @@ section{position:relative;overflow:hidden}
   background:var(--teal);margin-right:.85rem;flex-shrink:0;
 }
 .loc-btns{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap}
-.location-map{position:relative;overflow:hidden}
-.location-map img{
-  width:100%;height:100%;object-fit:cover;
-  filter:sepia(.2) hue-rotate(130deg) brightness(.85) saturate(.9);
-}
+.location-map{position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--cream)}
+.map-poi-bar{display:flex;gap:.5rem;align-items:center;overflow-x:auto;padding:1rem 1.2rem;background:var(--cream);border-bottom:1px solid rgba(0,128,128,.14);scrollbar-width:thin}
+.map-poi-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--teal-deep);margin-right:.3rem;flex-shrink:0;letter-spacing:.04em}
+.poi-chip{flex-shrink:0;white-space:nowrap;background:#fff;border:1px solid rgba(0,128,128,.22);color:var(--bark-mid);font-family:'Jost',sans-serif;font-weight:400;font-size:.74rem;letter-spacing:.03em;padding:.5rem .95rem;border-radius:50px;cursor:pointer;transition:all .25s}
+.poi-chip:hover{border-color:var(--teal);color:var(--teal-deep);transform:translateY(-1px)}
+.poi-chip.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.map-frame{position:relative;flex:1;min-height:380px}
+.map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
 /* ── CTA ── */
 #cta{
@@ -734,27 +735,22 @@ footer{
 
 <!-- KITCHEN -->
 <section id="kitchen">
-  <div class="kitchen-inner">
-    <div class="kitchen-content">
-      <div class="section-eyebrow reveal">Deodar Kitchen</div>
-      <h2 class="kitchen-heading reveal">Comfort<br>Comes Cooked<br>Here</h2>
-      <p class="kitchen-body reveal">We don't just cook food. We serve stories of hill kitchens, grandma recipes, and warmth that lingers long after the meal. From homestyle sabzi to steaming parathas — every plate carries a memory you'll want to take home.</p>
-      <div class="food-tags reveal">
-        <span class="food-tag">Hill Kitchen Recipes</span>
-        <span class="food-tag">Complimentary Breakfast</span>
-        <span class="food-tag">Multi-Cuisine Menu</span>
-        <span class="food-tag">Room Service</span>
-        <span class="food-tag">Parathas &amp; Sabzi</span>
-        <span class="food-tag">Uttarakhand Flavours</span>
-      </div>
-      <div class="reveal">
-        <a href="https://www.shivacontinental.in/deodar-kitchen/deodar-kitchen.html" target="_blank" class="btn-teal-outline">Come Dine With Us</a>
-      </div>
+  <div class="kitchen-parallax-bg" id="kitchenBg"></div>
+  <div class="kitchen-light-wash"></div>
+  <div class="kitchen-content">
+    <div class="section-eyebrow reveal" style="justify-content:center;color:rgba(200,230,230,.85)">Deodar Kitchen</div>
+    <h2 class="kitchen-heading reveal">Comfort<br>Comes Cooked<br>Here</h2>
+    <p class="kitchen-body reveal">We don't just cook food. We serve stories of hill kitchens, grandma recipes, and warmth that lingers long after the meal. From homestyle sabzi to steaming parathas — every plate carries a memory you'll want to take home.</p>
+    <div class="food-tags reveal">
+      <span class="food-tag">Hill Kitchen Recipes</span>
+      <span class="food-tag">Complimentary Breakfast</span>
+      <span class="food-tag">Multi-Cuisine Menu</span>
+      <span class="food-tag">Room Service</span>
+      <span class="food-tag">Parathas &amp; Sabzi</span>
+      <span class="food-tag">Uttarakhand Flavours</span>
     </div>
-    <div class="kitchen-images reveal-right">
-      <img class="kitchen-img kitchen-img-main" src="https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4" alt="Deodar Kitchen restaurant">
-      <img class="kitchen-img kitchen-img-sm" src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d" alt="Hill kitchen breakfast">
-      <img class="kitchen-img kitchen-img-sm" src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114" alt="Dining at Shiva Continental">
+    <div class="reveal">
+      <a href="https://www.shivacontinental.in/deodar-kitchen/deodar-kitchen.html" target="_blank" class="btn-ghost">Come Dine With Us</a>
     </div>
   </div>
 </section>
@@ -870,7 +866,21 @@ footer{
     </div>
   </div>
   <div class="location-map">
-    <img src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1920,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/3_5ba27cb9" alt="Location map Hotel Shiva Continental Mussoorie">
+    <div class="map-poi-bar">
+      <span class="map-poi-title">Nearby</span>
+      <button class="poi-chip active" data-q="Hotel Shiva Continental Mussoorie" data-z="16">🏨 Our Hotel</button>
+      <button class="poi-chip" data-q="Llama Cafe Mussoorie" data-z="17">☕ Llama Cafe · 3 min</button>
+      <button class="poi-chip" data-q="Mall Road Mussoorie" data-z="16">🛍️ Mall Road · 2 min</button>
+      <button class="poi-chip" data-q="Gun Hill Point Mussoorie" data-z="16">⛰️ Gun Hill · 10 min</button>
+      <button class="poi-chip" data-q="Mussoorie Bus Stand Kulri" data-z="16">🚌 Bus Stand · 5 min</button>
+      <button class="poi-chip" data-q="Tibetan Market Mussoorie" data-z="17">🧣 Tibetan Market · 10 min</button>
+      <button class="poi-chip" data-q="Camel's Back Road Mussoorie" data-z="16">🥾 Camel's Back Rd · 8 min</button>
+      <button class="poi-chip" data-q="Char Dukan Landour Mussoorie" data-z="16">☕ Char Dukan · Landour</button>
+      <button class="poi-chip" data-q="Kempty Falls Mussoorie" data-z="14">💧 Kempty Falls</button>
+    </div>
+    <div class="map-frame">
+      <iframe id="locMap" title="Map of Hotel Shiva Continental and nearby attractions" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=Hotel%20Shiva%20Continental%20Mussoorie&z=16&output=embed"></iframe>
+    </div>
   </div>
 </section>
 
@@ -923,6 +933,7 @@ const parallaxItems=[
   {el:document.getElementById('imgMain'),speed:.07},
   {el:document.getElementById('imgAccent'),speed:-.1},
   {el:document.getElementById('gardenBg'),speed:-.18},
+  {el:document.getElementById('kitchenBg'),speed:-.18},
   {el:document.getElementById('ctaBg'),speed:-.22},
 ];
 function doParallax(){
@@ -1106,6 +1117,17 @@ document.querySelectorAll('.amenity-card').forEach(card => {
     expandEl.classList.add('open');
     // scroll panel into view smoothly
     setTimeout(() => expandEl.scrollIntoView({behavior:'smooth', block:'nearest'}), 60);
+  });
+});
+
+/* NEARBY ATTRACTIONS MAP */
+document.querySelectorAll('.poi-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.poi-chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const q=encodeURIComponent(chip.dataset.q);
+    const z=chip.dataset.z||16;
+    document.getElementById('locMap').src='https://maps.google.com/maps?q='+q+'&z='+z+'&output=embed';
   });
 });
 </script>

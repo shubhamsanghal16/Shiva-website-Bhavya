@@ -7,180 +7,196 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>
 <style>
-  html,body{margin:0;padding:0;background:#070f1a;}
+  html,body{margin:0;padding:0;background:#faf7f2;}
   *{box-sizing:border-box;}
-  ::selection{background:rgba(0,128,128,.4);color:#fff;}
+  ::selection{background:rgba(0,128,128,.25);color:#2e1f0f;}
   @keyframes scDrop{0%{top:-100%}100%{top:200%}}
-  @keyframes scFloatY{0%{transform:translateY(0)}50%{transform:translateY(-18px)}100%{transform:translateY(0)}}
-  @keyframes scFadePulse{0%,100%{opacity:.25}50%{opacity:.7}}
-  @keyframes scDriftLeaf{0%{transform:translateY(20vh) translateX(0) rotate(0);opacity:0}10%{opacity:.5}90%{opacity:.2}100%{transform:translateY(-110vh) translateX(70px) rotate(540deg);opacity:0}}
+  @keyframes scRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  [data-reveal]{animation:scRise both;animation-timeline:view();animation-range:entry 0% entry 55%;}
+  @supports not (animation-timeline:view()){[data-reveal]{animation:scRise .9s cubic-bezier(.16,1,.3,1) both;}}
+  @keyframes scDriftLeaf{0%{transform:translateY(20vh) translateX(0) rotate(0);opacity:0}12%{opacity:.4}90%{opacity:.15}100%{transform:translateY(-110vh) translateX(60px) rotate(420deg);opacity:0}}
+  @keyframes scLeafSway{0%{transform:rotate(-14deg) translateX(-3px)}50%{transform:rotate(13deg) translateX(3px)}100%{transform:rotate(-14deg) translateX(-3px)}}
+  @keyframes scLeafFlutter{0%{transform:rotate(-22deg) scaleX(1)}25%{transform:rotate(6deg) scaleX(.55)}50%{transform:rotate(24deg) scaleX(.95)}75%{transform:rotate(4deg) scaleX(.6)}100%{transform:rotate(-22deg) scaleX(1)}}
 </style>
 </head>
 <body>
-<div id="sc-root" style="position:relative;background:#070f1a;color:#faf7f2;font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;">
+<div id="sc-root" style="position:relative;background:#faf7f2;color:#2e1f0f;font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden;">
 
-  <!-- ░░ LIVING WORLD (fixed WebGL canvas) ░░ -->
-  <div id="sc-world" style="position:fixed;inset:0;z-index:0;background:linear-gradient(180deg,#16313f 0%,#3f7486 38%,#cbb59a 78%,#e7d9c2 100%);">
-    <canvas id="sc-world-canvas" style="display:block;width:100%;height:100%;"></canvas>
+  <!-- ░░ PAINTED MOUNTAIN WORLD ░░ -->
+  <div id="sc-world" style="position:fixed;inset:0;z-index:0;overflow:hidden;background:linear-gradient(180deg,#a7cccf 0%,#cfe0db 46%,#f6ede0 100%);">
+    <div id="sc-sun" style="position:absolute;width:46vmax;height:46vmax;left:30%;top:18%;transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(circle,rgba(255,250,236,.9) 0%,rgba(255,240,208,.32) 36%,rgba(255,240,208,0) 70%);"></div>
+    <div id="sc-mtn" style="position:absolute;inset:0;"></div>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:60%;pointer-events:none;background:linear-gradient(180deg,rgba(246,237,224,0) 0%,rgba(238,229,212,.16) 58%,rgba(232,224,208,.34) 100%);"></div>
   </div>
 
-  <!-- atmospheric vignette + grain -->
-  <div style="position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 50% 28%,transparent 40%,rgba(5,11,18,.34) 78%,rgba(5,11,18,.6) 100%);"></div>
+  <!-- soft vignette -->
+  <div style="position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 95% at 50% 32%,transparent 54%,rgba(250,247,242,.3) 100%);"></div>
 
-  <!-- floating overlay leaves -->
-  <div style="position:fixed;left:8%;bottom:0;z-index:2;pointer-events:none;font-size:1.1rem;opacity:.5;animation:scDriftLeaf 17s linear infinite;animation-delay:1s;">🍃</div>
-  <div style="position:fixed;left:34%;bottom:0;z-index:2;pointer-events:none;font-size:.85rem;opacity:.4;animation:scDriftLeaf 23s linear infinite;animation-delay:7s;">🌿</div>
-  <div style="position:fixed;left:72%;bottom:0;z-index:2;pointer-events:none;font-size:1rem;opacity:.45;animation:scDriftLeaf 19s linear infinite;animation-delay:3s;">🍃</div>
-  <div style="position:fixed;left:88%;bottom:0;z-index:2;pointer-events:none;font-size:.8rem;opacity:.35;animation:scDriftLeaf 26s linear infinite;animation-delay:12s;">🌿</div>
+  <!-- floating leaves (calm) -->
+  <div style="position:fixed;left:10%;bottom:0;z-index:2;pointer-events:none;font-size:1rem;opacity:.4;animation:scDriftLeaf 28s linear infinite;animation-delay:2s;">🍃</div>
+  <div style="position:fixed;left:60%;bottom:0;z-index:2;pointer-events:none;font-size:.8rem;opacity:.32;animation:scDriftLeaf 34s linear infinite;animation-delay:12s;">🌿</div>
 
-  <!-- ░░ NAV ░░ -->
-  <div style="position:fixed;top:0;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:1.4rem clamp(1.2rem,4vw,3rem);">
-    <a href="shiva-continental.html" style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;letter-spacing:.12em;color:#fff;text-decoration:none;text-shadow:0 2px 18px rgba(0,0,0,.5);">Shiva Continental</a>
-    <div style="display:flex;align-items:center;gap:1.6rem;">
-      <a href="shiva-continental.html" style="font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.78);text-decoration:none;">Home</a>
-      <a href="https://www.secure-booking-engine.com/accounts/7XngYDeENYAAJH1ayOVj_Q/properties/O7MnuV8lpjv85dWWR1z5DQ/booking-engine/web/source/4wsctBw6Oq6j-g9XuxeRzQ/cart/KP1jvaTifw8HPTAxWGR6gQ/#!/rooms" target="_blank" style="font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.45);padding:.5rem 1.3rem;border-radius:2px;backdrop-filter:blur(6px);">Reserve a Stay</a>
+  <!-- ░░ NAV (matches the rest of the site) ░░ -->
+  <div id="sc-nav" style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;padding:1.2rem clamp(1.2rem,4vw,3rem);transition:background .4s,box-shadow .4s;">
+    <a href="shiva-continental.html" style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;letter-spacing:.12em;color:#2e1f0f;text-decoration:none;">Shiva Continental</a>
+    <div id="sc-navlinks" style="display:flex;gap:2rem;align-items:center;">
+      <a href="shiva-continental.html#story" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#5a4030;text-decoration:none;">Story</a>
+      <a href="about.html" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#008080;text-decoration:none;">About</a>
+      <a href="shiva-continental.html#rooms" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#5a4030;text-decoration:none;">Rooms</a>
+      <a href="gardenica.html" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#5a4030;text-decoration:none;">Garden</a>
+      <a href="shiva-continental.html#kitchen" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#5a4030;text-decoration:none;">Dine</a>
+      <a href="contact.html" style="font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#5a4030;text-decoration:none;">Contact</a>
     </div>
+    <a href="https://www.secure-booking-engine.com/accounts/7XngYDeENYAAJH1ayOVj_Q/properties/O7MnuV8lpjv85dWWR1z5DQ/booking-engine/web/source/4wsctBw6Oq6j-g9XuxeRzQ/cart/KP1jvaTifw8HPTAxWGR6gQ/#!/rooms" target="_blank" style="background:#008080;color:#fff;padding:.5rem 1.4rem;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;">Reserve a Stay</a>
   </div>
 
-  <!-- ░░ PROGRESS RAIL ░░ -->
-  <div style="position:fixed;right:clamp(1rem,2.4vw,2rem);top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:1.1rem;align-items:center;">
-    <div id="sc-dot-0" style="width:8px;height:8px;border-radius:50%;background:#fff;cursor:pointer;transition:all .4s;"></div>
-    <div id="sc-dot-1" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .4s;"></div>
-    <div id="sc-dot-2" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .4s;"></div>
-    <div id="sc-dot-3" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .4s;"></div>
-    <div id="sc-dot-4" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .4s;"></div>
-    <div id="sc-dot-5" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;transition:all .4s;"></div>
-  </div>
+  <!-- ░░ PROGRESS RAIL (built in JS) ░░ -->
+  <div id="sc-rail" style="position:fixed;right:clamp(.9rem,2.2vw,1.8rem);top:50%;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:.95rem;align-items:center;"></div>
 
   <!-- ░░ SCROLL TRACK ░░ -->
-  <div style="position:relative;z-index:10;">
+  <div id="sc-track" style="position:relative;z-index:10;">
+
+    <!-- animated trail layer (built in JS) -->
+    <div id="sc-trail-layer" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:1;pointer-events:none;"></div>
 
     <!-- CH0 — HERO -->
-    <section id="sc-ch-0" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 1.5rem 4rem;">
-      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:#c2e4e4;margin-bottom:1.8rem;text-shadow:0 2px 16px rgba(0,0,0,.6);">About · Since 1985 · Mussoorie</div>
-      <h1 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.4rem,13vw,13rem);line-height:.9;letter-spacing:-.02em;color:#fff;margin:0;text-shadow:0 8px 50px rgba(0,0,0,.5);">Born of<br>the Mussoorie<br><span style="font-style:italic;color:#d7ece9;">Mist</span></h1>
-      <p data-reveal style="max-width:30rem;margin:2.2rem auto 0;font-size:1.05rem;line-height:1.85;color:rgba(255,255,255,.82);text-shadow:0 2px 18px rgba(0,0,0,.6);">Scroll to travel through the story of Hotel Shiva Continental — a family, a hillside, and a home built at the edge of the clouds.</p>
-      <div id="sc-scrollcue" data-reveal style="margin-top:3.4rem;display:flex;flex-direction:column;align-items:center;gap:.7rem;transition:opacity .6s;">
-        <div style="width:1px;height:54px;background:rgba(255,255,255,.28);position:relative;overflow:hidden;"><div style="content:'';position:absolute;top:-100%;left:0;width:100%;height:50%;background:#c2e4e4;animation:scDrop 1.9s ease infinite;"></div></div>
-        <span style="font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.26em;color:rgba(255,255,255,.5);text-transform:uppercase;">Begin the descent</span>
+    <section id="sc-ch-0" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 1.5rem 4rem;">
+      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:#008080;margin-bottom:1.8rem;">A Shiva Continental Story · Since 1985</div>
+      <h1 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.4rem,13vw,13rem);line-height:.9;letter-spacing:-.02em;color:#2e1f0f;margin:0;text-shadow:0 1px 10px rgba(250,247,242,.45);">Born of<br>the Mussoorie<br><span style="font-style:italic;color:#9c6f1a;">Mist</span></h1>
+      <p data-reveal style="max-width:31rem;margin:2.2rem auto 0;font-size:1.05rem;line-height:1.85;color:#5a4030;">Follow the trail through four decades of mountain hospitality — a belief, a family, and a home built at the edge of the clouds.</p>
+      <div id="sc-scrollcue" data-reveal style="margin-top:3.2rem;display:flex;flex-direction:column;align-items:center;gap:.7rem;transition:opacity .6s;">
+        <div style="width:1px;height:54px;background:rgba(0,128,128,.3);position:relative;overflow:hidden;"><div style="position:absolute;top:-100%;left:0;width:100%;height:50%;background:#008080;animation:scDrop 2.2s ease infinite;"></div></div>
+        <span style="font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.26em;color:#9a8c7e;text-transform:uppercase;">Follow the trail</span>
       </div>
     </section>
 
-    <!-- CH1 — ORIGIN -->
-    <section id="sc-ch-1" style="min-height:115vh;display:flex;align-items:center;padding:6rem clamp(1.5rem,7vw,7rem);">
-      <div style="max-width:46rem;">
-        <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:#c2e4e4;margin-bottom:1.4rem;text-shadow:0 2px 14px rgba(0,0,0,.6);">Chapter One — The Origin</div>
-        <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.8rem,9vw,8.5rem);line-height:.92;letter-spacing:-.02em;color:#fff;margin:0 0 1.8rem;text-shadow:0 6px 44px rgba(0,0,0,.5);">It began<br>in <span style="font-style:italic;color:#ffe1b0;">1985.</span></h2>
-        <p data-reveal style="font-size:1.1rem;line-height:1.95;color:rgba(255,255,255,.84);max-width:34rem;text-shadow:0 2px 18px rgba(0,0,0,.55);">In 1985, I. C. Sanghal set out to make a mark on Indian hospitality. With his brothers V. K. and R. K. Sanghal beside him, a single hillside property opened its doors in Mussoorie — the first of the Shiva Group, which would grow across Dehradun, Gurgaon and Neemrana.</p>
-        <p data-reveal style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;line-height:1.5;color:#d7ece9;margin-top:1.6rem;max-width:30rem;text-shadow:0 2px 18px rgba(0,0,0,.55);">The mountains were the beginning. They still are.</p>
+    <!-- CH1 — BELIEF -->
+    <section id="sc-ch-1" style="position:relative;z-index:2;min-height:105vh;display:flex;align-items:center;justify-content:flex-start;padding:6rem clamp(1.5rem,8vw,8rem);">
+      <div style="max-width:42rem;">
+        <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:#008080;margin-bottom:1.3rem;">Our Belief</div>
+        <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.8rem,9vw,8rem);line-height:.92;letter-spacing:-.02em;color:#2e1f0f;margin:0 0 .6rem;text-shadow:0 1px 10px rgba(250,247,242,.45);">Atithi Devo<br><span style="font-style:italic;color:#9c6f1a;">Bhava.</span></h2>
+        <div data-reveal style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;color:#005f5f;margin-bottom:1.4rem;">"The guest is divine."</div>
+        <p data-reveal style="font-size:1.1rem;line-height:1.95;color:#5a4030;max-width:33rem;">It is the oldest idea in Indian hospitality — that whoever arrives at your door arrives as something sacred. We built Shiva Continental around it. Not a hotel that hosts you, but a home that honours you.</p>
       </div>
     </section>
 
-    <!-- CH2 — PHILOSOPHY -->
-    <section id="sc-ch-2" style="min-height:115vh;display:flex;align-items:center;justify-content:flex-end;text-align:right;padding:6rem clamp(1.5rem,7vw,7rem);">
-      <div style="max-width:46rem;">
-        <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:#c2e4e4;margin-bottom:1.4rem;text-shadow:0 2px 14px rgba(0,0,0,.6);">Chapter Two — The Philosophy</div>
-        <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,8.5vw,7.5rem);line-height:.95;letter-spacing:-.02em;color:#fff;margin:0 0 1.8rem;text-shadow:0 6px 44px rgba(0,0,0,.5);">More than rooms.<br>We offer <span style="font-style:italic;color:#ffe1b0;">soul.</span></h2>
-        <p data-reveal style="font-size:1.1rem;line-height:1.95;color:rgba(255,255,255,.84);max-width:34rem;margin-left:auto;text-shadow:0 2px 18px rgba(0,0,0,.55);">Set on a quiet hillside two minutes from Mall Road, our home holds 37 cosy rooms, valley-facing light, and a garden grown from things the world threw away. We were never built to be a place you check into — we were built to be a place you belong to.</p>
+    <!-- CH2 — ORIGIN -->
+    <section id="sc-ch-2" style="position:relative;z-index:2;min-height:105vh;display:flex;align-items:center;justify-content:flex-end;text-align:right;padding:6rem clamp(1.5rem,8vw,8rem);">
+      <div style="max-width:42rem;">
+        <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:#008080;margin-bottom:1.3rem;">The Origin · 1985</div>
+        <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,8.5vw,7.5rem);line-height:.95;letter-spacing:-.02em;color:#2e1f0f;margin:0 0 1.6rem;text-shadow:0 1px 10px rgba(250,247,242,.45);">A vision, set<br>in the <span style="font-style:italic;color:#9c6f1a;">hills.</span></h2>
+        <p data-reveal style="font-size:1.1rem;line-height:1.95;color:#5a4030;max-width:34rem;margin-left:auto;">In 1985, I. C. Sanghal set out to make a mark on Indian hospitality. With his brothers V. K. and R. K. Sanghal, the first Shiva property opened its doors in Mussoorie — the seed of a group that would grow across Dehradun, Gurgaon and Neemrana. Four decades on, the mountains are still where our story begins.</p>
       </div>
     </section>
 
-    <!-- CH3 — THE FAMILY -->
-    <section id="sc-ch-3" style="min-height:130vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem clamp(1.2rem,5vw,4rem);">
-      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:#c2e4e4;margin-bottom:1.4rem;text-shadow:0 2px 14px rgba(0,0,0,.6);">Chapter Three — The Family</div>
-      <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,8vw,7rem);line-height:.95;letter-spacing:-.02em;color:#fff;margin:0 0 1.2rem;text-shadow:0 6px 44px rgba(0,0,0,.5);">The hands behind<br>the <span style="font-style:italic;color:#ffe1b0;">hearth.</span></h2>
-      <p data-reveal style="max-width:34rem;font-size:1.05rem;line-height:1.85;color:rgba(255,255,255,.8);margin:0 auto 3.4rem;text-shadow:0 2px 18px rgba(0,0,0,.55);">Four members of the Sanghal family carry a vision that is now four decades old — that a hotel in the hills should feel less like a business, and more like a home with its doors left open.</p>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;width:100%;max-width:62rem;">
-
-        <div data-reveal style="display:flex;flex-direction:column;background:rgba(9,20,27,.5);border:1px solid rgba(120,180,178,.28);border-radius:6px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.4);">
-          <div style="position:relative;height:180px;background:linear-gradient(160deg,rgba(0,128,128,.42),rgba(13,24,34,.7));border-radius:120px 120px 8px 8px;display:flex;align-items:center;justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif;font-size:3.4rem;color:rgba(255,255,255,.92);letter-spacing:.04em;">VS</span>
-            <span style="position:absolute;bottom:10px;font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:rgba(255,255,255,.4);text-transform:uppercase;">— portrait —</span>
+    <!-- CH3 — VINESH (cutout left) -->
+    <section id="sc-ch-3" style="position:relative;z-index:2;min-height:94vh;display:flex;align-items:center;justify-content:center;padding:5rem clamp(1.5rem,6vw,6rem);">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(2rem,5vw,4.5rem);max-width:60rem;">
+        <div style="position:relative;width:clamp(190px,24vw,280px);aspect-ratio:3/4;flex-shrink:0;" data-reveal>
+          <div style="position:absolute;inset:0;border-radius:150px 150px 18px 18px;border:1px dashed rgba(0,95,95,.4);background-image:repeating-linear-gradient(135deg,rgba(0,128,128,.14) 0 9px,rgba(0,128,128,.04) 9px 18px);box-shadow:0 34px 50px -22px rgba(46,31,15,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(0,95,95,.5);">VS</span>
+            <span style="font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.18em;color:#9a8c7e;text-transform:uppercase;">cutout · Vinesh</span>
           </div>
-          <div style="padding:1.5rem 1.4rem 1.7rem;text-align:left;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#fff;">Vinesh Sanghal</div>
-            <div style="font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#7fd0ce;margin:.4rem 0 .9rem;">Founder · Director</div>
-            <p style="font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.74);margin:0;">Keeper of the original vision — that a mountain hotel should feel like a home with its doors left open, then and now.</p>
-          </div>
+          <div style="position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:72%;height:24px;background:radial-gradient(closest-side,rgba(46,31,15,.2),transparent);"></div>
         </div>
-
-        <div data-reveal style="display:flex;flex-direction:column;background:rgba(9,20,27,.5);border:1px solid rgba(120,180,178,.28);border-radius:6px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.4);">
-          <div style="position:relative;height:180px;background:linear-gradient(160deg,rgba(0,128,128,.42),rgba(13,24,34,.7));border-radius:120px 120px 8px 8px;display:flex;align-items:center;justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif;font-size:3.4rem;color:rgba(255,255,255,.92);letter-spacing:.04em;">MS</span>
-            <span style="position:absolute;bottom:10px;font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:rgba(255,255,255,.4);text-transform:uppercase;">— portrait —</span>
-          </div>
-          <div style="padding:1.5rem 1.4rem 1.7rem;text-align:left;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#fff;">Manishi Sanghal</div>
-            <div style="font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#7fd0ce;margin:.4rem 0 .9rem;">Director · Hospitality</div>
-            <p style="font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.74);margin:0;">The warmth of the house — setting the tone of welcome guests remember long after the valley fog has lifted.</p>
-          </div>
+        <div style="flex:1;min-width:240px;" data-reveal>
+          <div style="font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#008080;margin-bottom:.7rem;">The Family · 01 — Founder · Director</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1;color:#2e1f0f;margin-bottom:1rem;">Vinesh Sanghal</div>
+          <p style="font-size:1.02rem;line-height:1.9;color:#5a4030;max-width:30rem;">Vinesh carries the founding belief forward — that a mountain hotel should feel less like a business and more like a home with its doors left open. Every decision still passes through one quiet question: <em style="color:#005f5f;font-style:italic;">would a guest feel at home?</em></p>
         </div>
-
-        <div data-reveal style="display:flex;flex-direction:column;background:rgba(9,20,27,.5);border:1px solid rgba(120,180,178,.28);border-radius:6px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.4);">
-          <div style="position:relative;height:180px;background:linear-gradient(160deg,rgba(0,128,128,.42),rgba(13,24,34,.7));border-radius:120px 120px 8px 8px;display:flex;align-items:center;justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif;font-size:3.4rem;color:rgba(255,255,255,.92);letter-spacing:.04em;">SS</span>
-            <span style="position:absolute;bottom:10px;font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:rgba(255,255,255,.4);text-transform:uppercase;">— portrait —</span>
-          </div>
-          <div style="padding:1.5rem 1.4rem 1.7rem;text-align:left;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#fff;">Shubham Sanghal</div>
-            <div style="font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#7fd0ce;margin:.4rem 0 .9rem;">Director · Guest Experience</div>
-            <p style="font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.74);margin:0;">Often the voice on the other end of a guest's note — the one who answers personally, and means every word.</p>
-          </div>
-        </div>
-
-        <div data-reveal style="display:flex;flex-direction:column;background:rgba(9,20,27,.5);border:1px solid rgba(120,180,178,.28);border-radius:6px;overflow:hidden;backdrop-filter:blur(10px);box-shadow:0 18px 50px rgba(0,0,0,.4);">
-          <div style="position:relative;height:180px;background:linear-gradient(160deg,rgba(0,128,128,.42),rgba(13,24,34,.7));border-radius:120px 120px 8px 8px;display:flex;align-items:center;justify-content:center;">
-            <span style="font-family:'Cormorant Garamond',serif;font-size:3.4rem;color:rgba(255,255,255,.92);letter-spacing:.04em;">NS</span>
-            <span style="position:absolute;bottom:10px;font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.2em;color:rgba(255,255,255,.4);text-transform:uppercase;">— portrait —</span>
-          </div>
-          <div style="padding:1.5rem 1.4rem 1.7rem;text-align:left;">
-            <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#fff;">Naman Sanghal</div>
-            <div style="font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#7fd0ce;margin:.4rem 0 .9rem;">Director · New Ventures</div>
-            <p style="font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.74);margin:0;">The next generation — behind Gardenica's upcycled world and the ideas reimagining what a mountain stay can be.</p>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <!-- CH4 — WHAT WE TEND -->
-    <section id="sc-ch-4" style="min-height:120vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem clamp(1.2rem,5vw,4rem);">
-      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:#c2e4e4;margin-bottom:1.4rem;text-shadow:0 2px 14px rgba(0,0,0,.6);">Chapter Four — What We Tend</div>
-      <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,8vw,7rem);line-height:.95;letter-spacing:-.02em;color:#fff;margin:0 0 3.4rem;text-shadow:0 6px 44px rgba(0,0,0,.5);">Three things we<br>never stop <span style="font-style:italic;color:#ffe1b0;">tending.</span></h2>
+    <!-- CH4 — MANISHI (cutout right) -->
+    <section id="sc-ch-4" style="position:relative;z-index:2;min-height:94vh;display:flex;align-items:center;justify-content:center;padding:5rem clamp(1.5rem,6vw,6rem);">
+      <div style="display:flex;flex-wrap:wrap-reverse;align-items:center;gap:clamp(2rem,5vw,4.5rem);max-width:60rem;flex-direction:row-reverse;">
+        <div style="position:relative;width:clamp(190px,24vw,280px);aspect-ratio:3/4;flex-shrink:0;" data-reveal>
+          <div style="position:absolute;inset:0;border-radius:150px 150px 18px 18px;border:1px dashed rgba(0,95,95,.4);background-image:repeating-linear-gradient(135deg,rgba(0,128,128,.14) 0 9px,rgba(0,128,128,.04) 9px 18px);box-shadow:0 34px 50px -22px rgba(46,31,15,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(0,95,95,.5);">MS</span>
+            <span style="font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.18em;color:#9a8c7e;text-transform:uppercase;">cutout · Manishi</span>
+          </div>
+          <div style="position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:72%;height:24px;background:radial-gradient(closest-side,rgba(46,31,15,.2),transparent);"></div>
+        </div>
+        <div style="flex:1;min-width:240px;text-align:right;" data-reveal>
+          <div style="font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#008080;margin-bottom:.7rem;">The Family · 02 — Director · Hospitality</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1;color:#2e1f0f;margin-bottom:1rem;">Manishi Sanghal</div>
+          <p style="font-size:1.02rem;line-height:1.9;color:#5a4030;max-width:30rem;margin-left:auto;">Manishi is the warmth of the house — the tone of welcome that lingers. The tea brought without asking, the name remembered, the small kindnesses that quietly turn a stay into a memory.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CH5 — SHUBHAM (cutout left) -->
+    <section id="sc-ch-5" style="position:relative;z-index:2;min-height:94vh;display:flex;align-items:center;justify-content:center;padding:5rem clamp(1.5rem,6vw,6rem);">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(2rem,5vw,4.5rem);max-width:60rem;">
+        <div style="position:relative;width:clamp(190px,24vw,280px);aspect-ratio:3/4;flex-shrink:0;" data-reveal>
+          <div style="position:absolute;inset:0;border-radius:150px 150px 18px 18px;border:1px dashed rgba(0,95,95,.4);background-image:repeating-linear-gradient(135deg,rgba(0,128,128,.14) 0 9px,rgba(0,128,128,.04) 9px 18px);box-shadow:0 34px 50px -22px rgba(46,31,15,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(0,95,95,.5);">SS</span>
+            <span style="font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.18em;color:#9a8c7e;text-transform:uppercase;">cutout · Shubham</span>
+          </div>
+          <div style="position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:72%;height:24px;background:radial-gradient(closest-side,rgba(46,31,15,.2),transparent);"></div>
+        </div>
+        <div style="flex:1;min-width:240px;" data-reveal>
+          <div style="font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#008080;margin-bottom:.7rem;">The Family · 03 — Director · Guest Experience</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1;color:#2e1f0f;margin-bottom:1rem;">Shubham Sanghal</div>
+          <p style="font-size:1.02rem;line-height:1.9;color:#5a4030;max-width:30rem;">Shubham is often the voice on the other end of a guest's note — the one who answers personally, and means it. He believes hospitality is proven in the details no one is ever asked to notice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CH6 — NAMAN (cutout right) -->
+    <section id="sc-ch-6" style="position:relative;z-index:2;min-height:94vh;display:flex;align-items:center;justify-content:center;padding:5rem clamp(1.5rem,6vw,6rem);">
+      <div style="display:flex;flex-wrap:wrap-reverse;align-items:center;gap:clamp(2rem,5vw,4.5rem);max-width:60rem;flex-direction:row-reverse;">
+        <div style="position:relative;width:clamp(190px,24vw,280px);aspect-ratio:3/4;flex-shrink:0;" data-reveal>
+          <div style="position:absolute;inset:0;border-radius:150px 150px 18px 18px;border:1px dashed rgba(0,95,95,.4);background-image:repeating-linear-gradient(135deg,rgba(0,128,128,.14) 0 9px,rgba(0,128,128,.04) 9px 18px);box-shadow:0 34px 50px -22px rgba(46,31,15,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:rgba(0,95,95,.5);">NS</span>
+            <span style="font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.18em;color:#9a8c7e;text-transform:uppercase;">cutout · Naman</span>
+          </div>
+          <div style="position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:72%;height:24px;background:radial-gradient(closest-side,rgba(46,31,15,.2),transparent);"></div>
+        </div>
+        <div style="flex:1;min-width:240px;text-align:right;" data-reveal>
+          <div style="font-family:'Space Mono',monospace;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:#008080;margin-bottom:.7rem;">The Family · 04 — Director · New Ventures</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1;color:#2e1f0f;margin-bottom:1rem;">Naman Sanghal</div>
+          <p style="font-size:1.02rem;line-height:1.9;color:#5a4030;max-width:30rem;margin-left:auto;">Naman is the next chapter — behind Gardenica's upcycled garden and the ideas reimagining what a mountain stay can be. Proof that a forty-year-old belief can keep growing something entirely new.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CH7 — WHAT WE TEND -->
+    <section id="sc-ch-7" style="position:relative;z-index:2;min-height:115vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem clamp(1.2rem,5vw,4rem);">
+      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:#008080;margin-bottom:1.3rem;">What We Tend</div>
+      <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.6rem,8vw,7rem);line-height:.95;letter-spacing:-.02em;color:#2e1f0f;margin:0 0 3.2rem;text-shadow:0 1px 10px rgba(250,247,242,.45);">Three things we<br>never stop <span style="font-style:italic;color:#9c6f1a;">tending.</span></h2>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2.6rem;width:100%;max-width:60rem;">
         <div data-reveal style="text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:#7fd0ce;margin-bottom:.6rem;">i.</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#fff;margin-bottom:.8rem;">Gardenica</div>
-          <p style="font-size:.95rem;line-height:1.8;color:rgba(255,255,255,.76);max-width:18rem;margin:0 auto;text-shadow:0 2px 14px rgba(0,0,0,.5);">An old kettle, a cracked shoe, a forgotten bucket. Every plant grows inside a story — beauty with a past, blooming fresh each day.</p>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:#008080;margin-bottom:.5rem;">i.</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#2e1f0f;margin-bottom:.8rem;">Gardenica</div>
+          <p style="font-size:.95rem;line-height:1.8;color:#5a4030;max-width:18rem;margin:0 auto;">An old kettle, a cracked shoe, a forgotten bucket. Every plant grows inside a story — beauty with a past, blooming fresh each day.</p>
         </div>
         <div data-reveal style="text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:#7fd0ce;margin-bottom:.6rem;">ii.</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#fff;margin-bottom:.8rem;">Deodar Kitchen</div>
-          <p style="font-size:.95rem;line-height:1.8;color:rgba(255,255,255,.76);max-width:18rem;margin:0 auto;text-shadow:0 2px 14px rgba(0,0,0,.5);">We don't just cook food. We serve hill-kitchen recipes and grandmother's warmth — a memory you'll want to take home.</p>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:#008080;margin-bottom:.5rem;">ii.</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#2e1f0f;margin-bottom:.8rem;">Deodar Kitchen</div>
+          <p style="font-size:.95rem;line-height:1.8;color:#5a4030;max-width:18rem;margin:0 auto;">We don't just cook food. We serve hill-kitchen recipes and grandmother's warmth — a memory you'll want to take home.</p>
         </div>
         <div data-reveal style="text-align:center;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:#7fd0ce;margin-bottom:.6rem;">iii.</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#fff;margin-bottom:.8rem;">The Welcome</div>
-          <p style="font-size:.95rem;line-height:1.8;color:rgba(255,255,255,.76);max-width:18rem;margin:0 auto;text-shadow:0 2px 14px rgba(0,0,0,.5);">Warm smiles, genuine care, and a family that treats every guest as one of their own — from arrival to the last goodbye.</p>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;color:#008080;margin-bottom:.5rem;">iii.</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#2e1f0f;margin-bottom:.8rem;">The Welcome</div>
+          <p style="font-size:.95rem;line-height:1.8;color:#5a4030;max-width:18rem;margin:0 auto;">Warm smiles, genuine care, and a family that treats every guest as one of their own — from arrival to the last goodbye.</p>
         </div>
       </div>
     </section>
 
-    <!-- CH5 — INVITATION -->
-    <section id="sc-ch-5" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem;">
-      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:#c2e4e4;margin-bottom:1.6rem;text-shadow:0 2px 14px rgba(0,0,0,.6);">The Invitation</div>
-      <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.02em;color:#fff;margin:0 0 2.4rem;text-shadow:0 8px 50px rgba(0,0,0,.5);">Your story begins<br>where ours<br><span style="font-style:italic;color:#ffe1b0;">never ended.</span></h2>
+    <!-- CH8 — INVITATION -->
+    <section id="sc-ch-8" style="position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 1.5rem;">
+      <div data-reveal style="font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.32em;text-transform:uppercase;color:#008080;margin-bottom:1.6rem;">The Invitation</div>
+      <h2 data-reveal style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3rem,10vw,10rem);line-height:.9;letter-spacing:-.02em;color:#2e1f0f;margin:0 0 2.4rem;text-shadow:0 1px 10px rgba(250,247,242,.45);">Your story begins<br>where ours<br><span style="font-style:italic;color:#9c6f1a;">never ended.</span></h2>
       <div data-reveal style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:3rem;">
         <a href="https://www.secure-booking-engine.com/accounts/7XngYDeENYAAJH1ayOVj_Q/properties/O7MnuV8lpjv85dWWR1z5DQ/booking-engine/web/source/4wsctBw6Oq6j-g9XuxeRzQ/cart/KP1jvaTifw8HPTAxWGR6gQ/#!/rooms" target="_blank" style="background:#008080;color:#fff;padding:.95rem 2.4rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;">Reserve Your Stay</a>
-        <a href="shiva-continental.html" style="border:1px solid rgba(255,255,255,.5);color:#fff;padding:.95rem 2.4rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;backdrop-filter:blur(6px);">Return Home</a>
+        <a href="shiva-continental.html" style="border:1px solid #008080;color:#008080;padding:.95rem 2.4rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:2px;">Return Home</a>
       </div>
       <div data-reveal style="display:flex;gap:2.6rem;flex-wrap:wrap;justify-content:center;">
-        <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem;"><span style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:#7fd0ce;">Phone</span><span style="font-size:.86rem;color:rgba(255,255,255,.78);">+91 70 4228 8289</span></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem;"><span style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:#7fd0ce;">Email</span><span style="font-size:.86rem;color:rgba(255,255,255,.78);">sales@shivacontinental.in</span></div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem;"><span style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:#7fd0ce;">Find Us</span><span style="font-size:.86rem;color:rgba(255,255,255,.78);">Kulri, Mall Road · Mussoorie</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem;"><span style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#008080;">Phone</span><span style="font-size:.86rem;color:#5a4030;">+91 70 4228 8289</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem;"><span style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#008080;">Email</span><span style="font-size:.86rem;color:#5a4030;">sales@shivacontinental.in</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:.3rem;"><span style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:#008080;">Find Us</span><span style="font-size:.86rem;color:#5a4030;">Kulri, Mall Road · Mussoorie</span></div>
       </div>
     </section>
 
@@ -189,68 +205,24 @@
 
 <script>
 (function(){
+  var N = 9;
+  var aligns = [50, 30, 70, 30, 70, 30, 70, 50, 50];
   var p = 0, pTarget = 0;
-  var mx = 0, my = 0, mxTarget = 0, myTarget = 0;
-  var t = 0;
-  var _raf, _io, renderer, scene, camera;
-  var skyMat, sun, halo, stars, mist, mistVel, mistN, fire, firePh, fireBase, fireN, ridges, birds, phases;
+  var mx = 0, mxTarget = 0;
+  var layers = [];
+  var trailPath, trailGlow, trailLeaf, trailLen;
+  var _raf, _rzT;
 
-  function setupReveal(){
-    var els = document.querySelectorAll('#sc-root [data-reveal]');
-    els.forEach(function(el){
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(46px)';
-      el.style.transition = 'opacity 1.05s cubic-bezier(.16,1,.3,1), transform 1.05s cubic-bezier(.16,1,.3,1)';
-    });
-    _io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if (e.isIntersecting){
-          var sibs = Array.from(e.target.parentElement.querySelectorAll(':scope > [data-reveal]'));
-          var idx = Math.max(0, sibs.indexOf(e.target));
-          e.target.style.transitionDelay = (idx * 0.09) + 's';
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'none';
-          _io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    els.forEach(function(el){ _io.observe(el); });
-  }
+  var phases = [
+    { p: 0.0,  top: '#a7cccf', mid: '#cfe0db', bot: '#f6ede0', sunX: 0.30, sunY: 0.20 },
+    { p: 0.34, top: '#8fc0c5', mid: '#cfe2dc', bot: '#eef0e6', sunX: 0.50, sunY: 0.13 },
+    { p: 0.66, top: '#bcc9ad', mid: '#e0dcc1', bot: '#f7ebcf', sunX: 0.66, sunY: 0.22 },
+    { p: 1.0,  top: '#b2bccd', mid: '#dcd9cf', bot: '#f1e3d6', sunX: 0.76, sunY: 0.34 }
+  ];
 
-  function setupDots(){
-    for (var i = 0; i < 6; i++){
-      (function(idx){
-        var dot = document.getElementById('sc-dot-' + idx);
-        var sec = document.getElementById('sc-ch-' + idx);
-        if (dot && sec){
-          dot.addEventListener('click', function(){
-            window.scrollTo({ top: sec.offsetTop, behavior: 'smooth' });
-          });
-        }
-      })(i);
-    }
-  }
-
-  function handleScroll(){
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var sy = window.scrollY || window.pageYOffset;
-    pTarget = max > 0 ? Math.min(1, Math.max(0, sy / max)) : 0;
-    var active = 0;
-    for (var i = 0; i < 6; i++){
-      var sec = document.getElementById('sc-ch-' + i);
-      if (sec && sy >= sec.offsetTop - window.innerHeight * 0.45) active = i;
-    }
-    for (var j = 0; j < 6; j++){
-      var dot = document.getElementById('sc-dot-' + j);
-      if (!dot) continue;
-      var on = (j === active);
-      dot.style.background = on ? '#c2e4e4' : 'rgba(255,255,255,.35)';
-      dot.style.width = on ? '10px' : '8px';
-      dot.style.height = on ? '10px' : '8px';
-      dot.style.boxShadow = on ? '0 0 12px rgba(194,228,228,.8)' : 'none';
-    }
-    var cue = document.getElementById('sc-scrollcue');
-    if (cue) cue.style.opacity = sy > 80 ? '0' : '1';
+  function navResponsive(){
+    var links = document.getElementById('sc-navlinks');
+    if (links) links.style.display = window.innerWidth < 820 ? 'none' : 'flex';
   }
 
   function ridgeNoise(x, seed){
@@ -262,298 +234,242 @@
     return h;
   }
 
-  function buildRidge(o){
-    var THREE = window.THREE;
-    var segs = o.segs, width = o.width, bottomY = -300;
-    var topC = new THREE.Color(o.top), botC = new THREE.Color(o.bot);
-    var pos = [], col = [];
-    for (var i = 0; i <= segs; i++){
-      var x = -width / 2 + width * (i / segs);
-      var h;
-      if (o.pine){
-        var tw = Math.abs(((x * 0.16 + o.seed) % 13) - 6.5) / 6.5;
-        h = o.baseY + (1 - tw) * o.amp * (0.55 + 0.45 * Math.sin(x * 0.6 + o.seed));
-      } else {
-        h = o.baseY + ridgeNoise(x, o.seed) * o.amp;
+  function buildMountains(){
+    var wrap = document.getElementById('sc-mtn');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    layers = [];
+    var ns = 'http://www.w3.org/2000/svg';
+    var defs = [
+      { color: '#d7e4dd', base: 0.50, amp: 0.05,  seed: 14.0, parX: 8,  parY: 9  },
+      { color: '#bdd4cd', base: 0.58, amp: 0.06,  seed: 9.3,  parX: 14, parY: 16 },
+      { color: '#97b9af', base: 0.67, amp: 0.07,  seed: 6.1,  parX: 22, parY: 27 },
+      { color: '#6f9a90', base: 0.77, amp: 0.075, seed: 3.4,  parX: 32, parY: 42 },
+      { color: '#4f756b', base: 0.88, amp: 0.06,  seed: 1.2,  parX: 44, parY: 60 }
+    ];
+    defs.forEach(function(L){
+      var d = 'M0 1000';
+      for (var x = 0; x <= 1000; x += 10){
+        var y = L.base * 1000 + ridgeNoise(x, L.seed) * L.amp * 1000;
+        d += ' L' + x + ' ' + y.toFixed(1);
       }
-      pos.push(x, h, 0,  x, bottomY, 0);
-      col.push(topC.r, topC.g, topC.b,  botC.r, botC.g, botC.b);
-    }
-    var idx = [];
-    for (var k = 0; k < segs; k++){
-      var a = k*2, b = k*2+1, c = (k+1)*2, d = (k+1)*2+1;
-      idx.push(a, b, c,  c, b, d);
-    }
-    var g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-    g.setAttribute('color',    new THREE.Float32BufferAttribute(col, 3));
-    g.setIndex(idx);
-    var mesh = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ vertexColors: true, fog: true }));
-    mesh.position.z = -o.depth;
-    return mesh;
+      d += ' L1000 1000 Z';
+      var svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', '0 0 1000 1000');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      svg.setAttribute('width', '118%');
+      svg.setAttribute('height', '100%');
+      svg.style.cssText = 'position:absolute;left:-9%;bottom:0;will-change:transform;';
+      var path = document.createElementNS(ns, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', L.color);
+      svg.appendChild(path);
+      wrap.appendChild(svg);
+      layers.push({ el: svg, parX: L.parX, parY: L.parY });
+    });
   }
 
-  function radialTexture(inner, outer){
-    var c = document.createElement('canvas');
-    c.width = c.height = 128;
-    var ctx = c.getContext('2d');
-    var gr = ctx.createRadialGradient(64,64,0, 64,64,64);
-    gr.addColorStop(0,   inner);
-    gr.addColorStop(0.4, outer);
-    gr.addColorStop(1,   'rgba(255,255,255,0)');
-    ctx.fillStyle = gr;
-    ctx.fillRect(0, 0, 128, 128);
-    return new window.THREE.CanvasTexture(c);
+  function buildRail(){
+    var rail = document.getElementById('sc-rail');
+    if (!rail) return;
+    rail.innerHTML = '';
+    for (var i = 0; i < N; i++){
+      (function(idx){
+        var dot = document.createElement('div');
+        dot.id = 'sc-dot-' + idx;
+        dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:rgba(46,31,15,.25);cursor:pointer;transition:all .4s;';
+        dot.addEventListener('click', function(){
+          var sec = document.getElementById('sc-ch-' + idx);
+          if (sec) window.scrollTo({ top: sec.offsetTop, behavior: 'smooth' });
+        });
+        rail.appendChild(dot);
+      })(i);
+    }
   }
 
-  function initWorld(){
-    var THREE = window.THREE;
-    var canvas = document.getElementById('sc-world-canvas');
-    if (!canvas) return;
-
-    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    scene  = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(62, window.innerWidth / window.innerHeight, 0.1, 3000);
-    camera.position.set(0, 5, 62);
-    scene.fog = new THREE.Fog(0xcfe0db, 130, 640);
-
-    var C = function(h){ return new THREE.Color(h); };
-    phases = [
-      { p:0.0,  top:C('#101a2e'), bot:C('#caa07a'), sun:C('#ffd9a0'), fog:C('#9c8a86'), sunY:0.16, stars:0.55, tint:C('#cdbfae'), mist:0.5,  fire:0.18 },
-      { p:0.24, top:C('#3f7486'), bot:C('#e7ece2'), sun:C('#fff1d2'), fog:C('#cfe0db'), sunY:0.52, stars:0.0,  tint:C('#ffffff'), mist:0.45, fire:0.0  },
-      { p:0.5,  top:C('#5d8a86'), bot:C('#f6e4c2'), sun:C('#ffcf86'), fog:C('#ecd9b6'), sunY:0.33, stars:0.0,  tint:C('#ffe9cf'), mist:0.4,  fire:0.06 },
-      { p:0.76, top:C('#243a4a'), bot:C('#c98f63'), sun:C('#ff9d5c'), fog:C('#8a7b72'), sunY:0.07, stars:0.3,  tint:C('#b69e84'), mist:0.35, fire:0.45 },
-      { p:1.0,  top:C('#070f1a'), bot:C('#13303a'), sun:C('#d6e6ee'), fog:C('#0c1c24'), sunY:0.64, stars:1.0,  tint:C('#3c4e56'), mist:0.2,  fire:0.95 }
-    ];
-
-    // sky dome
-    skyMat = new THREE.ShaderMaterial({
-      side: THREE.BackSide, depthWrite: false,
-      uniforms: {
-        top:    { value: C('#3f7486') },
-        bottom: { value: C('#e7ece2') },
-        off:    { value: 28 },
-        exp:    { value: 0.62 }
-      },
-      vertexShader:   'varying vec3 vW; void main(){ vec4 wp=modelMatrix*vec4(position,1.0); vW=wp.xyz; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
-      fragmentShader: 'uniform vec3 top; uniform vec3 bottom; uniform float off; uniform float exp; varying vec3 vW; void main(){ float h=normalize(vW+vec3(0.0,off,0.0)).y; float f=pow(max(h,0.0),exp); gl_FragColor=vec4(mix(bottom,top,clamp(f,0.0,1.0)),1.0); }'
-    });
-    scene.add(new THREE.Mesh(new THREE.SphereGeometry(1200,32,16), skyMat));
-
-    // sun + halo
-    var sunTex = radialTexture('rgba(255,255,255,1)', 'rgba(255,230,180,0.85)');
-    sun = new THREE.Sprite(new THREE.SpriteMaterial({ map:sunTex, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending }));
-    sun.scale.set(140,140,1); sun.position.set(-60,40,-520);
-    scene.add(sun);
-    halo = new THREE.Sprite(new THREE.SpriteMaterial({ map:sunTex, transparent:true, opacity:0.35, depthWrite:false, blending:THREE.AdditiveBlending }));
-    halo.scale.set(440,440,1); halo.position.copy(sun.position);
-    scene.add(halo);
-
-    // ridge layers
-    var cfg = [
-      { depth:30,  width:1500, segs:130, baseY:-30, amp:26, pine:true,  seed:1.0,  top:'#0b1a1e', bot:'#04090c', par:1.0  },
-      { depth:72,  width:1900, segs:170, baseY:-36, amp:34, pine:false, seed:3.3,  top:'#163a3c', bot:'#0a2024', par:0.72 },
-      { depth:155, width:2300, segs:170, baseY:-30, amp:50, pine:false, seed:6.1,  top:'#2c5c5c', bot:'#163c40', par:0.46 },
-      { depth:255, width:2700, segs:160, baseY:-18, amp:64, pine:false, seed:9.4,  top:'#4f817d', bot:'#305c5e', par:0.3  },
-      { depth:385, width:3100, segs:150, baseY:-2,  amp:82, pine:false, seed:12.7, top:'#80a8a2', bot:'#558583', par:0.18 },
-      { depth:520, width:3500, segs:130, baseY:16,  amp:96, pine:false, seed:15.9, top:'#abc7c1', bot:'#86aaa6', par:0.1  }
-    ];
-    ridges = cfg.map(function(o){
-      var mesh = buildRidge(o);
-      scene.add(mesh);
-      return { mesh:mesh, par:o.par };
-    });
-
-    // stars
-    var starN = 520, sp = new Float32Array(starN * 3);
-    for (var si = 0; si < starN; si++){
-      var r  = 700 + Math.random() * 260;
-      var th = Math.random() * Math.PI * 2;
-      var ph = Math.random() * Math.PI * 0.42;
-      sp[si*3]   = Math.cos(th) * Math.sin(ph+0.05) * r;
-      sp[si*3+1] = Math.cos(ph) * r * 0.9 + 40;
-      sp[si*3+2] = Math.sin(th) * Math.sin(ph+0.05) * r - 200;
+  function catmull(pts){
+    if (pts.length < 2) return '';
+    var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+    for (var i = 0; i < pts.length - 1; i++){
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || pts[i + 1];
+      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ' C' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ' ' + c2x.toFixed(1) + ' ' + c2y.toFixed(1) + ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
     }
-    var starGeo = new THREE.BufferGeometry();
-    starGeo.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
-    stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
-      map: radialTexture('rgba(255,255,255,1)','rgba(220,235,255,0.6)'),
-      size:7, transparent:true, opacity:0, depthWrite:false,
-      blending:THREE.AdditiveBlending, sizeAttenuation:true
-    }));
-    scene.add(stars);
+    return d;
+  }
 
-    // mist motes
-    mistN = 460;
-    var mp = new Float32Array(mistN * 3);
-    mistVel = new Float32Array(mistN);
-    for (var mi = 0; mi < mistN; mi++){
-      mp[mi*3]   = (Math.random()-0.5) * 620;
-      mp[mi*3+1] = -40 + Math.random() * 150;
-      mp[mi*3+2] = -40 - Math.random() * 400;
-      mistVel[mi] = 0.06 + Math.random() * 0.16;
+  function buildTrail(){
+    var track = document.getElementById('sc-track');
+    var layer = document.getElementById('sc-trail-layer');
+    if (!track || !layer) return;
+    var W = track.clientWidth, H = track.scrollHeight;
+    if (W < 4 || H < 4) return;
+    var pts = [];
+    for (var i = 0; i < N; i++){
+      var sec = document.getElementById('sc-ch-' + i);
+      if (!sec) continue;
+      pts.push([(aligns[i] / 100) * W, sec.offsetTop + sec.offsetHeight / 2]);
     }
-    var mistGeo = new THREE.BufferGeometry();
-    mistGeo.setAttribute('position', new THREE.Float32BufferAttribute(mp, 3));
-    mist = new THREE.Points(mistGeo, new THREE.PointsMaterial({
-      map: radialTexture('rgba(255,255,255,0.9)','rgba(210,228,224,0.4)'),
-      size:9, transparent:true, opacity:0.4, depthWrite:false, blending:THREE.AdditiveBlending
-    }));
-    scene.add(mist);
+    if (pts.length < 2) return;
+    var d = catmull(pts);
+    var ns = 'http://www.w3.org/2000/svg';
+    layer.innerHTML = '';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', H);
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.style.cssText = 'position:absolute;top:0;left:0;overflow:visible;';
+    // dotted base
+    var base = document.createElementNS(ns, 'path');
+    base.setAttribute('d', d);
+    base.setAttribute('fill', 'none');
+    base.setAttribute('stroke', 'rgba(0,128,128,.1)');
+    base.setAttribute('stroke-width', '1.4');
+    base.setAttribute('stroke-dasharray', '1 12');
+    base.setAttribute('stroke-linecap', 'round');
+    svg.appendChild(base);
+    // soft glow underlay
+    var glow = document.createElementNS(ns, 'path');
+    glow.setAttribute('d', d);
+    glow.setAttribute('fill', 'none');
+    glow.setAttribute('stroke', 'rgba(0,128,128,.3)');
+    glow.setAttribute('stroke-width', '6');
+    glow.setAttribute('stroke-linecap', 'round');
+    glow.style.filter = 'blur(5px)';
+    svg.appendChild(glow);
+    // translucent glowy line
+    var path = document.createElementNS(ns, 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', 'rgba(0,128,128,.42)');
+    path.setAttribute('stroke-width', '1.5');
+    path.setAttribute('stroke-linecap', 'round');
+    path.style.filter = 'drop-shadow(0 0 3px rgba(0,128,128,.55))';
+    svg.appendChild(path);
+    layer.appendChild(svg);
+    trailPath = path;
+    trailGlow = glow;
+    var len = path.getTotalLength();
+    trailLen = len;
+    path.style.strokeDasharray = len;
+    path.style.strokeDashoffset = len * (1 - p);
+    glow.style.strokeDasharray = len;
+    glow.style.strokeDashoffset = len * (1 - p);
+    // falling leaf riding trail tip
+    var leaf = document.createElement('div');
+    leaf.style.cssText = 'position:absolute;left:0;top:0;transform:translate(-50%,-50%);pointer-events:none;z-index:4;filter:drop-shadow(0 5px 7px rgba(46,31,15,.3));';
+    leaf.innerHTML = '<span style="display:block;font-size:6rem;line-height:1;animation:scLeafFlutter 4.2s ease-in-out infinite;">🍂</span>';
+    layer.appendChild(leaf);
+    trailLeaf = leaf;
+    handleScroll();
+  }
 
-    // fireflies
-    fireN = 130;
-    var fp = new Float32Array(fireN * 3);
-    firePh = new Float32Array(fireN);
-    for (var fi = 0; fi < fireN; fi++){
-      fp[fi*3]   = (Math.random()-0.5) * 340;
-      fp[fi*3+1] = -26 + Math.random() * 80;
-      fp[fi*3+2] = -20 - Math.random() * 220;
-      firePh[fi] = Math.random() * Math.PI * 2;
+  function handleScroll(){
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var sy = window.scrollY || window.pageYOffset;
+    pTarget = max > 0 ? Math.min(1, Math.max(0, sy / max)) : 0;
+    var active = 0;
+    for (var i = 0; i < N; i++){
+      var sec = document.getElementById('sc-ch-' + i);
+      if (sec && sy >= sec.offsetTop - window.innerHeight * 0.45) active = i;
     }
-    var fireGeo = new THREE.BufferGeometry();
-    fireGeo.setAttribute('position', new THREE.Float32BufferAttribute(fp, 3));
-    fire = new THREE.Points(fireGeo, new THREE.PointsMaterial({
-      map: radialTexture('rgba(255,240,200,1)','rgba(255,180,90,0.7)'),
-      size:6, transparent:true, opacity:0, depthWrite:false, blending:THREE.AdditiveBlending
-    }));
-    scene.add(fire);
-    fireBase = fp.slice();
-
-    // birds
-    birds = [];
-    for (var bi = 0; bi < 6; bi++){
-      var bg = new THREE.BufferGeometry();
-      bg.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-3.2,0,0, 0,1.1,0, 3.2,0,0]), 3));
-      var line = new THREE.Line(bg, new THREE.LineBasicMaterial({ color:0x223038, transparent:true, opacity:0.5 }));
-      var sc = 1.6 + Math.random() * 2.4;
-      line.scale.set(sc,sc,sc);
-      line.position.set((Math.random()-0.5)*380, 30+Math.random()*70, -120-Math.random()*200);
-      scene.add(line);
-      birds.push({ line:line, speed:0.18+Math.random()*0.3, ph:Math.random()*6.28, baseY:line.position.y, flap:1+Math.random() });
+    for (var j = 0; j < N; j++){
+      var dot = document.getElementById('sc-dot-' + j);
+      if (dot){
+        var on = (j === active);
+        dot.style.background = on ? '#008080' : 'rgba(46,31,15,.25)';
+        dot.style.width = on ? '10px' : '8px';
+        dot.style.height = on ? '10px' : '8px';
+        dot.style.boxShadow = on ? '0 0 10px rgba(0,128,128,.5)' : 'none';
+      }
     }
+    var cue = document.getElementById('sc-scrollcue');
+    if (cue) cue.style.opacity = sy > 80 ? '0' : '1';
+    var nav = document.getElementById('sc-nav');
+    if (nav){
+      var sc = sy > 70;
+      nav.style.background = sc ? 'rgba(250,247,242,.92)' : 'transparent';
+      nav.style.boxShadow = sc ? '0 1px 0 rgba(0,0,0,.06)' : 'none';
+      nav.style.backdropFilter = sc ? 'blur(12px)' : 'none';
+    }
+  }
 
-    animate();
+  function hexToRgb(h){
+    h = h.replace('#', '');
+    return [parseInt(h.substr(0,2),16), parseInt(h.substr(2,2),16), parseInt(h.substr(4,2),16)];
+  }
+  function mixColor(a, b, t){
+    var A = hexToRgb(a), B = hexToRgb(b);
+    return 'rgb('+Math.round(A[0]+(B[0]-A[0])*t)+','+Math.round(A[1]+(B[1]-A[1])*t)+','+Math.round(A[2]+(B[2]-A[2])*t)+')';
   }
 
   function phaseAt(prog){
     var ph = phases, i = 0;
-    while (i < ph.length-1 && prog > ph[i+1].p) i++;
+    while (i < ph.length - 1 && prog > ph[i+1].p) i++;
     var a = ph[i], b = ph[Math.min(i+1, ph.length-1)];
     var span = (b.p - a.p) || 1;
     var tv = Math.max(0, Math.min(1, (prog - a.p) / span));
     return {
-      top:  a.top.clone().lerp(b.top,  tv),
-      bot:  a.bot.clone().lerp(b.bot,  tv),
-      sun:  a.sun.clone().lerp(b.sun,  tv),
-      fog:  a.fog.clone().lerp(b.fog,  tv),
-      tint: a.tint.clone().lerp(b.tint,tv),
-      sunY:  a.sunY  + (b.sunY  - a.sunY)  * tv,
-      stars: a.stars + (b.stars - a.stars) * tv,
-      mist:  a.mist  + (b.mist  - a.mist)  * tv,
-      fire:  a.fire  + (b.fire  - a.fire)  * tv
+      top:  mixColor(a.top, b.top, tv),
+      mid:  mixColor(a.mid, b.mid, tv),
+      bot:  mixColor(a.bot, b.bot, tv),
+      sunX: a.sunX + (b.sunX - a.sunX) * tv,
+      sunY: a.sunY + (b.sunY - a.sunY) * tv
     };
   }
 
   function animate(){
     _raf = requestAnimationFrame(animate);
-    t  += 0.016;
-    p  += (pTarget - p)   * 0.07;
+    p  += (pTarget - p)   * 0.06;
     mx += (mxTarget - mx) * 0.05;
-    my += (myTarget - my) * 0.05;
-
     var ph = phaseAt(p);
 
-    skyMat.uniforms.top.value.copy(ph.top);
-    skyMat.uniforms.bottom.value.copy(ph.bot);
-    scene.fog.color.copy(ph.fog);
-    renderer.setClearColor(ph.bot, 1);
+    var world = document.getElementById('sc-world');
+    if (world) world.style.background = 'linear-gradient(180deg,' + ph.top + ' 0%,' + ph.mid + ' 46%,' + ph.bot + ' 100%)';
 
-    var sunWorldY = -42 + ph.sunY * 210;
-    sun.position.set(-60 + mx * -26, sunWorldY, -520);
-    halo.position.copy(sun.position);
-    sun.material.color.copy(ph.sun);
-    halo.material.color.copy(ph.sun);
-    halo.material.opacity = 0.3 + Math.sin(t * 0.4) * 0.04;
-
-    for (var k = 0; k < ridges.length; k++){
-      var r = ridges[k];
-      r.mesh.position.x = -p * 250 * r.par + mx * 34 * r.par;
-      r.mesh.position.y = Math.sin(t * 0.13 + k) * 0.7;
-      r.mesh.material.color.copy(ph.tint);
+    var sun = document.getElementById('sc-sun');
+    if (sun){
+      sun.style.left = (ph.sunX * 100 + mx * 2.5) + '%';
+      sun.style.top  = (ph.sunY * 100) + '%';
     }
 
-    stars.material.opacity = ph.stars;
-    stars.rotation.y = t * 0.005;
-
-    mist.material.opacity = ph.mist;
-    var ma = mist.geometry.getAttribute('position');
-    for (var mi = 0; mi < mistN; mi++){
-      var ny = ma.getY(mi) + mistVel[mi];
-      if (ny > 120) ny = -40;
-      ma.setY(mi, ny);
-      ma.setX(mi, ma.getX(mi) + Math.sin(t * 0.2 + mi) * 0.02);
+    for (var k = 0; k < layers.length; k++){
+      var L = layers[k];
+      L.el.style.transform = 'translate3d(' + (mx * L.parX).toFixed(1) + 'px,' + (p * L.parY).toFixed(1) + 'px,0)';
     }
-    ma.needsUpdate = true;
 
-    fire.material.opacity = ph.fire;
-    if (ph.fire > 0.02){
-      var fa = fire.geometry.getAttribute('position');
-      for (var fi = 0; fi < fireN; fi++){
-        var fb = fi * 3;
-        fa.setX(fi, fireBase[fb]   + Math.sin(t * 0.6 + firePh[fi]) * 7);
-        fa.setY(fi, fireBase[fb+1] + Math.cos(t * 0.5 + firePh[fi] * 1.3) * 5);
+    if (trailPath){
+      var off = trailLen * (1 - p);
+      trailPath.style.strokeDashoffset = off;
+      if (trailGlow) trailGlow.style.strokeDashoffset = off;
+      if (trailLeaf){
+        var pt = trailPath.getPointAtLength(Math.max(0, Math.min(1, p)) * trailLen);
+        trailLeaf.style.left = pt.x + 'px';
+        trailLeaf.style.top  = pt.y + 'px';
       }
-      fa.needsUpdate = true;
     }
-
-    for (var bi = 0; bi < birds.length; bi++){
-      var bd = birds[bi];
-      bd.line.position.x += bd.speed;
-      if (bd.line.position.x > 230) bd.line.position.x = -230;
-      bd.line.position.y = bd.baseY + Math.sin(t * 0.4 + bd.ph) * 4;
-      var pa = bd.line.geometry.getAttribute('position');
-      var wy = Math.sin(t * 6 * bd.flap + bd.ph) * 0.9 + 0.5;
-      pa.setY(0, wy); pa.setY(2, wy); pa.setY(1, 1.1);
-      pa.needsUpdate = true;
-    }
-
-    camera.position.x = Math.sin(p * 0.7) * 5 + mx * 7;
-    camera.position.y = 4 + p * 13;
-    camera.position.z = 62 - p * 30;
-    camera.lookAt(mx * 11, 2 + p * 10 + my * 4, -170);
-
-    renderer.render(scene, camera);
-  }
-
-  function onResize(){
-    if (!renderer) return;
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    handleScroll();
-  }
-
-  function waitThree(tries){
-    if (window.THREE){ try { initWorld(); } catch(err){ console.warn('world init failed', err); } return; }
-    if (tries > 60) return;
-    setTimeout(function(){ waitThree(tries + 1); }, 100);
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    waitThree(0);
+    navResponsive();
+    buildMountains();
+    buildRail();
+    handleScroll();
+    buildTrail();
+    setTimeout(buildTrail, 600);
+    window.addEventListener('load', function(){ setTimeout(buildTrail, 200); });
+    animate();
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('mousemove', function(e){
-      mxTarget = (e.clientX / window.innerWidth)  * 2 - 1;
-      myTarget = (e.clientY / window.innerHeight) * 2 - 1;
+      mxTarget = (e.clientX / window.innerWidth) * 2 - 1;
     }, { passive: true });
-    window.addEventListener('resize', onResize);
-    handleScroll();
-    setupReveal();
-    setupDots();
+    window.addEventListener('resize', function(){
+      clearTimeout(_rzT);
+      _rzT = setTimeout(function(){ buildTrail(); navResponsive(); }, 160);
+    });
   });
 })();
 </script>
