@@ -488,6 +488,36 @@ section{position:relative;overflow:hidden}
 .map-frame{position:relative;flex:1;min-height:380px}
 .map-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
+/* ── REVIEWS ── */
+#reviews{background:var(--cream);padding:7rem 2rem;}
+.reviews-inner{max-width:1080px;margin:0 auto;}
+.reviews-heading{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--bark);text-align:center;margin-bottom:2.5rem;}
+.reviews-summary{display:flex;align-items:center;gap:1.5rem;justify-content:center;margin-bottom:3rem;}
+.reviews-score{font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:600;color:var(--teal-deep);line-height:1;}
+.reviews-meta{display:flex;flex-direction:column;gap:.35rem;}
+.reviews-stars{color:#f5a623;font-size:1.35rem;letter-spacing:.1em;}
+.reviews-count{font-family:'Jost',sans-serif;font-size:.8rem;color:var(--stone);text-transform:uppercase;letter-spacing:.1em;}
+.reviews-write-link{font-family:'Jost',sans-serif;font-size:.78rem;color:var(--teal);text-decoration:none;transition:color .2s;}
+.reviews-write-link:hover{color:var(--teal-deep);}
+.reviews-carousel{position:relative;overflow:hidden;margin:0 -1rem;}
+.reviews-track{display:flex;gap:1.5rem;padding:1rem 1rem 2rem;transition:transform .45s cubic-bezier(.25,.1,.25,1);will-change:transform;}
+.review-card{flex:0 0 calc(33.333% - 1rem);min-width:260px;background:#fff;border:1px solid rgba(0,128,128,.12);border-radius:16px;padding:1.8rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 2px 18px rgba(0,0,0,.04);}
+.review-skeleton{height:200px;background:linear-gradient(90deg,#f0ede8 25%,#e8e4df 50%,#f0ede8 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.review-header{display:flex;align-items:center;gap:.85rem;}
+.review-avatar{width:40px;height:40px;border-radius:50%;background:var(--teal-pale);border:1px solid var(--teal-soft);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--teal-deep);flex-shrink:0;overflow:hidden;}
+.review-avatar img{width:100%;height:100%;object-fit:cover;}
+.review-author-name{font-family:'Jost',sans-serif;font-size:.9rem;font-weight:500;color:var(--bark);}
+.review-time{font-family:'Jost',sans-serif;font-size:.75rem;color:var(--stone);}
+.review-stars{color:#f5a623;font-size:.9rem;}
+.review-text{font-family:'Jost',sans-serif;font-size:.85rem;line-height:1.7;color:var(--bark-mid);flex:1;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:#fff;border:1px solid rgba(0,128,128,.25);color:var(--teal);border-radius:50%;width:40px;height:40px;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:all .2s;z-index:2;}
+.carousel-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal);}
+.carousel-prev{left:.5rem;}
+.carousel-next{right:.5rem;}
+.reviews-google-badge{display:flex;align-items:center;gap:.5rem;justify-content:center;margin-top:2rem;font-family:'Jost',sans-serif;font-size:.75rem;color:var(--stone);text-transform:uppercase;letter-spacing:.1em;}
+@media(max-width:768px){.review-card{flex:0 0 calc(85% - 1rem);}.reviews-summary{gap:1rem;}.reviews-score{font-size:3rem;}}
+
 /* ── CTA ── */
 #cta{
   min-height:65vh;position:relative;
@@ -884,6 +914,37 @@ footer{
   </div>
 </section>
 
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="reviews-inner">
+    <div class="section-eyebrow reveal" style="justify-content:center">Guest Voices</div>
+    <h2 class="reviews-heading reveal">What Our Guests Say</h2>
+    <div class="reviews-summary reveal" id="reviewsSummary">
+      <div class="reviews-score" id="reviewsScore">4.5</div>
+      <div class="reviews-meta">
+        <div class="reviews-stars" id="reviewsStars">★★★★★</div>
+        <div class="reviews-count" id="reviewsCount">3,128 Google Reviews</div>
+        <a class="reviews-write-link" href="https://search.google.com/local/writereview?placeid=ChIJkwPgamvRCDkRNbvmo4w7KlE" target="_blank" rel="noopener">Write a review ↗</a>
+      </div>
+    </div>
+    <div class="reviews-carousel reveal" id="reviewsCarousel">
+      <div class="reviews-track" id="reviewsTrack">
+        <div class="review-card review-skeleton"></div>
+        <div class="review-card review-skeleton"></div>
+        <div class="review-card review-skeleton"></div>
+        <div class="review-card review-skeleton"></div>
+        <div class="review-card review-skeleton"></div>
+      </div>
+      <button class="carousel-btn carousel-prev" id="reviewsPrev" aria-label="Previous reviews">&#8592;</button>
+      <button class="carousel-btn carousel-next" id="reviewsNext" aria-label="Next reviews">&#8594;</button>
+    </div>
+    <div class="reviews-google-badge reveal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Powered by Google
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section id="cta">
   <div class="cta-bg" id="ctaBg"></div>
@@ -1130,6 +1191,91 @@ document.querySelectorAll('.poi-chip').forEach(chip=>{
     document.getElementById('locMap').src='https://maps.google.com/maps?q='+q+'&z='+z+'&output=embed';
   });
 });
+
+/* ── Google Reviews ── */
+(function(){
+  const PLACE_ID='ChIJkwPgamvRCDkRNbvmo4w7KlE';
+  const API_KEY='AIzaSyCvOOMpWnGPkoXK_Hd3ARPEoQlKAr5DU14';
+  const track=document.getElementById('reviewsTrack');
+  const prev=document.getElementById('reviewsPrev');
+  const next=document.getElementById('reviewsNext');
+  let cards=[];
+  let idx=0;
+  let perView=()=>window.innerWidth<768?1:window.innerWidth<1024?2:3;
+
+  function starStr(n){return '★'.repeat(n)+'☆'.repeat(5-n);}
+
+  function initials(name){
+    return name.split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('');
+  }
+
+  function renderCards(reviews,rating,total){
+    // Update summary
+    document.getElementById('reviewsScore').textContent=rating.toFixed(1);
+    document.getElementById('reviewsStars').textContent=starStr(Math.round(rating));
+    document.getElementById('reviewsCount').textContent=total.toLocaleString()+' Google Reviews';
+
+    track.innerHTML='';
+    reviews.forEach(r=>{
+      const card=document.createElement('div');
+      card.className='review-card';
+      const avatarInner=r.profile_photo_url
+        ?`<img src="${r.profile_photo_url}" alt="${r.author_name}" loading="lazy">`
+        :`<span>${initials(r.author_name)}</span>`;
+      card.innerHTML=`
+        <div class="review-header">
+          <div class="review-avatar">${avatarInner}</div>
+          <div>
+            <div class="review-author-name">${r.author_name}</div>
+            <div class="review-time">${r.relative_time_description}</div>
+          </div>
+        </div>
+        <div class="review-stars">${starStr(r.rating)}</div>
+        <div class="review-text">${r.text||''}</div>`;
+      track.appendChild(card);
+    });
+    cards=track.querySelectorAll('.review-card');
+    updatePosition();
+  }
+
+  function updatePosition(){
+    const pv=perView();
+    const cardEl=cards[0];
+    if(!cardEl) return;
+    const gap=24; // 1.5rem
+    const w=cardEl.offsetWidth+gap;
+    const maxIdx=Math.max(0,cards.length-pv);
+    idx=Math.min(idx,maxIdx);
+    track.style.transform=`translateX(-${idx*w}px)`;
+    prev.style.opacity=idx===0?'0.35':'1';
+    next.style.opacity=idx>=maxIdx?'0.35':'1';
+  }
+
+  prev.addEventListener('click',()=>{idx=Math.max(0,idx-1);updatePosition();});
+  next.addEventListener('click',()=>{
+    const pv=perView();
+    const maxIdx=Math.max(0,cards.length-pv);
+    idx=Math.min(maxIdx,idx+1);
+    updatePosition();
+  });
+  window.addEventListener('resize',updatePosition);
+
+  // Fetch via Places API
+  const cbName='__googlePlacesCB_'+Date.now();
+  window[cbName]=function(data){
+    if(data&&data.result){
+      const r=data.result;
+      const reviews=(r.reviews||[]).sort((a,b)=>b.rating-a.rating);
+      renderCards(reviews,r.rating,r.user_ratings_total);
+    }
+    delete window[cbName];
+    document.getElementById('_gpScript').remove();
+  };
+  const script=document.createElement('script');
+  script.id='_gpScript';
+  script.src=`https://maps.googleapis.com/maps/api/place/details/js?place_id=${PLACE_ID}&fields=reviews,rating,user_ratings_total&key=${API_KEY}&callback=${cbName}`;
+  document.head.appendChild(script);
+})();
 </script>
 </body>
 </html>
