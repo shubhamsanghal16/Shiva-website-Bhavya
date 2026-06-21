@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" fill="currentColor">
+  <!-- Upper deodar tree crown -->
+  <g>
+    <!-- Top spire -->
+    <polygon points="150,20 142,60 158,60" />
+    <polygon points="150,30 128,75 172,75" />
+    <polygon points="150,45 118,95 182,95" />
+    <!-- Upper branches tier 1 -->
+    <polygon points="150,65 108,110 192,110" />
+    <polygon points="100,100 88,114 112,114" />
+    <polygon points="200,100 188,114 212,114" />
+    <!-- Upper branches tier 2 -->
+    <polygon points="150,85 95,128 205,128" />
+    <polygon points="90,115 72,132 108,132" />
+    <polygon points="210,115 192,132 228,132" />
+    <!-- Trunk between trees -->
+    <rect x="146" y="128" width="8" height="30" />
+  </g>
+
+  <!-- S monogram circle area -->
+  <text x="150" y="200" font-family="Georgia, 'Times New Roman', serif" font-size="90" font-weight="700" text-anchor="middle" dominant-baseline="middle">S</text>
+
+  <!-- Small leaf sprig inside S -->
+  <g transform="translate(138,195) rotate(-20)">
+    <line x1="0" y1="0" x2="0" y2="-18" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    <ellipse cx="-5" cy="-8" rx="4" ry="2.5" transform="rotate(-35,-5,-8)"/>
+    <ellipse cx="5" cy="-13" rx="4" ry="2.5" transform="rotate(35,5,-13)"/>
+    <ellipse cx="-4" cy="-16" rx="3" ry="2" transform="rotate(-25,-4,-16)"/>
+  </g>
+
+  <!-- Lower wide deodar branches -->
+  <g>
+    <!-- Center trunk -->
+    <rect x="146" y="215" width="8" height="25" />
+    <!-- Lower tier 1 -->
+    <polygon points="150,220 75,248 225,248" />
+    <polygon points="72,238 50,258 94,258" />
+    <polygon points="228,238 206,258 250,258" />
+    <!-- Lower tier 2 -->
+    <polygon points="150,240 60,272 240,272" />
+    <polygon points="55,260 30,282 80,282" />
+    <polygon points="245,260 220,282 270,282" />
+    <!-- Lower tier 3 -->
+    <polygon points="150,262 50,290 250,290" />
+    <polygon points="46,278 22,300 70,300" />
+    <polygon points="254,278 230,300 278,300" />
+    <!-- Base trunk -->
+    <rect x="146" y="290" width="8" height="20" />
+    <!-- Root spread -->
+    <polygon points="150,308 128,318 172,318" />
+  </g>
+
+  <!-- Hotel name text -->
+  <text x="150" y="355" font-family="'Arial', 'Helvetica', sans-serif" font-size="22" font-weight="700" text-anchor="middle" letter-spacing="4">SHIVA CONTINENTAL</text>
+  <text x="150" y="385" font-family="'Arial', 'Helvetica', sans-serif" font-size="16" font-weight="700" text-anchor="middle" letter-spacing="5">• MUSSOORIE •</text>
+</svg>

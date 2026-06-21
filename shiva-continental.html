@@ -33,24 +33,18 @@ body{
 /* LOADER */
 #loader{
   position:fixed;inset:0;
-  background:var(--cream);
+  background:#fff;
   display:flex;align-items:center;justify-content:center;
   z-index:9999;transition:opacity .8s ease,visibility .8s ease;
 }
 #loader.gone{opacity:0;visibility:hidden;pointer-events:none}
 .loader-inner{text-align:center}
-.loader-text{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(2rem,5vw,3.8rem);
-  color:var(--teal);letter-spacing:.3em;
-  opacity:0;animation:fadeWord 2.6s ease forwards;
+.loader-logo-img{
+  width:180px;height:auto;
+  color:var(--bark);
+  opacity:0;animation:loaderRise 2s ease forwards;
 }
-.loader-sub{
-  font-size:.72rem;letter-spacing:.35em;text-transform:uppercase;
-  color:var(--stone);margin-top:.8rem;
-  opacity:0;animation:fadeWord 2.6s .3s ease forwards;
-}
-@keyframes fadeWord{0%{opacity:0;transform:translateY(18px)}60%{opacity:1;transform:translateY(0)}100%{opacity:1}}
+@keyframes loaderRise{0%{opacity:0;transform:translateY(20px)}60%{opacity:1;transform:translateY(0)}100%{opacity:1}}
 
 /* NAV */
 nav{
@@ -682,8 +676,7 @@ footer{
 <!-- LOADER -->
 <div id="loader">
   <div class="loader-inner">
-    <div class="loader-text">Shiva Continental</div>
-    <div class="loader-sub">Mussoorie · Uttarakhand</div>
+    <img src="assets/logo.svg" alt="Shiva Continental" class="loader-logo-img">
   </div>
 </div>
 
@@ -696,7 +689,10 @@ footer{
 
 <!-- NAV -->
 <nav id="main-nav">
-  <a href="#" class="nav-logo">Shiva Continental</a>
+  <a href="shiva-continental.html" class="nav-logo" style="display:flex;align-items:center;gap:.6rem">
+    <img src="assets/logo.svg" alt="Shiva Continental" style="height:38px;width:auto;color:#fff" id="navLogoImg">
+    <span>Shiva Continental</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#story">Story</a></li>
     <li><a href="about.html">About</a></li>
@@ -705,7 +701,7 @@ footer{
     <li><a href="#kitchen">Dine</a></li>
     <li><a href="#location">Location</a></li>
   </ul>
-  <button class="nav-book" id="openBooking">Booking Engine</button>
+  <button class="nav-book" id="openBooking">Book Now</button>
 </nav>
 
 <!-- BOOKING MODAL -->
@@ -731,7 +727,7 @@ footer{
   </div>
 </div>
 
-<!-- HERO (full-bleed photo — dark overlay on photo only, not body) -->
+<!-- HERO (full-bleed photo, dark overlay on photo only, not body) -->
 <section id="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-overlay"></div>
@@ -756,7 +752,7 @@ footer{
     <div class="reveal-left">
       <div class="section-eyebrow">Our Story</div>
       <h2 class="story-heading">A Place with<br>a Soul</h2>
-      <p class="story-body">Welcome to a stay that feels like home. From the moment you arrive, our team welcomes you with warm smiles and genuine care — not just as a guest, but as part of the family.</p>
+      <p class="story-body">Welcome to a stay that feels like home. From the moment you arrive, our team welcomes you with warm smiles and genuine care, not just as a guest, but as part of the family.</p>
       <p class="story-body">Wake up to serene hill views from your window, sip your tea in peaceful comfort, and in just two minutes, step into the vibrant buzz of Mall Road. It's the perfect balance of calm and connection.</p>
       <div class="stat-row">
         <div class="stat-item"><span class="stat-num">37</span><span class="stat-label">Cosy Rooms</span></div>
@@ -777,7 +773,7 @@ footer{
   <div class="rooms-header reveal">
     <div class="section-eyebrow">Accommodations</div>
     <h2>Rooms That Fit Every Journey</h2>
-    <p>From cosy corners to balcony views — designed for slow mornings, mountain light, and warm comfort.</p>
+    <p>From cosy corners to balcony views, designed for slow mornings, mountain light, and warm comfort.</p>
   </div>
   <div class="rooms-grid zoom-section">
     <div class="room-card">
@@ -877,7 +873,7 @@ footer{
   <div class="kitchen-content">
     <div class="section-eyebrow reveal" style="justify-content:center;color:rgba(200,230,230,.85)">Deodar Kitchen</div>
     <h2 class="kitchen-heading reveal">Comfort<br>Comes Cooked<br>Here</h2>
-    <p class="kitchen-body reveal">We don't just cook food. We serve stories of hill kitchens, grandma recipes, and warmth that lingers long after the meal. From homestyle sabzi to steaming parathas — every plate carries a memory you'll want to take home.</p>
+    <p class="kitchen-body reveal">We don't just cook food. We serve stories of hill kitchens, grandma recipes, and warmth that lingers long after the meal. From homestyle sabzi to steaming parathas, every plate carries a memory you'll want to take home.</p>
     <div class="food-tags reveal">
       <span class="food-tag">Hill Kitchen Recipes</span>
       <span class="food-tag">Complimentary Breakfast</span>
@@ -887,7 +883,7 @@ footer{
       <span class="food-tag">Uttarakhand Flavours</span>
     </div>
     <div class="reveal">
-      <a href="https://www.shivacontinental.in/deodar-kitchen/deodar-kitchen.html" target="_blank" class="btn-ghost">Come Dine With Us</a>
+      <a href="deodar-kitchen.html" class="btn-ghost">Come Dine With Us</a>
     </div>
   </div>
 </section>
@@ -966,7 +962,7 @@ footer{
   <div class="location-text">
     <div class="section-eyebrow reveal">Find Us</div>
     <h2 class="location-heading reveal">At the Heart<br>of Mussoorie</h2>
-    <p class="location-body reveal">Nestled in Kulri on the famed Mall Road, Hotel Shiva Continental places you at the pulse of Mussoorie — with the tranquility of the hills right at your doorstep.</p>
+    <p class="location-body reveal">Nestled in Kulri on the famed Mall Road, Hotel Shiva Continental places you at the pulse of Mussoorie, with the tranquility of the hills right at your doorstep.</p>
     <ul class="location-points reveal">
       <li>Kulri, The Mall Road, Mussoorie</li>
       <li>Uttarakhand – 248179</li>
@@ -975,7 +971,7 @@ footer{
       <li>Close to Kempty Falls route</li>
     </ul>
     <div class="loc-btns reveal">
-      <a href="https://www.shivacontinental.in/location.html" target="_blank" class="btn-primary">Get Directions</a>
+      <a href="contact.html" class="btn-primary">Get Directions</a>
       <a href="tel:+917042288289" class="btn-teal-outline">Call Us</a>
     </div>
   </div>
@@ -1050,7 +1046,10 @@ footer{
 <!-- FOOTER -->
 <footer>
   <div>
-    <div class="footer-logo">Shiva Continental</div>
+    <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.3rem">
+      <img src="assets/logo.svg" alt="Shiva Continental" style="height:48px;width:auto;color:#fff;opacity:.9">
+      <div class="footer-logo">Shiva Continental</div>
+    </div>
     <div class="footer-tagline">Kulri, Mall Road · Mussoorie · Uttarakhand</div>
   </div>
   <ul class="footer-links">
@@ -1058,7 +1057,7 @@ footer{
     <li><a href="#dine">Dine</a></li>
     <li><a href="gardenica.html">Gardenica</a></li>
     <li><a href="gardenica.html#gallery">Gallery</a></li>
-    <li><a href="https://www.shivacontinental.in/explore-mussoorie.html" target="_blank">Explore</a></li>
+    <li><a href="travel-agent.html">Travel Agents</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="footer-copy">© 2025 Hotel Shiva Continental. Mussoorie, India.</div>
@@ -1143,7 +1142,7 @@ setInterval(spawnLeaf,4500);
 const amenityData = {
   'room-service': {
     title: 'Room Service',
-    desc: 'Craving a hot cup of chai at midnight or a hearty meal after a long day of exploring the hills? Our room service brings the warmth of Deodar Kitchen straight to your door — any time you need it.',
+    desc: 'Craving a hot cup of chai at midnight or a hearty meal after a long day of exploring the hills? Our room service brings the warmth of Deodar Kitchen straight to your door, any time you need it.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4',
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d',
@@ -1152,7 +1151,7 @@ const amenityData = {
   },
   'breakfast': {
     title: 'Complimentary Breakfast',
-    desc: 'Start every morning the Shiva way — a generous complimentary breakfast featuring fresh hill-kitchen dishes, warm parathas, seasonal fruits, eggs your way, and steaming chai with a view of the valley mist.',
+    desc: 'Start every morning the Shiva way, a generous complimentary breakfast featuring fresh hill-kitchen dishes, warm parathas, seasonal fruits, eggs your way, and steaming chai with a view of the valley mist.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3326/x_0,y_512,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Our_multi_cuisine_restaurant_in_Mussourie_4',
@@ -1161,7 +1160,7 @@ const amenityData = {
   },
   'recreation': {
     title: 'Recreational Area',
-    desc: 'Unwind between sightseeing adventures in our recreational lounge — a comfortable space for games, reading, or simply gathering with family. The hills are best enjoyed at a slow, joyful pace.',
+    desc: 'Unwind between sightseeing adventures in our recreational lounge, a comfortable space for games, reading, or simply gathering with family. The hills are best enjoyed at a slow, joyful pace.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1919,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/4_6efe58d9',
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
@@ -1170,7 +1169,7 @@ const amenityData = {
   },
   'wifi': {
     title: 'Free Wi-Fi',
-    desc: 'Stay connected with high-speed complimentary Wi-Fi throughout the property — whether you\'re sharing your mountain memories on social media, catching up on work, or video-calling loved ones from the valley view.',
+    desc: 'Stay connected with high-speed complimentary Wi-Fi throughout the property, whether you\'re sharing your mountain memories on social media, catching up on work, or video-calling loved ones from the valley view.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114',
@@ -1179,7 +1178,7 @@ const amenityData = {
   },
   'garden': {
     title: 'Gardenica Garden',
-    desc: 'Our beloved upcycled garden — where broken things bloom again. Old kettles, cracked shoes, forgotten buckets, all repurposed into planters bursting with colour. A living artwork tended with love every single day.',
+    desc: 'Our beloved upcycled garden, where broken things bloom again. Old kettles, cracked shoes, forgotten buckets, all repurposed into planters bursting with colour. A living artwork tended with love every single day.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23',
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/1_dbf7366d',
@@ -1197,7 +1196,7 @@ const amenityData = {
   },
   'housekeeping': {
     title: 'Daily Housekeeping',
-    desc: 'Your comfort is our quiet promise. Our housekeeping team keeps every room fresh, spotless and welcoming — so you return from your adventures to a space that feels like it was just made for you.',
+    desc: 'Your comfort is our quiet promise. Our housekeeping team keeps every room fresh, spotless and welcoming, so you return from your adventures to a space that feels like it was just made for you.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/Rooms_at_our_hotel_near_Mall_Road_Mussourie_267',
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_513,w_5000,h_2812,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/TWC_5474-HDR_qjepdb',
@@ -1206,7 +1205,7 @@ const amenityData = {
   },
   'parking': {
     title: 'Parking Facility',
-    desc: 'Arriving by car? We have dedicated parking to take the hassle out of hill-town driving. Secure your vehicle and step straight into the calm of our property — no circling, no stress.',
+    desc: 'Arriving by car? We have dedicated parking to take the hassle out of hill-town driving. Secure your vehicle and step straight into the calm of our property, no circling, no stress.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23',
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1920,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/3_5ba27cb9',
@@ -1224,7 +1223,7 @@ const amenityData = {
   },
   'location': {
     title: 'Central Location',
-    desc: 'Perched on Kulri, Mall Road — the heartbeat of Mussoorie — we sit two minutes\' walk from the promenade, shops, and viewpoints. The hills are at your feet, and everything worth seeing is right around the corner.',
+    desc: 'Perched on Kulri, Mall Road, the heartbeat of Mussoorie, we sit two minutes\' walk from the promenade, shops, and viewpoints. The hills are at your feet, and everything worth seeing is right around the corner.',
     imgs: [
       'https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1920,h_1080,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/3_5ba27cb9',
       'https://assets.simplotel.com/simplotel/image/upload/w_5000,h_3327/x_0,y_257,w_5000,h_2813,r_0,c_crop,q_80,fl_progressive/w_1237,f_auto,c_fit/hotel-shiva-continental-mussoorie/Terrace_garden_at_our_hotel_in_Mussourie_23',
