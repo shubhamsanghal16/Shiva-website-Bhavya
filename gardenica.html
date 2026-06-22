@@ -35,6 +35,10 @@ nav{
 nav.scrolled{background:rgba(250,247,242,.94);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.07)}
 .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:#fff;letter-spacing:.12em;text-decoration:none;transition:color .4s}
 nav.scrolled .nav-logo{color:var(--bark)}
+nav .logo-dark{display:none}
+nav.scrolled .logo-light{display:none!important}
+nav.scrolled .logo-dark{display:block!important}
+
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);text-decoration:none;transition:color .3s}
 nav.scrolled .nav-links a{color:var(--bark-mid)}
@@ -245,7 +249,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.55);padding:3rem 3rem 2rem
 </style>
 </head>
 <body>
-<div id="sc-page-loader"><img src="assets/logo.svg" alt="Shiva Continental" class="sc-loader-logo"></div>
+<div id="sc-page-loader"><img src="assets/logo-black.png" alt="Shiva Continental" class="sc-loader-logo"></div>
 
 
 <!-- BOOKING MODAL -->
@@ -260,7 +264,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.55);padding:3rem 3rem 2rem
 </div>
 
 <nav id="nav">
-  <a href="shiva-continental.html" class="nav-logo" style="display:flex;align-items:center;gap:.5rem"><img src="assets/logo.svg" alt="" id="navLogoImg" style="height:32px;width:auto"> Shiva Continental</a>
+  <a href="shiva-continental.html" class="nav-logo" style="display:flex;align-items:center;gap:.5rem"><img src="assets/logo-white.png" alt="" class="logo-light" style="height:32px;width:auto"><img src="assets/logo-black.png" alt="" class="logo-dark" style="height:32px;width:auto;display:none"> Shiva Continental</a>
   <ul class="nav-links">
     <li><a href="shiva-continental.html#story">Story</a></li>
     <li><a href="about.html">About</a></li>
@@ -409,7 +413,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.55);padding:3rem 3rem 2rem
 <footer>
   <div class="footer-inner">
     <div>
-      <div class="footer-brand" style="display:flex;align-items:center;gap:.5rem"><img src="assets/logo.svg" alt="" style="height:28px;filter:brightness(10)"> Shiva Continental</div>
+      <div class="footer-brand" style="display:flex;align-items:center;gap:.5rem"><img src="assets/logo-white.png" alt="" style="height:28px"> Shiva Continental</div>
       <div class="footer-tagline">Mussoorie · Since 1985</div>
     </div>
     <ul class="footer-links">
