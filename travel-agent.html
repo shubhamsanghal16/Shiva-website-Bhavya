@@ -315,7 +315,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 </footer>
 
 <script>
-window.addEventListener('load',()=>setTimeout(()=>document.getElementById('page-loader').classList.add('gone'),1800));
+document.addEventListener('DOMContentLoaded',()=>document.getElementById('page-loader').classList.add('gone'));
 const DJUBO='https://www.secure-booking-engine.com/accounts/7XngYDeENYAAJH1ayOVj_Q/properties/O7MnuV8lpjv85dWWR1z5DQ/booking-engine/web/source/4wsctBw6Oq6j-g9XuxeRzQ/cart/KP1jvaTifw8HPTAxWGR6gQ/#!/rooms';
 const modal=document.getElementById('bkModal');
 const frame=document.getElementById('bkmFrame');

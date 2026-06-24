@@ -19,9 +19,9 @@
   @keyframes scLeafSway{0%{transform:rotate(-14deg) translateX(-3px)}50%{transform:rotate(13deg) translateX(3px)}100%{transform:rotate(-14deg) translateX(-3px)}}
   @keyframes scLeafFlutter{0%{transform:rotate(-22deg) scaleX(1)}25%{transform:rotate(6deg) scaleX(.55)}50%{transform:rotate(24deg) scaleX(.95)}75%{transform:rotate(4deg) scaleX(.6)}100%{transform:rotate(-22deg) scaleX(1)}}
 
-#sc-page-loader{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity .8s,visibility .8s}
+#sc-page-loader{position:fixed;inset:0;background:#fff;display:flex;align-items:center;justify-content:center;z-index:99999;transition:opacity .15s,visibility .15s}
 #sc-page-loader.done{opacity:0;visibility:hidden}
-.sc-loader-logo{width:160px;opacity:0;animation:loaderRise 2s ease forwards}
+.sc-loader-logo{width:160px;opacity:0;animation:loaderRise .3s ease forwards}
 @keyframes loaderRise{0%{opacity:0;transform:translateY(20px)}60%{opacity:1;transform:translateY(0)}100%{opacity:1}}
 #bkModal{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;background:#faf7f2;opacity:0;pointer-events:none;transition:opacity .35s}
 #bkModal.open{opacity:1;pointer-events:all}
@@ -472,6 +472,6 @@ nav#sc-nav.scrolled,nav#sc-nav{background:rgba(250,247,242,.92);backdrop-filter:
   document.addEventListener('keydown',function(e){if(e.key==='Escape') closeModal();});
 })();
 </script>
-<script>window.addEventListener('load',function(){var l=document.getElementById('sc-page-loader');if(l){setTimeout(function(){l.classList.add('done');},600);}});</script>
+<script>document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('sc-page-loader');if(l)l.classList.add('done');});</script>
 </body>
 </html>
