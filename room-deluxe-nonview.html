@@ -76,14 +76,25 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .bkm-spinner{width:40px;height:40px;border:3px solid var(--teal-soft);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .bkm-loader-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--bark-mid)}
+
+/* Photo Gallery */
+.room-gallery{max-width:1100px;margin:0 auto;padding:3rem 2rem 4rem}
+.room-gallery h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--bark);margin-bottom:1.4rem}
+.gallery-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:.7rem;border-radius:10px;overflow:hidden}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;transition:opacity .3s}
+.gallery-grid img:hover{opacity:.88}
+.gallery-grid img:first-child{grid-row:span 2;min-height:340px}
+.gallery-grid img:not(:first-child){min-height:165px}
+@media(max-width:640px){.gallery-grid{grid-template-columns:1fr 1fr}.gallery-grid img:first-child{grid-row:1}.gallery-grid img{min-height:140px!important}}
+
 </style>
-<!-- GA4: replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<!-- GA4: replace G-B2QPQKD8MP with your Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
 <script>
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments)}
 gtag("js",new Date());
-gtag("config","G-XXXXXXXXXX",{send_page_view:true,link_attribution:true});
+gtag("config","G-B2QPQKD8MP",{send_page_view:true,link_attribution:true});
 document.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll("#openBooking,.open-booking,.nav-book").forEach(function(btn){
     btn.addEventListener("click",function(){gtag("event","booking_open",{page_path:location.pathname});});
@@ -116,7 +127,7 @@ document.addEventListener("DOMContentLoaded",function(){
 </div>
 
 <div class="room-hero">
-  <img class="room-hero-img" src="https://assets.simplotel.com/simplotel/image/upload/x_0,y_0,w_1440,h_810,r_0,c_crop,q_80,fl_progressive/w_900,f_auto,c_fit/hotel-shiva-continental-mussoorie/2_cb516114" alt="Deluxe Non View">
+  <img class="room-hero-img" src="https://drive.google.com/thumbnail?id=1qTVoT6gXewEb5cHWuCOciQrnBUtJO6YB&sz=w1400-h900" alt="Deluxe Non View">
   <div class="room-hero-overlay"></div>
   <div class="room-hero-content">
     <div class="room-hero-size">200 sq.ft. · Hotel Shiva Continental</div>
@@ -159,6 +170,19 @@ document.addEventListener("DOMContentLoaded",function(){
           <li class="amenity-item">Laundry service</li>
       </ul>
     </div>
+  </div>
+</div>
+
+
+<!-- PHOTO GALLERY -->
+<div class="room-gallery">
+  <h3>Photo Gallery</h3>
+  <div class="gallery-grid">
+    <img src="https://drive.google.com/thumbnail?id=1dz64B7FSoC2tAJIrXQYfDTrRnhTGQIha&sz=w1200-h700" alt="Room photo" loading="lazy">
+    <img src="https://drive.google.com/thumbnail?id=1M-i8jIssC_4XkXooTiHZaP24nQ4cZExu&sz=w1200-h700" alt="Room photo" loading="lazy">
+    <img src="https://drive.google.com/thumbnail?id=1CndHczUHXj9kvlWUdWPC9DZVEJ1v7yOx&sz=w1200-h700" alt="Room photo" loading="lazy">
+    <img src="https://drive.google.com/thumbnail?id=165LMf03uMAt9nwthf47EBqui2ojSMxXc&sz=w1200-h700" alt="Room photo" loading="lazy">
+    <img src="https://drive.google.com/thumbnail?id=1EHJvCI7x6xiCj84Oq3_RAx5sfp4dVbmp&sz=w1200-h700" alt="Room photo" loading="lazy">
   </div>
 </div>
 

@@ -189,7 +189,7 @@ table.data-table td.num{text-align:right;color:var(--muted)}
         <span id="gaStatus" style="color:var(--muted);font-size:.78rem">Not connected — enter your GA4 Property ID below and click Connect.</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:.5rem;min-width:220px">
-        <input id="ga4PropertyId" class="range-select" style="width:100%;padding:.5rem .75rem" placeholder="GA4 Property ID (e.g. 123456789)">
+        <input id="ga4PropertyId" class="range-select" style="width:100%;padding:.5rem .75rem" placeholder="GA4 Property ID" value="544161483">
         <input id="ga4ClientId" class="range-select" style="width:100%;padding:.5rem .75rem" placeholder="OAuth Client ID (.apps.googleusercontent.com)">
         <button class="oauth-btn" id="connectGA">Connect Google Analytics</button>
       </div>
@@ -200,9 +200,9 @@ table.data-table td.num{text-align:right;color:var(--muted)}
       <h3>One-Time Setup (5 minutes)</h3>
       <ol>
         <li>
-          <strong>Add GA4 tracking to your site</strong> — Go to <a href="https://analytics.google.com" target="_blank">analytics.google.com</a> → Admin → Create Property → Web. Copy your <strong>Measurement ID</strong> (<code>G-XXXXXXXXXX</code>) and paste it in the GA4 Measurement ID field below (for adding to page code).
+          <strong>Add GA4 tracking to your site</strong> — Go to <a href="https://analytics.google.com" target="_blank">analytics.google.com</a> → Admin → Create Property → Web. Copy your <strong>Measurement ID</strong> (<code>G-B2QPQKD8MP</code>) and paste it in the GA4 Measurement ID field below (for adding to page code).
           <div class="config-row">
-            <input id="cfgMeasurementId" placeholder="G-XXXXXXXXXX (Measurement ID for tracking)">
+            <input id="cfgMeasurementId" placeholder="G-B2QPQKD8MP (Measurement ID for tracking)">
             <button class="save-cfg-btn" id="saveMeasurementId">Save</button>
           </div>
         </li>
@@ -317,7 +317,7 @@ if(sessionStorage.getItem('sc_admin')==='1'){
 let GA_PROPERTY='';let GA_CLIENT='';let accessToken='';
 
 function init(){
-  GA_PROPERTY=localStorage.getItem('sc_ga_prop')||'';
+  GA_PROPERTY=localStorage.getItem('sc_ga_prop')||'544161483';
   GA_CLIENT=localStorage.getItem('sc_ga_client')||'';
   if(GA_PROPERTY) document.getElementById('ga4PropertyId').value=GA_PROPERTY;
   if(GA_CLIENT) document.getElementById('ga4ClientId').value=GA_CLIENT;
