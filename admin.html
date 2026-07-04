@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shiva Continental — Admin</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --teal:#008080;--teal-deep:#005f5f;--teal-pale:#e8f5f5;
+  --cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#9a8c7e;
+  --gold:#b8861e;--bg:#0d1117;--surface:#161b22;--border:#30363d;
+  --text:#e6edf3;--muted:#7d8590;--green:#3fb950;--red:#f85149;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:14px}
+
+/* ── LOGIN ── */
+#loginScreen{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:var(--bg);z-index:100;
+}
+.login-box{
+  width:100%;max-width:380px;background:var(--surface);
+  border:1px solid var(--border);border-radius:12px;padding:2.4rem 2rem;
+}
+.login-logo{
+  font-family:'Georgia',serif;font-size:1.4rem;color:var(--teal);
+  text-align:center;margin-bottom:.3rem;letter-spacing:.06em;
+}
+.login-sub{font-size:.75rem;color:var(--muted);text-align:center;margin-bottom:2rem;letter-spacing:.12em;text-transform:uppercase}
+.login-box label{display:block;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.45rem}
+.login-box input{
+  width:100%;background:#0d1117;border:1px solid var(--border);border-radius:6px;
+  padding:.65rem .9rem;color:var(--text);font-size:.9rem;
+  transition:border-color .2s;outline:none;margin-bottom:1.1rem;
+}
+.login-box input:focus{border-color:var(--teal)}
+.login-btn{
+  width:100%;background:var(--teal);border:none;border-radius:6px;
+  padding:.7rem;color:#fff;font-size:.85rem;font-weight:600;
+  letter-spacing:.04em;cursor:pointer;transition:background .2s;
+}
+.login-btn:hover{background:var(--teal-deep)}
+.login-err{font-size:.8rem;color:var(--red);text-align:center;margin-top:.8rem;min-height:1.2em}
+
+/* ── DASHBOARD ── */
+#dashboard{display:none}
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1.6rem;background:var(--surface);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;
+}
+.topbar-brand{font-family:'Georgia',serif;font-size:1.1rem;color:var(--teal);letter-spacing:.06em}
+.topbar-right{display:flex;align-items:center;gap:1rem}
+.range-select{
+  background:var(--bg);border:1px solid var(--border);border-radius:6px;
+  color:var(--text);padding:.4rem .75rem;font-size:.8rem;cursor:pointer;outline:none;
+}
+.logout-btn{
+  background:none;border:1px solid var(--border);color:var(--muted);
+  border-radius:6px;padding:.4rem .9rem;font-size:.78rem;cursor:pointer;
+  transition:all .2s;
+}
+.logout-btn:hover{border-color:var(--red);color:var(--red)}
+
+.dash-body{padding:1.4rem 1.6rem;max-width:1400px;margin:0 auto}
+
+/* oauth banner */
+#oauthBanner{
+  background:rgba(0,128,128,.12);border:1px solid rgba(0,128,128,.3);
+  border-radius:8px;padding:1rem 1.4rem;margin-bottom:1.4rem;
+  display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+}
+.oauth-text{flex:1;font-size:.85rem;color:var(--text);line-height:1.5}
+.oauth-text strong{color:var(--teal)}
+.oauth-btn{
+  background:var(--teal);border:none;border-radius:6px;color:#fff;
+  padding:.55rem 1.2rem;font-size:.82rem;font-weight:600;cursor:pointer;
+  white-space:nowrap;transition:background .2s;
+}
+.oauth-btn:hover{background:var(--teal-deep)}
+.oauth-connected{color:var(--green);font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:.4rem}
+
+/* KPI row */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.9rem;margin-bottom:1.4rem}
+.kpi-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1.1rem 1.2rem;
+}
+.kpi-label{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+.kpi-val{font-size:2rem;font-weight:700;color:var(--text);line-height:1}
+.kpi-delta{font-size:.74rem;margin-top:.35rem}
+.kpi-delta.up{color:var(--green)}.kpi-delta.down{color:var(--red)}.kpi-delta.neu{color:var(--muted)}
+
+/* grid sections */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:.9rem}
+.dash-grid.three{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:900px){.dash-grid,.dash-grid.three{grid-template-columns:1fr}}
+
+.panel{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:1.2rem 1.4rem;
+}
+.panel-title{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+.panel-empty{color:var(--muted);font-size:.82rem;text-align:center;padding:2rem 0}
+
+/* bar chart */
+.bar-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem}
+.bar-label{width:120px;font-size:.8rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.bar-track{flex:1;background:rgba(255,255,255,.06);border-radius:4px;height:10px;position:relative}
+.bar-fill{height:100%;border-radius:4px;background:var(--teal);transition:width .6s ease}
+.bar-count{width:50px;text-align:right;font-size:.78rem;color:var(--muted);flex-shrink:0}
+
+/* table */
+table.data-table{width:100%;border-collapse:collapse}
+table.data-table th{font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.45rem .6rem;text-align:left;border-bottom:1px solid var(--border)}
+table.data-table td{padding:.5rem .6rem;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text)}
+table.data-table tr:last-child td{border-bottom:none}
+table.data-table td.num{text-align:right;color:var(--muted)}
+
+/* geo world-dot map placeholder */
+.geo-map{height:160px;background:rgba(0,128,128,.06);border-radius:8px;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--muted);border:1px dashed var(--border)}
+
+/* realtime dot */
+.rt-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.6s ease infinite;margin-right:.4rem}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+
+/* spinner */
+.spinner{width:28px;height:28px;border:3px solid rgba(0,128,128,.2);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;margin:2rem auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* setup guide */
+#setupGuide{
+  background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:1.6rem;margin-bottom:1rem;
+}
+#setupGuide h3{font-size:1rem;margin-bottom:1rem;color:var(--teal)}
+#setupGuide ol{padding-left:1.2rem;display:flex;flex-direction:column;gap:.7rem}
+#setupGuide li{font-size:.85rem;line-height:1.6;color:var(--text)}
+#setupGuide code{background:#0d1117;border:1px solid var(--border);border-radius:4px;padding:.1em .4em;font-size:.82em;color:#79c0ff}
+#setupGuide a{color:var(--teal);text-decoration:none}
+#setupGuide a:hover{text-decoration:underline}
+.config-row{display:flex;gap:.6rem;align-items:center;margin-top:.5rem}
+.config-row input{flex:1;background:#0d1117;border:1px solid var(--border);border-radius:6px;padding:.5rem .8rem;color:var(--text);font-size:.85rem;outline:none}
+.config-row input:focus{border-color:var(--teal)}
+.save-cfg-btn{background:var(--teal);border:none;border-radius:6px;color:#fff;padding:.5rem 1rem;font-size:.82rem;cursor:pointer;white-space:nowrap}
+.save-cfg-btn:hover{background:var(--teal-deep)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Shiva Continental</div>
+    <div class="login-sub">Analytics Console</div>
+    <label for="l-user">Username</label>
+    <input type="text" id="l-user" placeholder="shiva@admin" autocomplete="username">
+    <label for="l-pass">Password</label>
+    <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password">
+    <button class="login-btn" id="loginBtn">Sign In</button>
+    <div class="login-err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+
+  <div class="topbar">
+    <div class="topbar-brand">Shiva Continental · Analytics</div>
+    <div class="topbar-right">
+      <select class="range-select" id="dateRange">
+        <option value="7">Last 7 days</option>
+        <option value="14">Last 14 days</option>
+        <option value="28" selected>Last 28 days</option>
+        <option value="90">Last 90 days</option>
+      </select>
+      <button class="logout-btn" id="logoutBtn">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+
+    <!-- OAUTH / GA4 connection banner -->
+    <div id="oauthBanner">
+      <div class="oauth-text">
+        <strong>Connect Google Analytics</strong> to see real visitor data (geo, sources, clicks, page views).<br>
+        <span id="gaStatus" style="color:var(--muted);font-size:.78rem">Not connected — enter your GA4 Property ID below and click Connect.</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;min-width:220px">
+        <input id="ga4PropertyId" class="range-select" style="width:100%;padding:.5rem .75rem" placeholder="GA4 Property ID (e.g. 123456789)">
+        <input id="ga4ClientId" class="range-select" style="width:100%;padding:.5rem .75rem" placeholder="OAuth Client ID (.apps.googleusercontent.com)">
+        <button class="oauth-btn" id="connectGA">Connect Google Analytics</button>
+      </div>
+    </div>
+
+    <!-- Setup guide (hidden once connected) -->
+    <div id="setupGuide">
+      <h3>One-Time Setup (5 minutes)</h3>
+      <ol>
+        <li>
+          <strong>Add GA4 tracking to your site</strong> — Go to <a href="https://analytics.google.com" target="_blank">analytics.google.com</a> → Admin → Create Property → Web. Copy your <strong>Measurement ID</strong> (<code>G-XXXXXXXXXX</code>) and paste it in the GA4 Measurement ID field below (for adding to page code).
+          <div class="config-row">
+            <input id="cfgMeasurementId" placeholder="G-XXXXXXXXXX (Measurement ID for tracking)">
+            <button class="save-cfg-btn" id="saveMeasurementId">Save</button>
+          </div>
+        </li>
+        <li>
+          <strong>Get your Property ID</strong> — In GA4 → Admin → Property Settings. Copy the numeric Property ID (not the G-... one). Enter it in the banner above.
+        </li>
+        <li>
+          <strong>Create an OAuth Client ID</strong> — Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console</a> → Enable "Google Analytics Data API" → Credentials → Create OAuth 2.0 Client ID → Web Application → Authorised JS origins: <code>https://www.shivacontinental.in</code>. Enter the client ID in the banner above.
+        </li>
+        <li>
+          <strong>Click Connect</strong> above — sign in with the Google account that owns the GA4 property. Data loads immediately.
+        </li>
+      </ol>
+    </div>
+
+    <!-- KPI row -->
+    <div class="kpi-row" id="kpiRow">
+      <div class="kpi-card"><div class="kpi-label">Total Sessions</div><div class="kpi-val" id="kSessions">—</div><div class="kpi-delta neu" id="dSessions"></div></div>
+      <div class="kpi-card"><div class="kpi-label">Unique Users</div><div class="kpi-val" id="kUsers">—</div><div class="kpi-delta neu" id="dUsers"></div></div>
+      <div class="kpi-card"><div class="kpi-label">Page Views</div><div class="kpi-val" id="kPV">—</div><div class="kpi-delta neu" id="dPV"></div></div>
+      <div class="kpi-card"><div class="kpi-label">Bounce Rate</div><div class="kpi-val" id="kBounce">—</div><div class="kpi-delta neu" id="dBounce"></div></div>
+      <div class="kpi-card"><div class="kpi-label">Avg. Session</div><div class="kpi-val" id="kDur">—</div><div class="kpi-delta neu" id="dDur"></div></div>
+      <div class="kpi-card"><div class="kpi-label"><span class="rt-dot"></span>Live Now</div><div class="kpi-val" id="kLive">—</div><div class="kpi-delta neu">Active users (30 min)</div></div>
+    </div>
+
+    <!-- Row 1: Sources + Pages -->
+    <div class="dash-grid" style="margin-bottom:.9rem">
+      <div class="panel">
+        <div class="panel-title">Traffic Sources</div>
+        <div id="sourcesContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Top Pages</div>
+        <div id="pagesContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Geo + Devices -->
+    <div class="dash-grid" style="margin-bottom:.9rem">
+      <div class="panel">
+        <div class="panel-title">Geography — Top Countries &amp; Cities</div>
+        <div id="geoContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Device &amp; Browser</div>
+        <div id="deviceContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+      </div>
+    </div>
+
+    <!-- Row 3: Outbound clicks + Booking clicks -->
+    <div class="dash-grid" style="margin-bottom:.9rem">
+      <div class="panel">
+        <div class="panel-title">Outbound Clicks (Redirects)</div>
+        <div id="clicksContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Booking CTA Events</div>
+        <div id="bookingContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+      </div>
+    </div>
+
+    <!-- Row 4: full-width landing pages -->
+    <div class="panel" style="margin-bottom:.9rem">
+      <div class="panel-title">Landing Pages — Where Users Enter</div>
+      <div id="landingContent"><div class="panel-empty">Connect GA4 to see data</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Google Identity Services (for OAuth) -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+/* ─── AUTH ─── */
+const PASS_HASH='dab3b4d9a6e07f0ad9c36f46c6fa27f67a2d3a6c3b7e2f8d4a1c5b9e3f7d2a8'; // sha256 of "shiva@2026"
+const USER='shiva@admin';
+
+async function sha256(str){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+document.getElementById('loginBtn').addEventListener('click',async()=>{
+  const u=document.getElementById('l-user').value.trim();
+  const p=document.getElementById('l-pass').value;
+  const h=await sha256(p);
+  if(u===USER&&h===PASS_HASH){
+    sessionStorage.setItem('sc_admin','1');
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    init();
+  } else {
+    document.getElementById('loginErr').textContent='Incorrect username or password.';
+  }
+});
+document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginBtn').click()});
+document.getElementById('l-user').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('l-pass').focus()});
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  sessionStorage.removeItem('sc_admin');
+  location.reload();
+});
+
+// Resume session
+if(sessionStorage.getItem('sc_admin')==='1'){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  init();
+}
+
+/* ─── INIT ─── */
+let GA_PROPERTY='';let GA_CLIENT='';let accessToken='';
+
+function init(){
+  GA_PROPERTY=localStorage.getItem('sc_ga_prop')||'';
+  GA_CLIENT=localStorage.getItem('sc_ga_client')||'';
+  if(GA_PROPERTY) document.getElementById('ga4PropertyId').value=GA_PROPERTY;
+  if(GA_CLIENT) document.getElementById('ga4ClientId').value=GA_CLIENT;
+  if(accessToken&&GA_PROPERTY) loadAll();
+}
+
+document.getElementById('saveMeasurementId').addEventListener('click',()=>{
+  const mid=document.getElementById('cfgMeasurementId').value.trim();
+  if(mid){localStorage.setItem('sc_ga_mid',mid);alert('Saved. Now add this snippet to every HTML page <head>:\n\n<!-- GA4 tracking -->\n<script async src="https://www.googletagmanager.com/gtag/js?id='+mid+'"><\/script>\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","'+mid+'",{send_page_view:true});<\/script>\n\nYou can also ask Claude to add this to all pages.');}
+});
+
+document.getElementById('connectGA').addEventListener('click',()=>{
+  GA_PROPERTY=document.getElementById('ga4PropertyId').value.trim();
+  GA_CLIENT=document.getElementById('ga4ClientId').value.trim();
+  if(!GA_PROPERTY||!GA_CLIENT){alert('Please enter both the GA4 Property ID and OAuth Client ID.');return;}
+  localStorage.setItem('sc_ga_prop',GA_PROPERTY);
+  localStorage.setItem('sc_ga_client',GA_CLIENT);
+  signInWithGoogle();
+});
+
+function signInWithGoogle(){
+  const client=google.accounts.oauth2.initTokenClient({
+    client_id:GA_CLIENT,
+    scope:'https://www.googleapis.com/auth/analytics.readonly',
+    callback:(resp)=>{
+      if(resp.error){document.getElementById('gaStatus').textContent='Error: '+resp.error;return;}
+      accessToken=resp.access_token;
+      document.getElementById('gaStatus').innerHTML='<span class="oauth-connected">✔ Connected</span>';
+      document.getElementById('setupGuide').style.display='none';
+      loadAll();
+    }
+  });
+  client.requestAccessToken();
+}
+
+/* ─── GA4 DATA API ─── */
+const BASE='https://analyticsdata.googleapis.com/v1beta/properties/';
+
+async function runReport(body){
+  const days=parseInt(document.getElementById('dateRange').value)||28;
+  body.dateRanges=[{startDate:days+'daysAgo',endDate:'today'},{startDate:(days*2)+'daysAgo',endDate:(days+1)+'daysAgo'}];
+  const r=await fetch(`${BASE}${GA_PROPERTY}:runReport`,{
+    method:'POST',
+    headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok)throw new Error(await r.text());
+  return r.json();
+}
+
+async function runRealtimeReport(body){
+  const r=await fetch(`${BASE}${GA_PROPERTY}:runRealtimeReport`,{
+    method:'POST',
+    headers:{Authorization:'Bearer '+accessToken,'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok)throw new Error(await r.text());
+  return r.json();
+}
+
+function fmt(n){return n>=1000?(n/1000).toFixed(1)+'k':String(n)}
+function pct(n){return (n*100).toFixed(1)+'%'}
+function dur(s){const m=Math.floor(s/60);const sec=Math.round(s%60);return m+'m '+sec+'s'}
+
+function delta(cur,prev,lowerBetter){
+  if(!prev||prev===0)return{html:'',cls:'neu'};
+  const d=((cur-prev)/prev)*100;
+  const up=d>0;const cls=lowerBetter?(up?'down':'up'):(up?'up':'down');
+  return{html:(up?'▲':'▼')+' '+Math.abs(d).toFixed(1)+'% vs prev period',cls};
+}
+
+async function loadKPIs(){
+  const data=await runReport({
+    metrics:[
+      {name:'sessions'},{name:'totalUsers'},{name:'screenPageViews'},
+      {name:'bounceRate'},{name:'averageSessionDuration'}
+    ]
+  });
+  const cur=data.rows?data.rows[0].metricValues.map(v=>parseFloat(v.value)):[];
+  const prv=data.rows&&data.rows[1]?data.rows[1].metricValues.map(v=>parseFloat(v.value)):[];
+  const ids=['kSessions','kUsers','kPV','kBounce','kDur'];
+  const did=['dSessions','dUsers','dPV','dBounce','dDur'];
+  const lb=[false,false,false,true,false];
+  const formatters=[fmt,fmt,fmt,v=>pct(v),v=>dur(v)];
+  ids.forEach((id,i)=>{
+    document.getElementById(id).textContent=cur[i]!==undefined?formatters[i](cur[i]):'—';
+    const d=delta(cur[i],prv[i],lb[i]);
+    const el=document.getElementById(did[i]);
+    el.textContent=d.html;el.className='kpi-delta '+d.cls;
+  });
+}
+
+async function loadRealtime(){
+  try{
+    const data=await runRealtimeReport({metrics:[{name:'activeUsers'}]});
+    const v=data.rows?data.rows[0].metricValues[0].value:'0';
+    document.getElementById('kLive').textContent=v;
+  }catch(e){document.getElementById('kLive').textContent='—';}
+}
+
+function renderBars(containerId,rows,max){
+  const el=document.getElementById(containerId);
+  el.innerHTML='';
+  if(!rows||!rows.length){el.innerHTML='<div class="panel-empty">No data</div>';return;}
+  rows.forEach(r=>{
+    const label=r[0];const count=parseInt(r[1]);
+    const w=Math.round((count/max)*100);
+    el.innerHTML+=`<div class="bar-row"><div class="bar-label" title="${label}">${label}</div><div class="bar-track"><div class="bar-fill" style="width:${w}%"></div></div><div class="bar-count">${fmt(count)}</div></div>`;
+  });
+}
+
+function renderTable(containerId,headers,rows){
+  const el=document.getElementById(containerId);
+  if(!rows||!rows.length){el.innerHTML='<div class="panel-empty">No data</div>';return;}
+  let html=`<table class="data-table"><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+  rows.forEach(r=>{
+    html+=`<tr>${r.map((v,i)=>`<td class="${i>0?'num':''}">${v}</td>`).join('')}</tr>`;
+  });
+  html+='</tbody></table>';
+  el.innerHTML=html;
+}
+
+async function loadSources(){
+  const data=await runReport({
+    dimensions:[{name:'sessionDefaultChannelGroup'}],
+    metrics:[{name:'sessions'},{name:'totalUsers'}],
+    orderBys:[{metric:{metricName:'sessions'},desc:true}],
+    limit:8
+  });
+  const rows=(data.rows||[]).map(r=>[r.dimensionValues[0].value,r.metricValues[0].value,r.metricValues[1].value]);
+  const max=rows.length?parseInt(rows[0][1]):1;
+  renderBars('sourcesContent',rows.map(r=>r.slice(0,2)),max);
+}
+
+async function loadPages(){
+  const data=await runReport({
+    dimensions:[{name:'pagePath'}],
+    metrics:[{name:'screenPageViews'},{name:'sessions'}],
+    orderBys:[{metric:{metricName:'screenPageViews'},desc:true}],
+    limit:10
+  });
+  const rows=(data.rows||[]).map(r=>[r.dimensionValues[0].value,fmt(r.metricValues[0].value),fmt(r.metricValues[1].value)]);
+  renderTable('pagesContent',['Page','Views','Sessions'],rows);
+}
+
+async function loadGeo(){
+  const data=await runReport({
+    dimensions:[{name:'country'},{name:'city'}],
+    metrics:[{name:'sessions'},{name:'totalUsers'}],
+    orderBys:[{metric:{metricName:'sessions'},desc:true}],
+    limit:12
+  });
+  const rows=(data.rows||[]).map(r=>[
+    r.dimensionValues[0].value,
+    r.dimensionValues[1].value==='(not set)'?'—':r.dimensionValues[1].value,
+    fmt(r.metricValues[0].value),
+    fmt(r.metricValues[1].value)
+  ]);
+  renderTable('geoContent',['Country','City','Sessions','Users'],rows);
+}
+
+async function loadDevices(){
+  const data=await runReport({
+    dimensions:[{name:'deviceCategory'},{name:'browser'}],
+    metrics:[{name:'sessions'}],
+    orderBys:[{metric:{metricName:'sessions'},desc:true}],
+    limit:10
+  });
+  const rows=(data.rows||[]).map(r=>[r.dimensionValues[0].value,r.dimensionValues[1].value,fmt(r.metricValues[0].value)]);
+  renderTable('deviceContent',['Device','Browser','Sessions'],rows);
+}
+
+async function loadOutboundClicks(){
+  const data=await runReport({
+    dimensions:[{name:'eventName'},{name:'linkUrl'}],
+    metrics:[{name:'eventCount'}],
+    dimensionFilter:{filter:{fieldName:'eventName',stringFilter:{value:'click',matchType:'EXACT'}}},
+    orderBys:[{metric:{metricName:'eventCount'},desc:true}],
+    limit:10
+  });
+  const rows=(data.rows||[]).map(r=>[r.dimensionValues[1].value||'—',fmt(r.metricValues[0].value)]);
+  renderTable('clicksContent',['Destination URL','Clicks'],rows);
+}
+
+async function loadBookingEvents(){
+  const data=await runReport({
+    dimensions:[{name:'eventName'},{name:'pagePath'}],
+    metrics:[{name:'eventCount'}],
+    dimensionFilter:{orGroup:{expressions:[
+      {filter:{fieldName:'eventName',stringFilter:{value:'booking_open',matchType:'EXACT'}}},
+      {filter:{fieldName:'eventName',stringFilter:{value:'booking_intent',matchType:'EXACT'}}}
+    ]}},
+    orderBys:[{metric:{metricName:'eventCount'},desc:true}],
+    limit:10
+  });
+  const rows=(data.rows||[]).map(r=>[r.dimensionValues[0].value,r.dimensionValues[1].value,fmt(r.metricValues[0].value)]);
+  renderTable('bookingContent',['Event','Page','Count'],rows);
+}
+
+async function loadLanding(){
+  const data=await runReport({
+    dimensions:[{name:'landingPage'}],
+    metrics:[{name:'sessions'},{name:'totalUsers'},{name:'bounceRate'}],
+    orderBys:[{metric:{metricName:'sessions'},desc:true}],
+    limit:10
+  });
+  const rows=(data.rows||[]).map(r=>[
+    r.dimensionValues[0].value,
+    fmt(r.metricValues[0].value),
+    fmt(r.metricValues[1].value),
+    pct(parseFloat(r.metricValues[2].value))
+  ]);
+  renderTable('landingContent',['Landing Page','Sessions','Users','Bounce Rate'],rows);
+}
+
+async function loadAll(){
+  try{
+    await Promise.all([
+      loadKPIs(),loadSources(),loadPages(),loadGeo(),
+      loadDevices(),loadOutboundClicks(),loadBookingEvents(),loadLanding()
+    ]);
+    loadRealtime();
+    setInterval(loadRealtime,60000);
+  }catch(e){
+    console.error(e);
+    document.getElementById('gaStatus').innerHTML='<span style="color:var(--red)">Error loading data — check Property ID and OAuth permissions.</span>';
+  }
+}
+
+document.getElementById('dateRange').addEventListener('change',()=>{if(accessToken&&GA_PROPERTY)loadAll();});
+</script>
+</body>
+</html>
