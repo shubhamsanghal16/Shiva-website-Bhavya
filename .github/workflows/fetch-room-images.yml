@@ -1,0 +1,59 @@
+name: Fetch room photos from Drive
+
+# One-shot migration: downloads the room photos listed in assets/rooms/manifest.txt
+# from the hotel's public Google Drive folder (resized to 1600px by Google's image
+# CDN) and commits them into the repo so the site no longer hotlinks Drive.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/geo-optimize-rooms-content-25lnjt]
+    paths:
+      - '.github/workflows/fetch-room-images.yml'
+      - 'assets/rooms/manifest.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download images from Drive
+        run: |
+          set -uo pipefail
+          cd assets/rooms
+          fail=0
+          while read -r name id; do
+            [ -z "${name:-}" ] && continue
+            if [ -s "$name" ]; then echo "exists: $name"; continue; fi
+            ok=0
+            for url in "https://lh3.googleusercontent.com/d/${id}=w1600" \
+                       "https://drive.usercontent.google.com/download?id=${id}&export=download"; do
+              if curl -fsSL --retry 3 --retry-delay 2 -H 'Accept: image/jpeg,image/*' "$url" -o "$name"; then
+                if file "$name" | grep -qiE 'JPEG|PNG|Web/P|WebP'; then ok=1; break; fi
+              fi
+              rm -f "$name"
+            done
+            if [ "$ok" = 1 ]; then
+              echo "fetched: $name ($(du -h "$name" | cut -f1))"
+            else
+              echo "::error::FAILED to download $name (id $id) — is the Drive folder shared as 'Anyone with the link'?"
+              fail=1
+            fi
+          done < manifest.txt
+          exit $fail
+
+      - name: Commit photos to the branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/rooms
+          if git diff --cached --quiet; then
+            echo "No new images to commit."
+          else
+            git commit -m "Add room photos (copied from Drive to repo storage)"
+            git push
+          fi
