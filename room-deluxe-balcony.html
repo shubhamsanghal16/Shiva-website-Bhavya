@@ -104,6 +104,18 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .rg-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .45s}
 .rg-grid a:hover img{transform:scale(1.05)}
 </style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments)}
+gtag("js",new Date());
+gtag("config","G-B2QPQKD8MP",{send_page_view:true,link_attribution:true});
+document.addEventListener("DOMContentLoaded",function(){
+  document.querySelectorAll("#openBooking,.open-booking,.nav-book").forEach(function(btn){
+    btn.addEventListener("click",function(){gtag("event","booking_open",{page_path:location.pathname});});
+  });
+});
+</script>
 </head>
 <body>
 <nav>
