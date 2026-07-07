@@ -129,6 +129,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 @media(max-width:700px){.dk-gallery-grid{grid-template-columns:repeat(2,1fr)}}
 .dk-gallery-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);transition:transform .4s}
 .dk-gallery-grid img:hover{transform:scale(1.04)}
+.dk-favourites{text-align:center;font-size:.85rem;color:var(--stone);font-style:italic;margin-top:1.4rem;padding:0 2rem}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
 <script>
@@ -227,46 +228,6 @@ document.addEventListener("DOMContentLoaded",function(){
       <div class="food-scroll" id="foodScroll">
 
         <div class="food-card">
-          <div class="food-card-img-placeholder">🍗</div>
-          <div class="food-card-body">
-            <div class="food-card-name">Chicken with Lachha Prantha</div>
-            <div class="food-card-tag">Our most comforting combo</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-card-img-placeholder">🥗</div>
-          <div class="food-card-body">
-            <div class="food-card-name">Paneer Papdi</div>
-            <div class="food-card-tag">Crispy, chatpata, a true veg favourite.</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-card-img-placeholder">🍗</div>
-          <div class="food-card-body">
-            <div class="food-card-name">Chicken Tikka</div>
-            <div class="food-card-tag">Juicy, smoky bites with just the right spice kick.</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-card-img-placeholder">🧀</div>
-          <div class="food-card-body">
-            <div class="food-card-name">Paneer Tikka</div>
-            <div class="food-card-tag">Smoky, soft, and soul-satisfying.</div>
-          </div>
-        </div>
-
-        <div class="food-card">
-          <div class="food-card-img-placeholder">🥢</div>
-          <div class="food-card-body">
-            <div class="food-card-name">Spring Roll</div>
-            <div class="food-card-tag">Crispy bites, happy mood.</div>
-          </div>
-        </div>
-
-        <div class="food-card">
           <img class="food-card-img" src="assets/site/deodar-6.jpg" alt="Dal Makhani at Deodar Kitchen, Mussoorie" loading="lazy">
           <div class="food-card-body">
             <div class="food-card-name">Dal Makhani</div>
@@ -274,8 +235,49 @@ document.addEventListener("DOMContentLoaded",function(){
           </div>
         </div>
 
+        <div class="food-card">
+          <img class="food-card-img" src="assets/site/dish-b.jpg" alt="Breakfast plate with puris and dal served with a valley view at Deodar Kitchen" loading="lazy">
+          <div class="food-card-body">
+            <div class="food-card-name">Breakfast With a View</div>
+            <div class="food-card-tag">Puris, dal and the valley beyond.</div>
+          </div>
+        </div>
+
+        <div class="food-card">
+          <img class="food-card-img" src="assets/site/dish-a.jpg" alt="Homestyle breakfast plate at Deodar Kitchen, Mussoorie" loading="lazy">
+          <div class="food-card-body">
+            <div class="food-card-name">The Morning Plate</div>
+            <div class="food-card-tag">Warm, homestyle, fresh every day.</div>
+          </div>
+        </div>
+
+        <div class="food-card">
+          <img class="food-card-img" src="assets/site/dish-d.jpg" alt="Fresh breakfast served at Deodar Kitchen, Mussoorie" loading="lazy">
+          <div class="food-card-body">
+            <div class="food-card-name">Comfort, Cooked</div>
+            <div class="food-card-tag">Straight from our kitchen to your table.</div>
+          </div>
+        </div>
+
+        <div class="food-card">
+          <img class="food-card-img" src="assets/site/dish-e.jpg" alt="Guest having breakfast on the terrace at Hotel Shiva Continental" loading="lazy">
+          <div class="food-card-body">
+            <div class="food-card-name">Terrace Mornings</div>
+            <div class="food-card-tag">Breakfast in the mountain air.</div>
+          </div>
+        </div>
+
+        <div class="food-card">
+          <img class="food-card-img" src="assets/site/dish-f.jpg" alt="Terrace breakfast overlooking the Mussoorie valley" loading="lazy">
+          <div class="food-card-body">
+            <div class="food-card-name">Slow Mornings</div>
+            <div class="food-card-tag">You bring the appetite, the valley does the rest.</div>
+          </div>
+        </div>
       </div>
       <button class="scroll-arrow" id="scrollRight" aria-label="Scroll right">&#8594;</button>
+    <div class="dk-favourites">Guest favourites: Chicken with Lachha Prantha · Paneer Papdi · Chicken Tikka · Paneer Tikka · Spring Roll · Dal Makhani</div>
+
     </div>
   </div>
 </div>
