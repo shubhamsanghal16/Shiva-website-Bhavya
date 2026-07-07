@@ -88,6 +88,13 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .bkm-spinner{width:40px;height:40px;border:3px solid var(--teal-soft);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .bkm-loader-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--bark-mid)}
+.fac-gallery{max-width:1100px;margin:0 auto 4rem;padding:0 2rem}
+.fac-gallery h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.6rem,3vw,2.2rem);text-align:center;color:var(--bark);margin-bottom:.4rem}
+.fac-gallery .fac-gallery-sub{text-align:center;color:var(--stone);font-size:.85rem;margin-bottom:1.6rem}
+.fac-gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:700px){.fac-gallery-grid{grid-template-columns:repeat(2,1fr)}}
+.fac-gallery-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.08);transition:transform .4s}
+.fac-gallery-grid img:hover{transform:scale(1.04)}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
 <script>
@@ -184,12 +191,19 @@ document.addEventListener("DOMContentLoaded",function(){
   </div>
 </div>
 
-<div class="fac-slider-placeholder">
-  <div class="fac-slider-box">
-    <div style="font-size:2rem">🖼️</div>
-    <p>Property photos coming soon</p>
+<div class="fac-gallery">
+  <h2>The Indoor Play Zone &amp; Around the Hotel</h2>
+  <div class="fac-gallery-sub">Table tennis, carrom and chess for rainy hill evenings — plus the garden and restaurant that make the stay.</div>
+  <div class="fac-gallery-grid">
+    <img src="assets/site/recreation-1.jpg" alt="Indoor games room with carrom and table tennis at Hotel Shiva Continental Mussoorie" loading="lazy">
+    <img src="assets/site/recreation-3.jpg" alt="Table tennis table in the recreation room" loading="lazy">
+    <img src="assets/site/recreation-2.jpg" alt="Chess board in the recreation room" loading="lazy">
+    <img src="assets/site/deodar-restaurant.jpg" alt="Deodar Kitchen restaurant" loading="lazy">
+    <img src="assets/site/terrace-garden.jpg" alt="Terrace garden with mountain views" loading="lazy">
+    <img src="assets/site/gardenica-bloom.jpg" alt="Gardenica upcycled garden in bloom" loading="lazy">
   </div>
 </div>
+
 
 <div style="padding:0 2rem">
   <div class="fac-cta">
