@@ -1,16 +1,17 @@
-name: Fetch room photos from Drive
+name: Fetch site images into repo storage
 
-# One-shot migration: downloads the room photos listed in assets/rooms/manifest.txt
-# from the hotel's public Google Drive folder (resized to 1600px by Google's image
-# CDN) and commits them into the repo so the site no longer hotlinks Drive.
+# Downloads every image listed in assets/manifest.txt into the repo so the
+# website never depends on Google Drive or third-party CDNs at runtime.
+# Manifest line format:  <relative-path-under-assets/>  <drive-file-id | https-url>
+# Existing files are skipped, so re-runs only fetch new entries.
 
 on:
   workflow_dispatch:
   push:
-    branches: [claude/geo-optimize-rooms-content-25lnjt]
+    branches: [claude/geo-optimize-rooms-content-25lnjt, main]
     paths:
       - '.github/workflows/fetch-room-images.yml'
-      - 'assets/rooms/manifest.txt'
+      - 'assets/manifest.txt'
 
 permissions:
   contents: write
@@ -21,39 +22,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download images from Drive
+      - name: Download images
         run: |
           set -uo pipefail
-          cd assets/rooms
+          cd assets
           fail=0
-          while read -r name id; do
+          while read -r name src; do
             [ -z "${name:-}" ] && continue
+            case "$name" in \#*) continue;; esac
             if [ -s "$name" ]; then echo "exists: $name"; continue; fi
+            mkdir -p "$(dirname "$name")"
+            if [ "${src#https://}" != "$src" ]; then
+              urls="$src"
+            else
+              urls="https://lh3.googleusercontent.com/d/${src}=w1600 https://drive.usercontent.google.com/download?id=${src}&export=download"
+            fi
             ok=0
-            for url in "https://lh3.googleusercontent.com/d/${id}=w1600" \
-                       "https://drive.usercontent.google.com/download?id=${id}&export=download"; do
+            for url in $urls; do
               if curl -fsSL --retry 3 --retry-delay 2 -H 'Accept: image/jpeg,image/*' "$url" -o "$name"; then
-                if file "$name" | grep -qiE 'JPEG|PNG|Web/P|WebP'; then ok=1; break; fi
+                if file "$name" | grep -qiE 'JPEG|PNG|WebP'; then ok=1; break; fi
               fi
               rm -f "$name"
             done
             if [ "$ok" = 1 ]; then
               echo "fetched: $name ($(du -h "$name" | cut -f1))"
             else
-              echo "::error::FAILED to download $name (id $id) — is the Drive folder shared as 'Anyone with the link'?"
+              echo "::error::FAILED to download $name from $src"
               fail=1
             fi
           done < manifest.txt
           exit $fail
 
-      - name: Commit photos to the branch
+      - name: Commit images
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/rooms
+          git add assets
           if git diff --cached --quiet; then
             echo "No new images to commit."
           else
-            git commit -m "Add room photos (copied from Drive to repo storage)"
+            git commit -m "Add site images (migrated to repo storage)"
             git push
           fi
