@@ -1,6 +1,16 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/shiva-continental.html" },
-    { "source": "/admin", "destination": "/admin.html" }
+    {
+      "source": "/",
+      "destination": "/shiva-continental.html"
+    },
+    {
+      "source": "/booknow",
+      "destination": "/shiva-continental.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    }
   ]
 }
