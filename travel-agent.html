@@ -149,6 +149,22 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .faq-inner summary::after{content:'+';color:var(--teal);font-size:1.25rem;flex-shrink:0}
 .faq-inner details[open] summary::after{content:'\2013'}
 .faq-inner details p{padding:0 1.4rem 1.2rem;font-size:.9rem;line-height:1.8;color:var(--bark-mid)}
+/* Mobile nav */
+.nav-toggle{display:none;background:none;border:none;cursor:pointer;padding:.45rem;z-index:210}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--bark);margin:5px 0;transition:transform .3s,opacity .3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-backdrop{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s;z-index:99}
+.nav-backdrop.open{opacity:1;pointer-events:all}
+@media(max-width:768px){
+  .nav-toggle{display:block}
+  .nav-links{display:flex !important;position:fixed;top:0;right:0;height:100vh;width:min(78vw,320px);background:var(--cream);flex-direction:column;gap:0;padding:5.5rem 2rem 2rem;box-shadow:-8px 0 40px rgba(0,0,0,.18);transform:translateX(100%);transition:transform .35s ease;z-index:205}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links li{border-bottom:1px solid rgba(0,0,0,.06)}
+  .nav-links a{display:block;padding:1rem 0;font-size:.92rem}
+  .bkm-tagline{display:none}
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
 <script>
@@ -403,6 +419,30 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
   var payload=JSON.stringify({page:p,ref:document.referrer||''});
   fetch('/api/track',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:payload}).catch(function(){});
 }catch(e){}})();
+</script>
+<script>
+/* Mobile hamburger menu */
+(function(){
+  var nav=document.querySelector('nav');
+  var links=nav&&nav.querySelector('.nav-links');
+  if(!nav||!links)return;
+  var btn=document.createElement('button');
+  btn.className='nav-toggle';btn.setAttribute('aria-label','Open menu');btn.setAttribute('aria-expanded','false');
+  btn.innerHTML='<span></span><span></span><span></span>';
+  var book=nav.querySelector('.nav-book');
+  nav.insertBefore(btn,book||null);
+  var bd=document.createElement('div');bd.className='nav-backdrop';
+  document.body.appendChild(bd);
+  function set(open){
+    btn.classList.toggle('open',open);links.classList.toggle('open',open);bd.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    document.body.style.overflow=open?'hidden':'';
+  }
+  btn.addEventListener('click',function(){set(!links.classList.contains('open'))});
+  bd.addEventListener('click',function(){set(false)});
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();
 </script>
 </body>
 </html>
