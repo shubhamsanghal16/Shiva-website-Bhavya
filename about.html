@@ -522,7 +522,7 @@ document.addEventListener("DOMContentLoaded",function(){
 /* Live geo analytics beacon — recorded by /api/track with Vercel visitor-location headers */
 (function(){try{
   var p=location.pathname.replace(/\/shiva-continental\.html$/,'/')||'/';
-  var payload=JSON.stringify({page:p,ref:document.referrer||''});
+  var q=new URLSearchParams(location.search);var payload=JSON.stringify({page:p,ref:document.referrer||'',us:q.get('utm_source')||'',um:q.get('utm_medium')||'',uc:q.get('utm_campaign')||''});
   fetch('/api/track',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:payload}).catch(function(){});
 }catch(e){}})();
 </script>
@@ -558,15 +558,16 @@ document.addEventListener("DOMContentLoaded",function(){
   var closeBtn=document.getElementById('closeBooking');
   if(!modal||!openBtn||!closeBtn)return;
   function isOpen(){return modal.classList.contains('open')}
+  var bkEv=function(){try{fetch('/api/track',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({ev:'booking_open'})}).catch(function(){})}catch(e){}};
   new MutationObserver(function(){
-    if(isOpen()&&location.pathname!=='/booknow'){try{history.pushState({bk:1},'','/booknow')}catch(e){}}
+    if(isOpen()&&location.pathname!=='/booknow'){bkEv();try{history.pushState({bk:1},'','/booknow')}catch(e){}}
     else if(!isOpen()&&location.pathname==='/booknow'){try{history.back()}catch(e){}}
   }).observe(modal,{attributes:true,attributeFilter:['class']});
   window.addEventListener('popstate',function(){
     if(location.pathname==='/booknow'){if(!isOpen())openBtn.click()}
     else if(isOpen()){closeBtn.click()}
   });
-  if(location.pathname==='/booknow'||location.pathname==='/booknow/'){if(!isOpen())openBtn.click()}
+  if(location.pathname==='/booknow'||location.pathname==='/booknow/'){if(!isOpen()){bkEv();openBtn.click()}}
 })();
 </script>
 </body>

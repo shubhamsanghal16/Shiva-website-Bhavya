@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Geo Analytics | Shiva Continental Admin</title>
+<title>Analytics | Shiva Continental Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--teal:#008080;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;--cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#9a8c7e}
+:root{--teal:#008080;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;--cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#9a8c7e;--gold:#b8861e}
 body{background:var(--cream);color:var(--bark);font-family:'Jost',sans-serif;font-weight:300;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2rem;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.07);position:sticky;top:0;z-index:10}
+header{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2rem;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.07);position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:.6rem}
 .logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;letter-spacing:.12em;text-decoration:none;color:var(--bark)}
 .logo span{color:var(--teal);font-size:.72rem;font-family:'Jost',sans-serif;letter-spacing:.2em;text-transform:uppercase;display:block}
-.hdr-right{display:flex;gap:.8rem;align-items:center}
+.hdr-right{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
 .pill{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.35rem .9rem;border-radius:50px;background:var(--teal-pale);color:var(--teal-deep)}
 .pill.live{background:#e6f6ec;color:#1e7a44}
 .pill.live::before{content:'●';margin-right:.4rem;animation:blink 1.6s infinite}
@@ -23,6 +23,8 @@ button.ghost:hover{border-color:var(--teal);color:var(--teal)}
 main{max-width:1180px;margin:0 auto;padding:2rem}
 h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;margin-bottom:.3rem}
 .sub{color:var(--stone);font-size:.85rem;margin-bottom:2rem}
+.section-h{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;margin:2.6rem 0 1.2rem;display:flex;align-items:center;gap:.8rem}
+.section-h::after{content:'';flex:1;height:1px;background:var(--teal-soft)}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin-bottom:2rem}
 .card{background:#fff;border-radius:14px;padding:1.4rem;box-shadow:0 2px 18px rgba(0,0,0,.05)}
 .card .k{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);margin-bottom:.4rem}
@@ -32,17 +34,30 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;margin-
 @media(max-width:860px){.grid2{grid-template-columns:1fr}}
 .panel{background:#fff;border-radius:14px;padding:1.6rem;box-shadow:0 2px 18px rgba(0,0,0,.05)}
 .panel h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.15rem;margin-bottom:1rem;color:var(--bark)}
+.panel .hint{font-size:.75rem;color:var(--stone);margin:-.6rem 0 1rem}
+.chart-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-bottom:1rem}
+.chart-head h2{margin-bottom:0}
+.range-btns{display:flex;gap:.35rem;background:var(--teal-pale);padding:.25rem;border-radius:50px}
+.range-btns button{background:none;border:none;padding:.35rem .95rem;border-radius:50px;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.06em;color:var(--teal-deep);cursor:pointer;transition:all .2s}
+.range-btns button:hover{background:rgba(255,255,255,.6)}
+.range-btns button.active{background:var(--teal);color:#fff;font-weight:500}
 .bar-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem;font-size:.85rem}
-.bar-label{width:150px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--bark-mid)}
+.bar-label{width:170px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--bark-mid)}
 .bar-track{flex:1;height:10px;background:var(--teal-pale);border-radius:6px;overflow:hidden}
 .bar-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--teal-deep));border-radius:6px}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),#96690f)}
 .bar-val{width:52px;text-align:right;color:var(--teal-deep);font-weight:500;font-size:.8rem}
-#chart{width:100%;height:190px}
+#chart{width:100%;height:210px}
 table{width:100%;border-collapse:collapse;font-size:.82rem}
 th{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--teal-pale)}
 td{padding:.5rem .6rem;border-bottom:1px solid #f4efe8;color:var(--bark-mid)}
 .empty{color:var(--stone);font-size:.85rem;padding:.8rem 0}
-/* gate + setup */
+.link-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+@media(max-width:860px){.link-cards{grid-template-columns:1fr}}
+.link-card{display:block;background:#fff;border-radius:14px;padding:1.4rem;box-shadow:0 2px 18px rgba(0,0,0,.05);text-decoration:none;color:inherit;border:1px solid transparent;transition:border .2s}
+.link-card:hover{border-color:var(--teal-soft)}
+.link-card .t{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.1rem;color:var(--teal-deep);margin-bottom:.3rem}
+.link-card .d{font-size:.8rem;color:var(--bark-mid);line-height:1.6}
 .center-box{max-width:460px;margin:14vh auto;background:#fff;border-radius:16px;padding:2.5rem;box-shadow:0 10px 44px rgba(0,0,0,.1);text-align:center}
 .center-box h1{margin-bottom:1rem}
 .center-box p{font-size:.88rem;color:var(--bark-mid);line-height:1.7;margin-bottom:1.4rem}
@@ -60,7 +75,7 @@ td{padding:.5rem .6rem;border-bottom:1px solid #f4efe8;color:var(--bark-mid)}
 <body>
 
 <header>
-  <a class="logo" href="/">Shiva Continental<span>Admin · Geo Analytics</span></a>
+  <a class="logo" href="/">Shiva Continental<span>Admin · Analytics</span></a>
   <div class="hdr-right">
     <span class="pill live hidden" id="livePill">Live</span>
     <span class="pill" id="updatedPill"></span>
@@ -69,16 +84,14 @@ td{padding:.5rem .6rem;border-bottom:1px solid #f4efe8;color:var(--bark-mid)}
   </div>
 </header>
 
-<!-- ACCESS GATE -->
 <div class="center-box hidden" id="gate">
   <h1>Admin Access</h1>
-  <p>Enter the admin access key to view live visitor geography for shivacontinental.in.</p>
+  <p>Enter the admin access key to view live analytics for shivacontinental.in.</p>
   <div class="err" id="gateErr"></div>
   <input type="password" id="keyInput" placeholder="Access key" autocomplete="current-password">
   <button class="btn" id="keyBtn">Unlock Dashboard</button>
 </div>
 
-<!-- STORAGE NOT CONFIGURED -->
 <div class="setup hidden" id="setup">
   <h1>One step left: connect the database</h1>
   <p style="font-size:.9rem;color:var(--bark-mid);line-height:1.8">The tracking code is live on every page and the API is deployed, but there is no database connected yet, so visits cannot be stored. Connect the free Redis database once and data starts flowing immediately:</p>
@@ -92,10 +105,9 @@ td{padding:.5rem .6rem;border-bottom:1px solid #f4efe8;color:var(--bark-mid)}
   <button class="btn" onclick="location.reload()">I've connected it — reload</button>
 </div>
 
-<!-- DASHBOARD -->
 <main class="hidden" id="dash">
   <h1>Where your guests browse from</h1>
-  <div class="sub">Live visitor geography, updated on every page view · timezone IST · <span id="sinceNote"></span></div>
+  <div class="sub">Live visitor analytics, updated on every page view · timezone IST · <span id="sinceNote"></span></div>
 
   <div class="cards">
     <div class="card"><div class="k">Total Page Views</div><div class="v" id="cTotal">–</div><div class="n">since tracking began</div></div>
@@ -105,7 +117,16 @@ td{padding:.5rem .6rem;border-bottom:1px solid #f4efe8;color:var(--bark-mid)}
   </div>
 
   <div class="panel" style="margin-bottom:1.2rem">
-    <h2>Daily page views — last 30 days</h2>
+    <div class="chart-head">
+      <h2 id="chartTitle">Page views</h2>
+      <div class="range-btns" id="rangeBtns">
+        <button data-range="day">1D</button>
+        <button data-range="7d">7D</button>
+        <button data-range="30d" class="active">1M</button>
+        <button data-range="ytd">YTD</button>
+        <button data-range="year">1Y</button>
+      </div>
+    </div>
     <svg id="chart" preserveAspectRatio="none"></svg>
   </div>
 
@@ -122,83 +143,130 @@ td{padding:.5rem .6rem;border-bottom:1px solid #f4efe8;color:var(--bark-mid)}
       </div>
     </div>
   </div>
+
+  <div class="section-h">Marketing</div>
+
+  <div class="cards">
+    <div class="card"><div class="k">Booking Opens</div><div class="v" id="mBookTotal">–</div><div class="n">Book Now clicks, all time</div></div>
+    <div class="card"><div class="k">Booking Opens Today</div><div class="v" id="mBookToday">–</div><div class="n">since midnight IST</div></div>
+    <div class="card"><div class="k">Booking Intent Rate</div><div class="v" id="mIntent">–</div><div class="n">opens ÷ total page views</div></div>
+    <div class="card"><div class="k">AI &amp; Search Visits</div><div class="v" id="mAiVisits">–</div><div class="n">from Google, ChatGPT, Perplexity…</div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel"><h2>Traffic Sources</h2><div class="hint">Where visitors come from (referrer domains). "(direct)" = typed, WhatsApp or app links.</div><div id="refBars"></div></div>
+    <div class="panel"><h2>AI Assistants &amp; Search Engines</h2><div class="hint">Visits referred by AI answers and search results — your GEO work shows up here.</div><div id="aiBars"></div></div>
+  </div>
+
+  <div class="grid2">
+    <div class="panel"><h2>Campaigns (UTM)</h2><div class="hint">Tag links like <code style="font-size:.75rem">?utm_source=whatsapp&amp;utm_medium=status&amp;utm_campaign=diwali</code> and they appear here.</div>
+      <div style="max-height:300px;overflow:auto">
+      <table><thead><tr><th>Source</th><th>Medium</th><th>Campaign</th><th style="text-align:right">Visits</th></tr></thead><tbody id="utmBody"></tbody></table>
+      </div>
+    </div>
+    <div class="panel"><h2>Search Queries &amp; Deeper Funnels</h2>
+      <div class="hint">Query-level data isn't exposed to websites — it lives in these two consoles (both already wired to this site):</div>
+      <div class="link-cards" style="grid-template-columns:1fr">
+        <a class="link-card" href="https://search.google.com/search-console" target="_blank" rel="noopener"><div class="t">Google Search Console ↗</div><div class="d">The exact search queries that surface shivacontinental.in, impressions, clicks and position. Add the property with your Google account if not yet verified.</div></a>
+        <a class="link-card" href="https://analytics.google.com/" target="_blank" rel="noopener"><div class="t">Google Analytics 4 ↗</div><div class="d">Tag G-B2QPQKD8MP is live on every page, including a booking_open event — build audiences, funnels and ad remarketing there.</div></a>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script>
 const $=id=>document.getElementById(id);
 const KEY_STORE='shiva_admin_key';
-let timer=null;
+let currentRange='30d';
+const RANGE_TITLES={day:'Page views — today, by hour',['7d']:'Page views — last 7 days',['30d']:'Page views — last 30 days',ytd:'Page views — this year, by month',year:'Page views — last 12 months'};
+const AI_SEARCH=/(^|\.)?(google\.|bing\.com|duckduckgo|search\.yahoo|baidu|chatgpt\.com|openai\.com|perplexity\.ai|gemini\.google|copilot\.microsoft|claude\.ai|you\.com|phind\.com)/i;
 
 function flag(cc){
   if(!cc||cc.length!==2||cc==='ZZ')return '🌐';
   return String.fromCodePoint(...[...cc.toUpperCase()].map(c=>127397+c.charCodeAt(0)));
 }
 const REGION_NAMES=(typeof Intl!=='undefined'&&Intl.DisplayNames)?new Intl.DisplayNames(['en'],{type:'region'}):null;
-function countryName(cc){
-  if(cc==='ZZ')return 'Unknown';
-  try{return REGION_NAMES?REGION_NAMES.of(cc):cc}catch{return cc}
-}
-function show(view){
-  ['gate','setup','dash'].forEach(v=>$(v).classList.toggle('hidden',v!==view));
-  $('livePill').classList.toggle('hidden',view!=='dash');
-}
-function bars(el,entries,labelFn){
-  if(!entries.length){el.innerHTML='<div class="empty">No data yet — waiting for the first visitors.</div>';return}
+function countryName(cc){if(cc==='ZZ')return 'Unknown';try{return REGION_NAMES?REGION_NAMES.of(cc):cc}catch{return cc}}
+function show(view){['gate','setup','dash'].forEach(v=>$(v).classList.toggle('hidden',v!==view));$('livePill').classList.toggle('hidden',view!=='dash')}
+function bars(el,entries,labelFn,gold){
+  if(!entries.length){el.innerHTML='<div class="empty">No data yet.</div>';return}
   const max=entries[0][1]||1;
   el.innerHTML=entries.slice(0,12).map(([k,v])=>{
     const pct=Math.max(3,Math.round(v/max*100));
-    return `<div class="bar-row"><div class="bar-label" title="${labelFn(k)}">${labelFn(k)}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div><div class="bar-val">${v.toLocaleString()}</div></div>`;
+    return `<div class="bar-row"><div class="bar-label" title="${labelFn(k)}">${labelFn(k)}</div><div class="bar-track"><div class="bar-fill${gold?' gold':''}" style="width:${pct}%"></div></div><div class="bar-val">${v.toLocaleString()}</div></div>`;
   }).join('');
 }
-function drawChart(daily){
+function drawChart(points){
   const svg=$('chart');
-  const W=svg.clientWidth||900,H=190,P=24;
+  const W=svg.clientWidth||900,H=210,P=26;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-  const max=Math.max(1,...daily.map(d=>d.hits));
-  const bw=(W-P*2)/daily.length;
+  if(!points.length){svg.innerHTML='';return}
+  const max=Math.max(1,...points.map(d=>d.hits));
+  const bw=(W-P*2)/points.length;
+  const tick=Math.max(1,Math.ceil(points.length/9));
   let out='';
-  daily.forEach((d,i)=>{
+  points.forEach((d,i)=>{
     const h=Math.round((H-P*2)*d.hits/max);
     const x=P+i*bw, y=H-P-h;
-    out+=`<rect x="${x+1.5}" y="${y}" width="${Math.max(2,bw-3)}" height="${Math.max(h,d.hits>0?2:0)}" rx="2" fill="#008080" opacity="${d.hits?0.85:0.15}"><title>${d.date}: ${d.hits} views</title></rect>`;
-    if(i%5===0)out+=`<text x="${x+bw/2}" y="${H-6}" font-size="9" fill="#9a8c7e" text-anchor="middle" font-family="Jost">${d.date.slice(5)}</text>`;
+    out+=`<rect x="${x+1.5}" y="${y}" width="${Math.max(2,bw-3)}" height="${Math.max(h,d.hits>0?2:0)}" rx="2" fill="#008080" opacity="${d.hits?0.85:0.15}"><title>${d.label}: ${d.hits.toLocaleString()} views</title></rect>`;
+    if(i%tick===0)out+=`<text x="${x+bw/2}" y="${H-8}" font-size="9" fill="#9a8c7e" text-anchor="middle" font-family="Jost">${d.label.length>7?d.label.slice(5):d.label}</text>`;
   });
-  out+=`<text x="${P}" y="14" font-size="10" fill="#9a8c7e" font-family="Jost">peak ${max.toLocaleString()}/day</text>`;
+  out+=`<text x="${P}" y="14" font-size="10" fill="#9a8c7e" font-family="Jost">peak ${max.toLocaleString()}</text>`;
   svg.innerHTML=out;
 }
-async function load(){
+async function load(range){
+  range=range||currentRange;
   const key=localStorage.getItem(KEY_STORE)||'';
   let res;
-  try{
-    res=await fetch('/api/stats',{headers:key?{Authorization:'Bearer '+key}:{}});
-  }catch(e){ $('gateErr').textContent='Network error — is the site deployed on Vercel?'; show('gate'); return }
-  if(res.status===401){ localStorage.removeItem(KEY_STORE); show('gate'); $('gateErr').textContent=key?'Wrong key, try again.':''; return }
+  try{res=await fetch('/api/stats?range='+range,{headers:key?{Authorization:'Bearer '+key}:{}});}
+  catch(e){$('gateErr').textContent='Network error — is the site deployed on Vercel?';show('gate');return}
+  if(res.status===401){localStorage.removeItem(KEY_STORE);show('gate');$('gateErr').textContent=key?'Wrong key, try again.':'';return}
   const data=await res.json();
-  if(!data.configured){ show('setup'); return }
+  if(!data.configured){show('setup');return}
+  currentRange=range;
+  document.querySelectorAll('#rangeBtns button').forEach(b=>b.classList.toggle('active',b.dataset.range===range));
+  $('chartTitle').textContent=RANGE_TITLES[range]||'Page views';
   show('dash');
-  const today=data.daily[data.daily.length-1];
   $('cTotal').textContent=data.totalHits.toLocaleString();
-  $('cToday').textContent=today?today.hits.toLocaleString():'0';
+  $('cToday').textContent=(data.todayHits||0).toLocaleString();
   $('cTodayNote').textContent=data.todayCountries.length?`top: ${countryName(data.todayCountries[0][0])}`:'';
   $('cCountries').textContent=data.countries.length;
   $('cCities').textContent=data.cities.length;
   $('sinceNote').textContent=data.firstSeen?`tracking since ${data.firstSeen}`:'awaiting first visit';
   $('updatedPill').textContent='Updated '+new Date(data.generatedAt).toLocaleTimeString();
-  drawChart(data.daily);
+  drawChart(data.series.points);
   bars($('countryBars'),data.countries,cc=>`${flag(cc)} ${countryName(cc)}`);
   bars($('cityBars'),data.cities,k=>{const[cc,region,city]=k.split('|');return `${flag(cc)} ${city}${region?', '+region:''}`});
   bars($('pageBars'),data.pages,p=>p);
+  // marketing
+  const ev=Object.fromEntries(data.events||[]);
+  const evToday=Object.fromEntries(data.todayEvents||[]);
+  const opens=Number(ev.booking_open||0);
+  $('mBookTotal').textContent=opens.toLocaleString();
+  $('mBookToday').textContent=Number(evToday.booking_open||0).toLocaleString();
+  $('mIntent').textContent=data.totalHits?((opens/data.totalHits)*100).toFixed(1)+'%':'–';
+  const refs=data.refs||[];
+  const ai=refs.filter(([d])=>AI_SEARCH.test(d));
+  $('mAiVisits').textContent=ai.reduce((s,[,v])=>s+v,0).toLocaleString();
+  bars($('refBars'),refs,d=>d);
+  bars($('aiBars'),ai,d=>'🤖 '+d,true);
+  $('utmBody').innerHTML=(data.utm&&data.utm.length)?data.utm.map(([k,v])=>{
+    const[s,m,c]=k.split('|');
+    return `<tr><td>${s}</td><td>${m}</td><td>${c}</td><td style="text-align:right">${v.toLocaleString()}</td></tr>`;
+  }).join(''):'<tr><td colspan="4" class="empty">No campaign-tagged visits yet — share a UTM link to see it here.</td></tr>';
   $('recentBody').innerHTML=data.recent.length?data.recent.map(v=>{
     const t=new Date(v.t).toLocaleString('en-IN',{timeZone:'Asia/Kolkata',day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
     return `<tr><td>${t}</td><td>${flag(v.country)} ${v.city}, ${countryName(v.country)}</td><td>${v.page}</td></tr>`;
   }).join(''):'<tr><td colspan="3" class="empty">No visits recorded yet.</td></tr>';
 }
+document.querySelectorAll('#rangeBtns button').forEach(b=>b.addEventListener('click',()=>load(b.dataset.range)));
 $('keyBtn').addEventListener('click',()=>{localStorage.setItem(KEY_STORE,$('keyInput').value.trim());load()});
 $('keyInput').addEventListener('keydown',e=>{if(e.key==='Enter')$('keyBtn').click()});
-$('refreshBtn').addEventListener('click',load);
+$('refreshBtn').addEventListener('click',()=>load());
 $('logoutBtn').addEventListener('click',()=>{localStorage.removeItem(KEY_STORE);show('gate')});
 load();
-timer=setInterval(load,60000);
+// auto-refresh light ranges only (year/ytd scan many keys — refresh those manually)
+setInterval(()=>{if(['day','7d','30d'].includes(currentRange)&&!$('dash').classList.contains('hidden'))load()},60000);
 </script>
 </body>
 </html>
