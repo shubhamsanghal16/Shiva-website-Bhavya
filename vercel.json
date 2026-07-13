@@ -1,23 +1,99 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/shiva-continental.html" },
-    { "source": "/booknow", "destination": "/shiva-continental.html" },
-    { "source": "/admin", "destination": "/admin.html" }
+    {
+      "source": "/",
+      "destination": "/shiva-continental.html"
+    },
+    {
+      "source": "/booknow",
+      "destination": "/shiva-continental.html"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin.html"
+    }
   ],
   "redirects": [
-    { "source": "/contact-us/contact-us.html", "destination": "/contact.html", "permanent": true },
-    { "source": "/contact-us", "destination": "/contact.html", "permanent": true },
-    { "source": "/location.html", "destination": "/contact.html", "permanent": true },
-    { "source": "/rooms/suite-with-balcony.html", "destination": "/room-suite-balcony.html", "permanent": true },
-    { "source": "/rooms/super-deluxe-with-balcony.html", "destination": "/room-super-deluxe-balcony.html", "permanent": true },
-    { "source": "/rooms/executive-with-balcony-non-view.html", "destination": "/room-executive-balcony.html", "permanent": true },
-    { "source": "/rooms/deluxe-with-balcony-non-view.html", "destination": "/room-deluxe-balcony.html", "permanent": true },
-    { "source": "/rooms/deluxe-non-view.html", "destination": "/room-deluxe-nonview.html", "permanent": true },
-    { "source": "/rooms/economy-room.html", "destination": "/room-economy.html", "permanent": true },
-    { "source": "/rooms/:path*", "destination": "/rooms.html", "permanent": true },
-    { "source": "/travel-agent/travel-agent.html", "destination": "/travel-agent.html", "permanent": true },
-    { "source": "/deodar-kitchen/deodar-kitchen.html", "destination": "/deodar-kitchen.html", "permanent": true },
-    { "source": "/about-us/:path*", "destination": "/about.html", "permanent": true },
-    { "source": "/dining/:path*", "destination": "/deodar-kitchen.html", "permanent": true }
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "shivacontinental.in"
+        }
+      ],
+      "destination": "https://www.shivacontinental.in/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us/contact-us.html",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/location.html",
+      "destination": "/contact.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/suite-with-balcony.html",
+      "destination": "/room-suite-balcony.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/super-deluxe-with-balcony.html",
+      "destination": "/room-super-deluxe-balcony.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/executive-with-balcony-non-view.html",
+      "destination": "/room-executive-balcony.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/deluxe-with-balcony-non-view.html",
+      "destination": "/room-deluxe-balcony.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/deluxe-non-view.html",
+      "destination": "/room-deluxe-nonview.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/economy-room.html",
+      "destination": "/room-economy.html",
+      "permanent": true
+    },
+    {
+      "source": "/rooms/:path*",
+      "destination": "/rooms.html",
+      "permanent": true
+    },
+    {
+      "source": "/travel-agent/travel-agent.html",
+      "destination": "/travel-agent.html",
+      "permanent": true
+    },
+    {
+      "source": "/deodar-kitchen/deodar-kitchen.html",
+      "destination": "/deodar-kitchen.html",
+      "permanent": true
+    },
+    {
+      "source": "/about-us/:path*",
+      "destination": "/about.html",
+      "permanent": true
+    },
+    {
+      "source": "/dining/:path*",
+      "destination": "/deodar-kitchen.html",
+      "permanent": true
+    }
   ]
 }
