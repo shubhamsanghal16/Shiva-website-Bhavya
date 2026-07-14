@@ -53,6 +53,63 @@ jobs:
           done < manifest.txt
           exit $fail
 
+      - name: Fetch waterfall photos from Wikimedia Commons
+        run: |
+          python3 - <<'EOF'
+          import json, os, urllib.parse, urllib.request
+
+          TARGETS = {
+              "site/waterfall-kempty.jpg": "Kempty Falls Mussoorie",
+              "site/waterfall-bhatta.jpg": "Bhatta Falls Mussoorie",
+              "site/waterfall-jharipani.jpg": "Jharipani Falls",
+              "site/waterfall-mossy.jpg": "Mossy Fall Mussoorie",
+          }
+          CREDITS = "assets/site/waterfall-credits.json"
+          credits = json.load(open(CREDITS)) if os.path.exists(CREDITS) else {}
+          UA = {"User-Agent": "ShivaContinentalSite/1.0 (image fetch for attribution-compliant reuse)"}
+
+          def api(params):
+              url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+              req = urllib.request.Request(url, headers=UA)
+              return json.load(urllib.request.urlopen(req, timeout=30))
+
+          for out, term in TARGETS.items():
+              path = os.path.join("assets", out)
+              if os.path.getsize(path) > 0 if os.path.exists(path) else False:
+                  print("exists:", out); continue
+              data = api({"action": "query", "generator": "search",
+                          "gsrsearch": term + " filetype:bitmap", "gsrnamespace": 6, "gsrlimit": 10,
+                          "prop": "imageinfo", "iiprop": "url|size|extmetadata", "iiurlwidth": 1600,
+                          "format": "json"})
+              pages = (data.get("query") or {}).get("pages") or {}
+              best = None
+              for p in sorted(pages.values(), key=lambda p: p.get("index", 99)):
+                  ii = (p.get("imageinfo") or [{}])[0]
+                  if not ii.get("thumburl"): continue
+                  if ii.get("width", 0) < 1000: continue
+                  mime_ok = ii.get("thumburl", "").lower().endswith((".jpg", ".jpeg", ".png"))
+                  if not mime_ok: continue
+                  best = (p, ii); break
+              if not best:
+                  print("::warning::no Commons image found for", term); continue
+              p, ii = best
+              urllib.request.urlretrieve(urllib.request.Request(ii["thumburl"], headers=UA).full_url, path)
+              # verify it downloaded as an image
+              with open(path, "rb") as fh: magic = fh.read(4)
+              if magic[:3] != b"\xff\xd8\xff" and magic[:4] != b"\x89PNG":
+                  os.remove(path); print("::warning::bad download for", term); continue
+              em = ii.get("extmetadata") or {}
+              def meta(k): return (em.get(k) or {}).get("value", "")
+              credits[out] = {
+                  "title": p.get("title", ""),
+                  "artist": meta("Artist"),
+                  "license": meta("LicenseShortName"),
+                  "descriptionurl": ii.get("descriptionurl", ""),
+              }
+              print("fetched:", out, "<-", p.get("title"), "| license:", credits[out]["license"])
+          json.dump(credits, open(CREDITS, "w"), indent=1)
+          EOF
+
       - name: Commit images
         run: |
           git config user.name "github-actions[bot]"
