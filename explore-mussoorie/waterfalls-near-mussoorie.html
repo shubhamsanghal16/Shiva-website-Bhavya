@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Waterfalls in Mussoorie: Kempty, Bhatta, Jharipani & Mossy Fall — Distances & Tips">
 <meta name="twitter:description" content="All the waterfalls in and near Mussoorie with approximate distances from Mall Road: Kempty Falls (~15 km), Bhatta Falls (~7 km), Jharipani (~8.5 km) and Mossy Fall (~7 km), plus best time to visit and local tips.">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Waterfalls In &amp; Around Mussoorie","description":"All the waterfalls in and near Mussoorie with approximate distances from Mall Road: Kempty Falls (~15 km), Bhatta Falls (~7 km), Jharipani (~8.5 km) and Mossy Fall (~7 km), plus best time to visit and local tips.","url":"https://www.shivacontinental.in/explore-mussoorie/waterfalls-near-mussoorie.html","author":{"@type":"Organization","name":"Hotel Shiva Continental"},"publisher":{"@type":"Organization","name":"Hotel Shiva Continental","url":"https://www.shivacontinental.in/"},"dateModified":"2026-07-13"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.shivacontinental.in/"},{"@type":"ListItem","position":2,"name":"Explore Mussoorie","item":"https://www.shivacontinental.in/explore-mussoorie/sunset-points-to-visit-in-mussoorie.html"},{"@type":"ListItem","position":3,"name":"Waterfalls In &amp; Around Mussoorie","item":"https://www.shivacontinental.in/explore-mussoorie/waterfalls-near-mussoorie.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How far is Kempty Falls from Mussoorie?","acceptedAnswer":{"@type":"Answer","text":"Kempty Falls is about 15 km from the Mall Road area of Mussoorie — roughly a 45–60 minute drive on the Yamunotri road, depending on season traffic."}},{"@type":"Question","name":"What is the distance between Bhatta Falls and Kempty Falls?","acceptedAnswer":{"@type":"Answer","text":"Bhatta Falls and Kempty Falls are on opposite sides of Mussoorie — about 20–22 km apart by road, roughly an hour's drive. Many visitors do them as one half-day taxi loop."}},{"@type":"Question","name":"Which waterfall is closest to Mall Road, Mussoorie?","acceptedAnswer":{"@type":"Answer","text":"Bhatta Falls and Mossy Fall are the closest, each about 7 km from the Mall Road area — 25–35 minutes by taxi."}},{"@type":"Question","name":"What is the best time to visit waterfalls in Mussoorie?","acceptedAnswer":{"@type":"Answer","text":"July to November, when the monsoon and post-monsoon flow is strongest. Mornings and weekdays are far less crowded, especially at Kempty Falls."}}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","headline":"Waterfalls In &amp; Around Mussoorie","description":"All the waterfalls in and near Mussoorie with approximate distances from Mall Road: Kempty Falls (~15 km), Bhatta Falls (~7 km), Jharipani (~8.5 km) and Mossy Fall (~7 km), plus best time to visit and local tips.","url":"https://www.shivacontinental.in/explore-mussoorie/waterfalls-near-mussoorie.html","author":{"@type":"Organization","name":"Hotel Shiva Continental"},"publisher":{"@type":"Organization","name":"Hotel Shiva Continental","url":"https://www.shivacontinental.in/"},"dateModified":"2026-07-13","image":["https://www.shivacontinental.in/assets/site/waterfall-kempty.jpg"]},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.shivacontinental.in/"},{"@type":"ListItem","position":2,"name":"Explore Mussoorie","item":"https://www.shivacontinental.in/explore-mussoorie/sunset-points-to-visit-in-mussoorie.html"},{"@type":"ListItem","position":3,"name":"Waterfalls In &amp; Around Mussoorie","item":"https://www.shivacontinental.in/explore-mussoorie/waterfalls-near-mussoorie.html"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How far is Kempty Falls from Mussoorie?","acceptedAnswer":{"@type":"Answer","text":"Kempty Falls is about 15 km from the Mall Road area of Mussoorie — roughly a 45–60 minute drive on the Yamunotri road, depending on season traffic."}},{"@type":"Question","name":"What is the distance between Bhatta Falls and Kempty Falls?","acceptedAnswer":{"@type":"Answer","text":"Bhatta Falls and Kempty Falls are on opposite sides of Mussoorie — about 20–22 km apart by road, roughly an hour's drive. Many visitors do them as one half-day taxi loop."}},{"@type":"Question","name":"Which waterfall is closest to Mall Road, Mussoorie?","acceptedAnswer":{"@type":"Answer","text":"Bhatta Falls and Mossy Fall are the closest, each about 7 km from the Mall Road area — 25–35 minutes by taxi."}},{"@type":"Question","name":"What is the best time to visit waterfalls in Mussoorie?","acceptedAnswer":{"@type":"Answer","text":"July to November, when the monsoon and post-monsoon flow is strongest. Mornings and weekdays are far less crowded, especially at Kempty Falls."}}]}]}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
 <script>
@@ -96,6 +96,31 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .nav-links li{border-bottom:1px solid rgba(0,0,0,.06)}
 .nav-links a{display:block;padding:1rem 0;font-size:.92rem}
 }
+.wf-card{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.07);margin:2rem 0}
+@media(max-width:760px){.wf-card{grid-template-columns:1fr}}
+.wf-card:nth-child(even) .wf-imgwrap{order:2}
+@media(max-width:760px){.wf-card:nth-child(even) .wf-imgwrap{order:0}}
+.wf-imgwrap{position:relative;min-height:260px}
+.wf-imgwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.wf-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;background:linear-gradient(135deg,var(--teal-deep) 0%,var(--teal) 100%);color:rgba(255,255,255,.9)}
+.wf-ph .e{font-size:2.6rem}
+.wf-ph .n{font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:.02em}
+.wf-credit{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.45);color:rgba(255,255,255,.85);font-size:.62rem;padding:.25rem .6rem;letter-spacing:.02em}
+.wf-credit a{color:rgba(255,255,255,.92)}
+.wf-body{padding:1.6rem 1.8rem}
+.wf-body h2{margin-top:0 !important}
+.wf-facts{list-style:none;margin:1rem 0 !important;display:flex;flex-direction:column;gap:.5rem}
+.wf-facts li{font-size:.88rem;line-height:1.7;color:var(--bark-mid);padding-left:1.6rem;position:relative}
+.wf-facts li::before{position:absolute;left:0}
+.wf-facts li.f-dist::before{content:'\1F697'}
+.wf-facts li.f-reach::before{content:'\1F6E3\FE0F'}
+.wf-facts li.f-best::before{content:'\1F5D3\FE0F'}
+.wf-links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.1rem}
+.wf-links a{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;letter-spacing:.04em;text-decoration:none;padding:.5rem 1rem;border-radius:50px;border:1px solid var(--teal-soft);color:var(--teal-deep);transition:all .2s}
+.wf-links a:hover{background:var(--teal-pale)}
+.wf-links a.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.wf-links a.primary:hover{background:var(--teal-deep)}
+article{max-width:960px}
 </style>
 </head>
 <body>
@@ -125,23 +150,80 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 <div class="breadcrumb"><a href="/">Home</a> &rsaquo; Explore Mussoorie &rsaquo; Waterfalls In &amp; Around Mussoorie</div>
 
 <article>
-<p>Mussoorie's waterfalls are at their fullest from the monsoon through late autumn (July–November), and pleasant for a splash through summer. Here are the four worth planning around, with approximate distances from the Mall Road / Picture Palace end of town.</p>
+<p>Mussoorie's waterfalls are at their fullest from the monsoon through late autumn (July–November), and pleasant for a splash through summer. Here are the four worth planning around — with distances measured from Hotel Shiva Continental in Kulri (2 minutes from the Picture Palace end of Mall Road), how to reach each one, and a map pin for your driver.</p>
 <div class="dist-wrap"><table class="dist">
-<tr><th>Waterfall</th><th>Approx. distance from Mall Road</th><th>Approx. drive time</th><th>Known for</th></tr>
+<tr><th>Waterfall</th><th>From the hotel</th><th>Drive time</th><th>Known for</th></tr>
 <tr><td>Kempty Falls</td><td>~15 km</td><td>45–60 min</td><td>The famous one — tiered falls, bathing pools, ropeway</td></tr>
 <tr><td>Bhatta Falls</td><td>~7 km</td><td>25–35 min</td><td>Quieter pools, picnic-friendly, short walk in</td></tr>
 <tr><td>Jharipani Falls</td><td>~8.5 km</td><td>~30 min + short trek</td><td>Forest setting on the old Jharipani road</td></tr>
 <tr><td>Mossy Fall</td><td>~7 km</td><td>~30 min</td><td>Moss-lined rocks, least commercial of the four</td></tr>
 </table></div>
-<h2>Kempty Falls</h2>
-<p>The best-known waterfall in the region, on the Mussoorie–Yamunotri road. It's the most developed — changing rooms, food stalls, and a ropeway down to the pools — which also makes it the busiest; go before 10&nbsp;am or on a weekday if you want the pools to yourself. Carry a change of clothes.</p>
-<h2>Bhatta Falls</h2>
-<p>Down the Dehradun road near Bhatta village, then a short approach from the parking. Smaller than Kempty but with calmer pools and far fewer crowds — a favourite with families for exactly that reason. <strong>Planning both in one loop?</strong> Bhatta and Kempty are on opposite sides of town — allow roughly 20–22&nbsp;km and about an hour's drive between them.</p>
-<h2>Jharipani Falls</h2>
-<p>Near Jharipani village on the old route below Mussoorie, reached with a short walk from the road. Best just after the rains when the flow is strong; wear grippy shoes for the final stretch.</p>
-<h2>Mossy Fall</h2>
-<p>The closest thing to a secret on this list — a slim cascade over moss-covered rock on the Barlowganj side, about 7&nbsp;km out. No stalls, no ropeway; just water, forest and the occasional photographer. Combine it with a Barlowganj–Jharipani loop.</p>
-<div class="tip"><strong>Local tips:</strong> waterfall flow varies a lot by season — strongest July to November, gentler in spring. Entry/parking at the popular falls costs a small fee (carry cash). Our reception arranges taxis for a half-day waterfall loop; ask the evening before. All distances are approximate road distances from the Kulri / Picture Palace end of Mall Road, 2 minutes from Hotel Shiva Continental.</div>
+
+<div class="wf-card">
+  <div class="wf-imgwrap"><img src="/assets/site/waterfall-kempty.jpg" alt="Kempty Falls near Mussoorie" loading="lazy"><div class="wf-credit">Photo: Inder S Kharayat · CC BY-SA 3.0 · <a href="https://commons.wikimedia.org/wiki/File:Kempty_Falls_Mussoorie_2.jpg" target="_blank" rel="noopener nofollow">Wikimedia Commons</a></div></div>
+  <div class="wf-body">
+    <h2>Kempty Falls</h2>
+    <p>The most famous waterfall in the region — a tiered 40-foot cascade on the Mussoorie–Yamunotri road that has been a picnic spot since the British era. It's the most developed of the four: changing rooms, food stalls, and a ropeway that drops you right at the bathing pools. Weekends get crowded; reach before 10 am for the pools at their calmest.</p>
+    <ul class="wf-facts">
+      <li class="f-dist"><strong>From Hotel Shiva Continental:</strong> ~15 km · 45–60 min drive</li>
+      <li class="f-reach"><strong>How to reach:</strong> Drive out via Library Chowk on the Mussoorie–Yamunotri road (toward Barkot). Taxis from the hotel do the round trip; the ropeway or a flight of steps takes you from road level down to the pools.</li>
+      <li class="f-best"><strong>Best time:</strong> July–November for full flow; summer mornings for a swim.</li>
+    </ul>
+    <div class="wf-links">
+      <a class="primary" href="https://www.google.com/maps/search/?api=1&query=Kempty+Falls+Mussoorie" target="_blank" rel="noopener">📍 Open in Google Maps</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Shiva+Continental+Mussoorie&destination=Kempty+Falls+Mussoorie" target="_blank" rel="noopener">🧭 Directions from the hotel</a>
+    </div>
+  </div>
+</div>
+<div class="wf-card">
+  <div class="wf-imgwrap"><div class="wf-ph"><span class="e">🌫️</span><span class="n">Bhatta Falls</span></div></div>
+  <div class="wf-body">
+    <h2>Bhatta Falls</h2>
+    <p>A quieter, family-favourite fall near Bhatta village on the Dehradun road, with calm pools spread over rock terraces — better for actually sitting in the water than Kempty on a busy day. Carry a picnic; there are only basic stalls at the site.</p>
+    <ul class="wf-facts">
+      <li class="f-dist"><strong>From Hotel Shiva Continental:</strong> ~7 km · 25–35 min drive</li>
+      <li class="f-reach"><strong>How to reach:</strong> Head down the Mussoorie–Dehradun road to Bhatta village, then a short approach road and a few minutes' walk from the parking to the falls.</li>
+      <li class="f-best"><strong>Best time:</strong> Strongest just after the monsoon (September–November).</li>
+    </ul>
+    <div class="wf-links">
+      <a class="primary" href="https://www.google.com/maps/search/?api=1&query=Bhatta+Falls+Mussoorie" target="_blank" rel="noopener">📍 Open in Google Maps</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Shiva+Continental+Mussoorie&destination=Bhatta+Falls+Mussoorie" target="_blank" rel="noopener">🧭 Directions from the hotel</a>
+    </div>
+  </div>
+</div>
+<div class="wf-card">
+  <div class="wf-imgwrap"><div class="wf-ph"><span class="e">🌲</span><span class="n">Jharipani Falls</span></div></div>
+  <div class="wf-body">
+    <h2>Jharipani Falls</h2>
+    <p>A forest-framed cascade near Jharipani village on the old route below Mussoorie, close to the century-old schools of the Jharipani ridge. The final stretch is a short walk on an uneven path — proper shoes make the difference.</p>
+    <ul class="wf-facts">
+      <li class="f-dist"><strong>From Hotel Shiva Continental:</strong> ~8.5 km · ~30 min drive + a 10–15 min walk</li>
+      <li class="f-reach"><strong>How to reach:</strong> Drive via Barlowganj toward Jharipani village; the trail to the falls starts near the village and takes about 10–15 minutes on foot.</li>
+      <li class="f-best"><strong>Best time:</strong> Right after the rains, when the flow through the forest is at its best.</li>
+    </ul>
+    <div class="wf-links">
+      <a class="primary" href="https://www.google.com/maps/search/?api=1&query=Jharipani+Falls+Mussoorie" target="_blank" rel="noopener">📍 Open in Google Maps</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Shiva+Continental+Mussoorie&destination=Jharipani+Falls+Mussoorie" target="_blank" rel="noopener">🧭 Directions from the hotel</a>
+    </div>
+  </div>
+</div>
+<div class="wf-card">
+  <div class="wf-imgwrap"><div class="wf-ph"><span class="e">🍃</span><span class="n">Mossy Fall</span></div></div>
+  <div class="wf-body">
+    <h2>Mossy Fall</h2>
+    <p>The quietest of the lot — a slim cascade sliding over moss-lined rock on the Barlowganj side. No stalls, no ropeway, rarely a crowd; just water, forest and birdsong. Combine it with a Barlowganj–Jharipani loop for a lovely low-key half day.</p>
+    <ul class="wf-facts">
+      <li class="f-dist"><strong>From Hotel Shiva Continental:</strong> ~7 km · ~30 min drive</li>
+      <li class="f-reach"><strong>How to reach:</strong> Take the Barlowganj road out of Mussoorie; the fall is a short distance off the road with the last stretch on foot.</li>
+      <li class="f-best"><strong>Best time:</strong> Monsoon and the weeks right after; carry water and snacks.</li>
+    </ul>
+    <div class="wf-links">
+      <a class="primary" href="https://www.google.com/maps/search/?api=1&query=Mossy+Falls+Mussoorie" target="_blank" rel="noopener">📍 Open in Google Maps</a>
+      <a href="https://www.google.com/maps/dir/?api=1&origin=Hotel+Shiva+Continental+Mussoorie&destination=Mossy+Falls+Mussoorie" target="_blank" rel="noopener">🧭 Directions from the hotel</a>
+    </div>
+  </div>
+</div>
+<div class="tip"><strong>Local tips:</strong> flow varies a lot by season — strongest July to November, gentler in spring. Entry/parking at the popular falls costs a small fee (carry cash). <strong>Planning Kempty and Bhatta in one loop?</strong> They're on opposite sides of town — roughly 20–22&nbsp;km and about an hour's drive apart. Our reception arranges taxis for a half-day waterfall loop; ask the evening before. Distances are approximate road distances and vary with season traffic.</div>
 </article>
 
 <div class="related">

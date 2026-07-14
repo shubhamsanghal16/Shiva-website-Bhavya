@@ -59,11 +59,11 @@ jobs:
           import json, os, urllib.parse, urllib.request
 
           # Each target: a list of search terms tried in order until one yields a usable photo.
+          # Only Kempty has a reliably-labelled free photo on Commons; broader searches for
+          # Bhatta/Jharipani/Mossy returned wrong-location false positives, so they're left to
+          # the page's styled placeholders rather than risk publishing a mislabelled image.
           TARGETS = {
-              "site/waterfall-kempty.jpg": ["Kempty Falls Mussoorie", "Kempty Falls", "Kempty"],
-              "site/waterfall-bhatta.jpg": ["Bhatta Falls Mussoorie", "Bhatta Falls", "Bhatta waterfall Dehradun"],
-              "site/waterfall-jharipani.jpg": ["Jharipani Falls", "Jharipani Mussoorie", "Jharipani"],
-              "site/waterfall-mossy.jpg": ["Mossy Falls Mussoorie", "Mossy Fall Mussoorie", "Mossy Falls Barlowganj"],
+              "site/waterfall-kempty.jpg": ["Kempty Falls Mussoorie", "Kempty Falls"],
           }
           CREDITS = "assets/site/waterfall-credits.json"
           credits = json.load(open(CREDITS)) if os.path.exists(CREDITS) else {}
