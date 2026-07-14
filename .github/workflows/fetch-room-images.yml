@@ -68,10 +68,12 @@ jobs:
           credits = json.load(open(CREDITS)) if os.path.exists(CREDITS) else {}
           UA = {"User-Agent": "ShivaContinentalSite/1.0 (image fetch for attribution-compliant reuse)"}
 
+          opener = urllib.request.build_opener()
+          opener.addheaders = list(UA.items())
+
           def api(params):
               url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
-              req = urllib.request.Request(url, headers=UA)
-              return json.load(urllib.request.urlopen(req, timeout=30))
+              return json.load(opener.open(url, timeout=30))
 
           for out, term in TARGETS.items():
               path = os.path.join("assets", out)
@@ -93,7 +95,8 @@ jobs:
               if not best:
                   print("::warning::no Commons image found for", term); continue
               p, ii = best
-              urllib.request.urlretrieve(urllib.request.Request(ii["thumburl"], headers=UA).full_url, path)
+              with opener.open(ii["thumburl"], timeout=60) as resp, open(path, "wb") as fh:
+                  fh.write(resp.read())
               # verify it downloaded as an image
               with open(path, "rb") as fh: magic = fh.read(4)
               if magic[:3] != b"\xff\xd8\xff" and magic[:4] != b"\x89PNG":
