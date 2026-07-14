@@ -58,11 +58,12 @@ jobs:
           python3 - <<'EOF'
           import json, os, urllib.parse, urllib.request
 
+          # Each target: a list of search terms tried in order until one yields a usable photo.
           TARGETS = {
-              "site/waterfall-kempty.jpg": "Kempty Falls Mussoorie",
-              "site/waterfall-bhatta.jpg": "Bhatta Falls Mussoorie",
-              "site/waterfall-jharipani.jpg": "Jharipani Falls",
-              "site/waterfall-mossy.jpg": "Mossy Fall Mussoorie",
+              "site/waterfall-kempty.jpg": ["Kempty Falls Mussoorie", "Kempty Falls", "Kempty"],
+              "site/waterfall-bhatta.jpg": ["Bhatta Falls Mussoorie", "Bhatta Falls", "Bhatta waterfall Dehradun"],
+              "site/waterfall-jharipani.jpg": ["Jharipani Falls", "Jharipani Mussoorie", "Jharipani"],
+              "site/waterfall-mossy.jpg": ["Mossy Falls Mussoorie", "Mossy Fall Mussoorie", "Mossy Falls Barlowganj"],
           }
           CREDITS = "assets/site/waterfall-credits.json"
           credits = json.load(open(CREDITS)) if os.path.exists(CREDITS) else {}
@@ -75,25 +76,30 @@ jobs:
               url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
               return json.load(opener.open(url, timeout=30))
 
-          for out, term in TARGETS.items():
+          for out, terms in TARGETS.items():
               path = os.path.join("assets", out)
-              if os.path.getsize(path) > 0 if os.path.exists(path) else False:
+              if os.path.exists(path) and os.path.getsize(path) > 0:
                   print("exists:", out); continue
-              data = api({"action": "query", "generator": "search",
-                          "gsrsearch": term + " filetype:bitmap", "gsrnamespace": 6, "gsrlimit": 10,
-                          "prop": "imageinfo", "iiprop": "url|size|extmetadata", "iiurlwidth": 1600,
-                          "format": "json"})
-              pages = (data.get("query") or {}).get("pages") or {}
               best = None
-              for p in sorted(pages.values(), key=lambda p: p.get("index", 99)):
-                  ii = (p.get("imageinfo") or [{}])[0]
-                  if not ii.get("thumburl"): continue
-                  if ii.get("width", 0) < 1000: continue
-                  mime_ok = ii.get("thumburl", "").lower().endswith((".jpg", ".jpeg", ".png"))
-                  if not mime_ok: continue
-                  best = (p, ii); break
+              for term in terms:
+                  data = api({"action": "query", "generator": "search",
+                              "gsrsearch": term + " filetype:bitmap", "gsrnamespace": 6, "gsrlimit": 15,
+                              "prop": "imageinfo", "iiprop": "url|size|extmetadata", "iiurlwidth": 1600,
+                              "format": "json"})
+                  pages = (data.get("query") or {}).get("pages") or {}
+                  for p in sorted(pages.values(), key=lambda p: p.get("index", 99)):
+                      ii = (p.get("imageinfo") or [{}])[0]
+                      title = (p.get("title", "") or "").lower()
+                      if not ii.get("thumburl"): continue
+                      if ii.get("width", 0) < 800: continue
+                      if not ii.get("thumburl", "").lower().endswith((".jpg", ".jpeg", ".png")): continue
+                      # skip obvious maps/logos/diagrams
+                      if any(w in title for w in ("map", "logo", "diagram", "chart", "sign", ".svg")): continue
+                      best = (p, ii); break
+                  if best:
+                      print("matched", out, "on term:", term); break
               if not best:
-                  print("::warning::no Commons image found for", term); continue
+                  print("::warning::no Commons image found for", out); continue
               p, ii = best
               with opener.open(ii["thumburl"], timeout=60) as resp, open(path, "wb") as fh:
                   fh.write(resp.read())
