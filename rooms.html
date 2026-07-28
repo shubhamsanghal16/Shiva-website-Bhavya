@@ -30,9 +30,9 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --teal:#008080;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;
+  --teal:#00706f;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;
   --cream:#faf7f2;--warm:#f5ede0;--bark:#2e1f0f;--bark-mid:#5a4030;
-  --stone:#9a8c7e;--gold:#b8861e;
+  --stone:#6f6355;--gold:#9c7414;
 }
 html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--bark);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
@@ -80,11 +80,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-white:hover{background:var(--teal-pale);transform:translateY(-2px)}
 
 /* FOOTER */
-footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
+footer{background:var(--bark);color:rgba(255,255,255,.85);padding:3rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:#fff;letter-spacing:.12em}
 .footer-tagline{font-size:.75rem;letter-spacing:.1em;margin-top:.2rem}
 .footer-links{display:flex;flex-wrap:wrap;gap:1.2rem;list-style:none}
-.footer-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.78rem;letter-spacing:.08em;transition:color .3s}
+.footer-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.78rem;letter-spacing:.08em;transition:color .3s}
 .footer-links a:hover{color:#fff}
 .footer-copy{font-size:.72rem;width:100%;text-align:center;border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;margin-top:.5rem}
 
@@ -99,7 +99,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .bkm-close{background:none;border:1px solid rgba(0,0,0,.12);color:var(--bark-mid);width:38px;height:38px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .bkm-close:hover{background:var(--bark);color:#fff;border-color:var(--bark)}
 .bkm-bar{display:flex;align-items:center;gap:1rem;padding:.65rem 2rem;background:var(--teal-deep);flex-shrink:0}
-.bkm-bar-label{font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.bkm-bar-label{font-family:'Jost',sans-serif;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
 .bkm-bar-badge{font-family:'Jost',sans-serif;font-size:.78rem;color:rgba(255,255,255,.9);display:flex;align-items:center;gap:.4rem}
 .bkm-bar-dot{width:6px;height:6px;background:#4caf85;border-radius:50%}
 .bkm-body{flex:1;position:relative;overflow:hidden}
@@ -137,6 +137,21 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
   .nav-links li{border-bottom:1px solid rgba(0,0,0,.06)}
   .nav-links a{display:block;padding:1rem 0;font-size:.92rem}
   .bkm-tagline{display:none}
+}
+
+/* ===== UX / accessibility enhancements ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:3px}
+.nav-book,.room-cta,.btn,.btn-white,.btn-teal-outline,.btn-ghost,.open-booking,.wf-links a,.btn-wa,.room-cta{min-height:44px}
+.nav-book{box-shadow:0 4px 16px rgba(0,112,111,.32)}
+.nav-book:hover{box-shadow:0 6px 20px rgba(0,112,111,.42)}
+@media(max-width:768px){
+  html{font-size:17px}
+  p,.room-desc,.story-body,li{font-size:.95rem;line-height:1.7}
+  .page-hero p,.lead{font-size:1rem}
+  .nav-book{padding:.6rem 1.2rem;font-size:.78rem}
+  h1,.hero-title,.page-hero h1{line-height:1.15}
+  /* comfortable tap targets in menus & footers */
+  .nav-links a,.footer-links a{padding:.7rem 0;display:inline-block}
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>

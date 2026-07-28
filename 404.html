@@ -13,6 +13,21 @@ h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,6
 p{color:#5a4030;line-height:1.8;margin-bottom:1.8rem;max-width:460px}
 .links a{display:inline-block;margin:.3rem;padding:.7rem 1.6rem;border-radius:2px;text-decoration:none;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}
 .a1{background:#008080;color:#fff}.a2{border:1px solid #c2e4e4;color:#005f5f}
+
+/* ===== UX / accessibility enhancements ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:3px}
+.nav-book,.room-cta,.btn,.btn-white,.btn-teal-outline,.btn-ghost,.open-booking,.wf-links a,.btn-wa,.room-cta{min-height:44px}
+.nav-book{box-shadow:0 4px 16px rgba(0,112,111,.32)}
+.nav-book:hover{box-shadow:0 6px 20px rgba(0,112,111,.42)}
+@media(max-width:768px){
+  html{font-size:17px}
+  p,.room-desc,.story-body,li{font-size:.95rem;line-height:1.7}
+  .page-hero p,.lead{font-size:1rem}
+  .nav-book{padding:.6rem 1.2rem;font-size:.78rem}
+  h1,.hero-title,.page-hero h1{line-height:1.15}
+  /* comfortable tap targets in menus & footers */
+  .nav-links a,.footer-links a{padding:.7rem 0;display:inline-block}
+}
 </style>
 </head>
 <body>

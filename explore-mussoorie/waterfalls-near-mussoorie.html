@@ -29,7 +29,7 @@ gtag("config","G-B2QPQKD8MP",{send_page_view:true,link_attribution:true});
 </script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--teal:#008080;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;--cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#9a8c7e;--gold:#b8861e}
+:root{--teal:#00706f;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;--cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#6f6355;--gold:#b8861e}
 html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--bark);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;background:rgba(250,247,242,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.07)}
@@ -67,11 +67,11 @@ table.dist{width:100%;border-collapse:collapse;font-size:.9rem;background:#fff;b
 .related h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.2rem;margin-bottom:.8rem}
 .related ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
 .related a{color:var(--teal-deep);font-size:.9rem}
-footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
+footer{background:var(--bark);color:rgba(255,255,255,.85);padding:3rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:#fff;letter-spacing:.12em}
 .footer-tagline{font-size:.75rem;letter-spacing:.1em;margin-top:.2rem}
 .footer-links{display:flex;flex-wrap:wrap;gap:1.2rem;list-style:none}
-.footer-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.78rem}
+.footer-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.78rem}
 .footer-links a:hover{color:#fff}
 .footer-copy{font-size:.72rem;width:100%;text-align:center;border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;margin-top:.5rem}
 #bkModal{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:var(--cream);opacity:0;pointer-events:none;transition:opacity .35s}
@@ -121,6 +121,21 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .wf-links a.primary{background:var(--teal);border-color:var(--teal);color:#fff}
 .wf-links a.primary:hover{background:var(--teal-deep)}
 article{max-width:960px}
+
+/* ===== UX / accessibility enhancements ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:3px}
+.nav-book,.room-cta,.btn,.btn-white,.btn-teal-outline,.btn-ghost,.open-booking,.wf-links a,.btn-wa,.room-cta{min-height:44px}
+.nav-book{box-shadow:0 4px 16px rgba(0,112,111,.32)}
+.nav-book:hover{box-shadow:0 6px 20px rgba(0,112,111,.42)}
+@media(max-width:768px){
+  html{font-size:17px}
+  p,.room-desc,.story-body,li{font-size:.95rem;line-height:1.7}
+  .page-hero p,.lead{font-size:1rem}
+  .nav-book{padding:.6rem 1.2rem;font-size:.78rem}
+  h1,.hero-title,.page-hero h1{line-height:1.15}
+  /* comfortable tap targets in menus & footers */
+  .nav-links a,.footer-links a{padding:.7rem 0;display:inline-block}
+}
 </style>
 </head>
 <body>

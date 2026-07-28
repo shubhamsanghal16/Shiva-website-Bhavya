@@ -28,7 +28,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--teal:#008080;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;--cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#9a8c7e;--gold:#b8861e}
+:root{--teal:#00706f;--teal-deep:#005f5f;--teal-pale:#e8f5f5;--teal-soft:#c2e4e4;--cream:#faf7f2;--bark:#2e1f0f;--bark-mid:#5a4030;--stone:#6f6355;--gold:#b8861e}
 html{scroll-behavior:smooth}
 body{background:var(--cream);color:var(--bark);font-family:'Jost',sans-serif;font-weight:300;overflow-x:hidden}
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;background:rgba(250,247,242,.96);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(0,0,0,.07)}
@@ -41,9 +41,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 @media(max-width:768px){.nav-links{display:none}.nav-book{font-size:.7rem;padding:.4rem 1rem}}
 .room-hero{position:relative;height:65vh;min-height:420px;overflow:hidden}
 .room-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05)}
-.room-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.18) 0%,rgba(0,0,0,.55) 100%)}
+.room-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.32) 0%,rgba(0,0,0,.68) 100%)}
 .room-hero-content{position:absolute;bottom:3rem;left:0;right:0;padding:0 2.5rem;color:#fff}
-.room-hero-size{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:.5rem}
+.room-hero-size{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.88);margin-bottom:.5rem}
 .room-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:.4rem}
 .room-hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.8)}
 .breadcrumb{padding:.8rem 2.5rem;background:#fff;border-bottom:1px solid rgba(0,0,0,.06);font-size:.75rem;color:var(--stone)}
@@ -65,16 +65,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .amenity-item::before{content:'—';color:var(--teal-soft);flex-shrink:0}
 .room-cta-band{background:linear-gradient(135deg,var(--teal-deep) 0%,#004444 100%);padding:5rem 2rem;text-align:center}
 .room-cta-band h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300;color:#fff;margin-bottom:.6rem}
-.room-cta-band p{color:rgba(255,255,255,.7);margin-bottom:2rem}
+.room-cta-band p{color:rgba(255,255,255,.88);margin-bottom:2rem}
 .btn-white{background:#fff;color:var(--teal-deep);padding:.85rem 2.4rem;border-radius:2px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-family:'Jost',sans-serif;transition:all .3s;display:inline-block;cursor:pointer;border:none}
 .btn-white:hover{background:var(--teal-pale);transform:translateY(-2px)}
 .btn-outline-white{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);padding:.85rem 2.4rem;border-radius:2px;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-family:'Jost',sans-serif;transition:all .3s;display:inline-block;margin-left:1rem}
 .btn-outline-white:hover{border-color:#fff;background:rgba(255,255,255,.08)}
-footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
+footer{background:var(--bark);color:rgba(255,255,255,.85);padding:3rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
 .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:#fff;letter-spacing:.12em}
 .footer-tagline{font-size:.75rem;letter-spacing:.1em;margin-top:.2rem}
 .footer-links{display:flex;flex-wrap:wrap;gap:1.2rem;list-style:none}
-.footer-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:.78rem;transition:color .3s}
+.footer-links a{color:rgba(255,255,255,.85);text-decoration:none;font-size:.78rem;transition:color .3s}
 .footer-links a:hover{color:#fff}
 .footer-copy{font-size:.72rem;width:100%;text-align:center;border-top:1px solid rgba(255,255,255,.08);padding-top:1.5rem;margin-top:.5rem}
 #bkModal{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:var(--cream);opacity:0;pointer-events:none;transition:opacity .35s}
@@ -87,7 +87,7 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
 .bkm-close{background:none;border:1px solid rgba(0,0,0,.12);color:var(--bark-mid);width:38px;height:38px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .bkm-close:hover{background:var(--bark);color:#fff;border-color:var(--bark)}
 .bkm-bar{display:flex;align-items:center;gap:1rem;padding:.65rem 2rem;background:var(--teal-deep);flex-shrink:0}
-.bkm-bar-label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.bkm-bar-label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
 .bkm-bar-badge{font-size:.78rem;color:rgba(255,255,255,.9);display:flex;align-items:center;gap:.4rem}
 .bkm-bar-dot{width:6px;height:6px;background:#4caf85;border-radius:50%}
 .bkm-body{flex:1;position:relative;overflow:hidden}
@@ -120,6 +120,21 @@ footer{background:var(--bark);color:rgba(255,255,255,.6);padding:3rem 2.5rem;dis
   .nav-links li{border-bottom:1px solid rgba(0,0,0,.06)}
   .nav-links a{display:block;padding:1rem 0;font-size:.92rem}
   .bkm-tagline{display:none}
+}
+
+/* ===== UX / accessibility enhancements ===== */
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:3px}
+.nav-book,.room-cta,.btn,.btn-white,.btn-teal-outline,.btn-ghost,.open-booking,.wf-links a,.btn-wa,.room-cta{min-height:44px}
+.nav-book{box-shadow:0 4px 16px rgba(0,112,111,.32)}
+.nav-book:hover{box-shadow:0 6px 20px rgba(0,112,111,.42)}
+@media(max-width:768px){
+  html{font-size:17px}
+  p,.room-desc,.story-body,li{font-size:.95rem;line-height:1.7}
+  .page-hero p,.lead{font-size:1rem}
+  .nav-book{padding:.6rem 1.2rem;font-size:.78rem}
+  h1,.hero-title,.page-hero h1{line-height:1.15}
+  /* comfortable tap targets in menus & footers */
+  .nav-links a,.footer-links a{padding:.7rem 0;display:inline-block}
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-B2QPQKD8MP"></script>
